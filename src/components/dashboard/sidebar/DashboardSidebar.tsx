@@ -9,7 +9,7 @@ import { LogoutButton } from './LogoutButton'
 import MenuItem from './MenuItem'
 import { MENU } from './menu.data'
 
-export function DashboardSidebar() {
+export default function DashboardSidebarasd() {
 	return (
 		<aside className='border-r border-r-border h-full bg-sidebar flex flex-col justify-between'>
 			<div>
