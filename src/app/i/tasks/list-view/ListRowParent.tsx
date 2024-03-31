@@ -17,7 +17,12 @@ interface IListRowParent {
 	setItems: Dispatch<SetStateAction<ITaskResponse[] | undefined>>
 }
 
-const ListRowParent = ({ value, label, items, setItems }: IListRowParent) => {
+export function ListRowParent({
+	value,
+	items,
+	label,
+	setItems
+}: IListRowParent) {
 	return (
 		<Droppable droppableId={value}>
 			{provided => (
@@ -28,6 +33,7 @@ const ListRowParent = ({ value, label, items, setItems }: IListRowParent) => {
 					<div className={styles.colHeading}>
 						<div className='w-full'>{label}</div>
 					</div>
+
 					{filterTasks(items, value)?.map((item, index) => (
 						<Draggable
 							key={item.id}
@@ -49,7 +55,9 @@ const ListRowParent = ({ value, label, items, setItems }: IListRowParent) => {
 							)}
 						</Draggable>
 					))}
+
 					{provided.placeholder}
+
 					{value !== 'completed' && !items?.some(item => !item.id) && (
 						<ListAddRowInput
 							setItems={setItems}
@@ -61,5 +69,3 @@ const ListRowParent = ({ value, label, items, setItems }: IListRowParent) => {
 		</Droppable>
 	)
 }
-
-export default ListRowParent

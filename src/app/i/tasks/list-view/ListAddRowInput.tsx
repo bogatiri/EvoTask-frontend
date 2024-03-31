@@ -9,10 +9,11 @@ interface IListAddRowInput {
 	setItems: Dispatch<SetStateAction<ITaskResponse[] | undefined>>
 }
 
-export function ListAddRowInput({ filterDate, setItems }: IListAddRowInput) {
+export function ListAddRowInput({ setItems, filterDate }: IListAddRowInput) {
 	const addRow = () => {
 		setItems(prev => {
 			if (!prev) return
+
 			return [
 				...prev,
 				{
@@ -28,10 +29,10 @@ export function ListAddRowInput({ filterDate, setItems }: IListAddRowInput) {
 	return (
 		<div className={styles.addRow}>
 			<button
-				className='italic opacity-40 text-sm'
 				onClick={addRow}
+				className='italic opacity-40 text-sm'
 			>
-				Add Task...
+				Add task...
 			</button>
 		</div>
 	)

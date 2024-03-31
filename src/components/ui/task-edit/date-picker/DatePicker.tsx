@@ -19,7 +19,11 @@ interface IDatePicker {
 	position?: 'left' | 'right'
 }
 
-export function DatePicker({ onChange, value, position }: IDatePicker) {
+export function DatePicker({
+	onChange,
+	value,
+	position = 'right'
+}: IDatePicker) {
 	const [selected, setSelected] = useState<Date>()
 	const { isShow, setIsShow, ref } = useOutside(false)
 
@@ -34,6 +38,7 @@ export function DatePicker({ onChange, value, position }: IDatePicker) {
 			onChange('')
 		}
 	}
+
 	return (
 		<div
 			className='relative'
@@ -43,7 +48,10 @@ export function DatePicker({ onChange, value, position }: IDatePicker) {
 				{value ? dayjs(value).format('LL') : 'Click for select'}
 			</button>
 			{value && (
-				<button className='absolute -top-2 -right-4 opacity-30 hover:opacity-100 transition-opacity'>
+				<button
+					className='absolute -top-2 -right-4 opacity-30 hover:opacity-100 transition-opacity'
+					onClick={() => onChange('')}
+				>
 					<X size={14} />
 				</button>
 			)}
@@ -51,12 +59,14 @@ export function DatePicker({ onChange, value, position }: IDatePicker) {
 				<div
 					className={cn(
 						'absolute p-2.5 slide bg-sidebar z-10 shadow rounded-lg',
-						position === 'left' ? '-left-4' : '-right-4'
+						position === 'left' ? '-left-4' : ' -right-4'
 					)}
-					style={{ top: 'calc(100% + .7rem)' }}
+					style={{
+						top: 'calc(100% + .7rem)'
+					}}
 				>
 					<DayPicker
-						fromYear={2024}
+						fromYear={2023}
 						toYear={2054}
 						initialFocus={isShow}
 						mode='single'

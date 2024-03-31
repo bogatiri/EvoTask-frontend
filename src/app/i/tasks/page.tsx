@@ -1,23 +1,21 @@
 import type { Metadata } from 'next'
 
-import { Header } from '@/components/ui/Header'
+import { Heading } from '@/components/ui/Heading'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import TasksView from './TasksView'
+import { TasksView } from './TasksView'
 
 export const metadata: Metadata = {
 	title: 'Tasks',
 	...NO_INDEX_PAGE
 }
 
-const Page = () => {
+export default function TasksPage() {
 	return (
 		<div>
-			<Header title='Tasks' />
+			<Heading title='Tasks' />
 			<TasksView />
 		</div>
 	)
 }
-
-export default Page

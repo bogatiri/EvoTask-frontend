@@ -19,12 +19,13 @@ const getSeason = (month: Date): keyof typeof seasonEmoji => {
 
 export const formatCaption: DateFormatter = month => {
 	const season = getSeason(month)
+
 	return (
 		<>
 			<span
-				className='mr-2'
 				role='img'
 				aria-label={season}
+				className='mr-2'
 			>
 				{seasonEmoji[season]}
 			</span>

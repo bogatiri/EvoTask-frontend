@@ -21,8 +21,10 @@ export function useTaskDnd() {
 					isCompleted: true
 				}
 			})
+
 			return
 		}
+
 		const newCreatedAt = FILTERS[destinationColumnId].format()
 
 		updateTask({
@@ -33,5 +35,6 @@ export function useTaskDnd() {
 			}
 		})
 	}
+
 	return { onDragEnd }
 }

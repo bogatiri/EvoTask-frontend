@@ -16,14 +16,15 @@ export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
 	const { createTask } = useCreateTask()
 	const { updateTask } = useUpdateTask()
 
-	const debounceCreateTask = useCallback(
+	const debouncedCreateTask = useCallback(
 		debounce((formData: TypeTaskFormState) => {
 			createTask(formData)
 		}, 444),
 		[]
 	)
 
-	const debounceUpdateTask = useCallback(
+	// Теперь debouncedUpdateTask будет сохраняться между рендерами, и debounce будет работать как ожидается.
+	const debouncedUpdateTask = useCallback(
 		debounce((formData: TypeTaskFormState) => {
 			updateTask({ id: itemId, data: formData })
 		}, 444),
@@ -33,16 +34,17 @@ export function useTaskDebounce({ watch, itemId }: IUseTaskDebounce) {
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
 			if (itemId) {
-				debounceUpdateTask({
+				debouncedUpdateTask({
 					...formData,
 					priority: formData.priority || undefined
 				})
 			} else {
-				debounceCreateTask(formData)
+				debouncedCreateTask(formData)
 			}
 		})
+
 		return () => {
 			unsubscribe()
 		}
-	}, [watch(), debounceCreateTask, debounceUpdateTask])
+	}, [watch(), debouncedUpdateTask, debouncedCreateTask])
 }

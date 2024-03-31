@@ -10,7 +10,7 @@ interface IBadge {
 const badge = tv({
 	base: 'rounded-lg w-max py-1 px-2 text-xs font-semibold text-sm text-white transition',
 	variants: {
-		backGroundColor: {
+		backgroundColor: {
 			gray: 'bg-gray-500/20',
 			high: 'bg-red-400/60',
 			medium: 'bg-orange-400/70',
@@ -18,20 +18,20 @@ const badge = tv({
 		}
 	},
 	defaultVariants: {
-		backGroundColor: 'gray'
+		backgroundColor: 'gray'
 	}
 })
 
 export function Badge({
+	children,
 	className,
 	variant,
-	style,
-	children
+	style
 }: PropsWithChildren<IBadge>) {
 	return (
 		<span
 			className={badge({
-				backGroundColor: variant as 'low' | 'medium' | 'high',
+				backgroundColor: variant as 'low' | 'high' | 'medium',
 				className
 			})}
 			style={style}

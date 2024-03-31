@@ -14,5 +14,6 @@ export function useDeleteTask() {
 			})
 		}
 	})
+
 	return { deleteTask, isDeletePending }
 }

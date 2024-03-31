@@ -67,17 +67,19 @@ export function SingleSelect({
 					className={cn(
 						'absolute w-full p-2.5 left-0 slide bg-sidebar z-10 shadow rounded-lg'
 					)}
-					style={{ top: 'calc(100% + .5rem)' }}
+					style={{
+						top: 'calc(100% + .5rem)'
+					}}
 				>
 					{data.map(item => (
 						<button
-							className='block mb-4 last:mb-0 capitalize reounded-lg'
 							key={item.value}
 							onClick={e => {
 								e.preventDefault()
 								onChange(item.value)
 								setIsShow(false)
 							}}
+							className='block mb-4 last:mb-0 capitalize rounded-lg'
 							style={
 								isColorSelect
 									? {

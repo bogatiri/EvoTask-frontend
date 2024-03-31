@@ -12,9 +12,10 @@ export function useUpdateSettings() {
 		mutationKey: ['update profile'],
 		mutationFn: (data: TypeUserForm) => userService.update(data),
 		onSuccess() {
-			toast.success('Successfully update profile')
+			toast.success('Successfully update profile!')
 			queryClient.invalidateQueries({ queryKey: ['profile'] })
 		}
 	})
-	return {mutate, isPending}
+
+	return { mutate, isPending }
 }

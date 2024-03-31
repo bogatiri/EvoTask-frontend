@@ -8,13 +8,14 @@ import { taskService } from '@/services/task.service'
 export function useTasks() {
 	const { data } = useQuery({
 		queryKey: ['tasks'],
-		queryFn: () => taskService.getTask()
+		queryFn: () => taskService.getTasks()
 	})
+
 	const [items, setItems] = useState<ITaskResponse[] | undefined>(data?.data)
 
 	useEffect(() => {
 		setItems(data?.data)
 	}, [data?.data])
-	
+
 	return { items, setItems }
 }

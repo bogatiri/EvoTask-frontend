@@ -3,8 +3,8 @@ import { GripVertical, Loader, Trash } from 'lucide-react'
 import type { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { TransparentField } from '@/components/ui/Fields/TransparentField'
-import Checkbox from '@/components/ui/chekbox'
+import Checkbox from '@/components/ui/checkbox'
+import { TransparentField } from '@/components/ui/fields/TransparentField'
 import { SingleSelect } from '@/components/ui/task-edit/SingleSelect'
 import { DatePicker } from '@/components/ui/task-edit/date-picker/DatePicker'
 
@@ -47,6 +47,7 @@ export function ListRow({ item, setItems }: IListRow) {
 					<button aria-describedby='todo-item'>
 						<GripVertical className={styles.grip} />
 					</button>
+
 					<Controller
 						control={control}
 						name='isCompleted'

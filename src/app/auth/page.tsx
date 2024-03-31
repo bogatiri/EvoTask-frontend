@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
-import Auth from './Auth'
+
+import { Auth } from './Auth'
 
 export const metadata: Metadata = {
 	title: 'Auth',
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 }
 
 export default function AuthPage() {
-	return <div><Auth/></div>
+	return <Auth />
 }

@@ -28,8 +28,9 @@ export const Field = forwardRef<HTMLInputElement, InputFieldProps>(
 				<input
 					ref={ref}
 					disabled={disabled}
-					type={type}
+					type={type} 
 					id={id}
+					autoComplete='off'
 					placeholder={placeholder}
 					className={`mt-2 flex w-full items-center justify-center rounded-lg border border-border bg-white/0 p-3 text-base outline-none placeholder:text-white/30 placeholder:font-normal duration-500 transition-colors focus:border-primary ${
 						disabled === true

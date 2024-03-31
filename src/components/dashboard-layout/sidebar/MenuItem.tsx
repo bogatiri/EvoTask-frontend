@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { IMenuItem } from './menu.interface'
 
-export default function MenuItem({ item }: { item: IMenuItem }) {
+export function MenuItem({ item }: { item: IMenuItem }) {
 	return (
 		<div>
 			<Link

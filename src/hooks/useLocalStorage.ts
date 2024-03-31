@@ -38,5 +38,6 @@ export function useLocalStorage<T>({
 			isMounted.current = true
 		}
 	}, [key, value])
+
 	return [value, setValue, isLoading]
 }

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 		default: SITE_NAME,
 		template: `%s | ${SITE_NAME}`
 	},
-	description: 'Best one for planning from RED GROUP [htmllessons.ru]'
+	description: 'Best one for planning from EvoTask'
 }
 
 export default function RootLayout({

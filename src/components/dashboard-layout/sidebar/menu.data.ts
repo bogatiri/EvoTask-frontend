@@ -35,10 +35,5 @@ export const MENU: IMenuItem[] = [
 		icon: Settings,
 		link: DASHBOARD_PAGES.SETTINGS,
 		name: 'Settings'
-	},
-	{
-		icon: Settings,
-		link: DASHBOARD_PAGES.SETTINGS,
-		name: 'ScrumBan'
 	}
 ]
