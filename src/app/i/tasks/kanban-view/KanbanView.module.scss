@@ -1,6 +1,7 @@
 .board {
 	@apply grid grid-flow-col gap-8 w-full;
 	overflow-x: auto;
+	overflow-y: auto;
 
 	.column {
 		@apply w-[17rem];

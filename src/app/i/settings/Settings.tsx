@@ -34,7 +34,7 @@ export function Settings() {
 				className='w-2/4'
 				onSubmit={handleSubmit(onSubmit)}
 			>
-				<div className='grid grid-cols-2 gap-10'>
+				<div className='grid grid-cols-2 gap-10 sm:grid-cols-1 sm:gap-6'>
 					<div>
 						<Field
 							id='email'

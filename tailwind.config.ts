@@ -11,29 +11,128 @@ const config: Config = {
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}'
 	],
 	theme: {
+		container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px'
+			}
+		},
 		extend: {
-			colors: COLORS,
+			colors: {
+				COLORS,
+				border: 'rgba(255,255,255,.12)',
+				input: 'hsl(var(--input))',
+				ring: 'hsl(var(--ring))',
+				background: 'hsl(var(--background))',
+				foreground: 'hsl(var(--foreground))',
+				primary: {
+					DEFAULT: 'hsl(var(--primary))',
+					foreground: 'hsl(var(--primary-foreground))'
+				},
+				secondary: {
+					DEFAULT: 'hsl(var(--secondary))',
+					foreground: 'hsl(var(--secondary-foreground))'
+				},
+				destructive: {
+					DEFAULT: 'hsl(var(--destructive))',
+					foreground: 'hsl(var(--destructive-foreground))'
+				},
+				muted: {
+					DEFAULT: 'hsl(var(--muted))',
+					foreground: 'hsl(var(--muted-foreground))'
+				},
+				accent: {
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
+				},
+				popover: {
+					DEFAULT: 'hsl(var(--popover))',
+					foreground: 'hsl(var(--popover-foreground))'
+				},
+				card: {
+					DEFAULT: 'hsl(var(--card))',
+					foreground: 'hsl(var(--card-foreground))'
+				},
+				'washed-blue-50': '#f0f3ff',
+				'washed-blue-100': '#d0daff',
+				'washed-blue-200': '#bac9ff',
+				'washed-blue-300': '#9ab0ff',
+				'washed-blue-400': '#86a1ff',
+				'washed-blue-500': '#6889ff',
+				'washed-blue-600': '#5f7de8',
+				'washed-blue-700': '#4a61b5',
+				'washed-blue-800': '#394b8c',
+				'washed-blue-900': '#2c3a6b',
+				'washed-purple-50': '#f8f7ff',
+				'washed-purple-100': '#e8e7ff',
+				'washed-purple-200': '#dddcff',
+				'washed-purple-300': '#cecbff',
+				'washed-purple-400': '#c5c1ff',
+				'washed-purple-500': '#b6b2ff',
+				'washed-purple-600': '#a6a2e8',
+				'washed-purple-700': '#817eb5',
+				'washed-purple-800': '#64628c',
+				'washed-purple-900': '#4c4b6b',
+				'primary-blue-50': '#e6f0ff',
+				'primary-blue-100': '#b2d1ff',
+				'primary-blue-200': '#8cbaff',
+				'primary-blue-300': '#589bff',
+				'primary-blue-400': '#3787ff',
+				'primary-blue-500': '#0569ff',
+				'primary-blue-600': '#0560e8',
+				'primary-blue-700': '#044bb5',
+				'primary-blue-800': '#033a8c',
+				'primary-blue-900': '#022c6b',
+				'primary-purple-50': '#f1e6ff',
+				'primary-purple-100': '#d3b0ff',
+				'primary-purple-200': '#bd8aff',
+				'primary-purple-300': '#9f54ff',
+				'primary-purple-400': '#8d33ff',
+				'primary-purple-500': '#7000ff',
+				'primary-purple-600': '#6600e8',
+				'primary-purple-700': '#5000b5',
+				'primary-purple-800': '#3e008c',
+				'primary-purple-900': '#2f006b',
+				'Neutrals/neutrals-1': '#ffffff',
+				'Neutrals/neutrals-2': '#fcfcfd',
+				'Neutrals/neutrals-3': '#f5f5f6',
+				'Neutrals/neutrals-4': '#f0f0f1',
+				'Neutrals/neutrals-5': '#d9d9dc',
+				'Neutrals/neutrals-6': '#c0bfc4',
+				'Neutrals/neutrals-7': '#8d8c95',
+				'Neutrals/neutrals-8': '#5b5966',
+				'Neutrals/neutrals-9': '#464553',
+				'Neutrals/neutrals-10': '#282637',
+				'Neutrals/neutrals-11': '#201f30',
+				'Neutrals/neutrals-12': '#161427',
+				'Neutrals/neutrals-13': '#020014',
+				'brand-washedPurple': '#b5b2ff',
+				'brand-washedBlue': '#6889ff',
+				'brand-primaryBlue': '#0469ff',
+				'brand-primaryPurple': '#7000ff',
+				'brand-dark': '#030014'
+			},
+			keyframes: {
+				'accordion-down': {
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
+				},
+				'accordion-up': {
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				}
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
 			spacing: {
 				0.5: '0.12rem',
 				layout: '1.4rem',
 				'big-layout': '2.3rem'
 			},
-			fontSize: {
-				xs: '0.9rem',
-				sm: '1.07rem',
-				base: '1.18rem',
-				lg: '1.24rem',
-				xl: '1.38rem',
-				'1.5xl': '1.5rem',
-				'2xl': '1.82rem',
-				'3xl': '2.22rem',
-				'4xl': '2.66rem',
-				'5xl': '3.56rem',
-				'6xl': '4.44rem',
-				'7xl': '5.33rem',
-				'8xl': '7.1rem',
-				'9xl': '9.5rem'
-			},
+
 			transitionDuration: {
 				DEFAULT: '266ms'
 			},
@@ -155,7 +254,10 @@ const config: Config = {
 					"url('https://i.ibb.co/g66yJnm/Ellipse-94.png')",
 				homeButton:
 					'linear-gradient(112.83deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 110.84%)',
-				smartHomeDropzone: `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='13' ry='13' stroke='%23E0E5F2FF' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='5' stroke-linecap='square'/%3e%3c/svg%3e")`
+				smartHomeDropzone: `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='13' ry='13' stroke='%23E0E5F2FF' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='5' stroke-linecap='square'/%3e%3c/svg%3e")`,
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
 			}
 		},
 		screens: {
@@ -446,6 +548,6 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: []
+	plugins: [require('tailwindcss-animate')]
 }
 export default config

@@ -63,7 +63,7 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 				<TransparentField {...register('name')} />
 			</div>
 
-			<div className={styles.cardBody}>
+			<div className={cn(styles.cardBody, 'grid grid-cols-2 gap-2')}>
 				<Controller
 					control={control}
 					name='createdAt'

@@ -23,7 +23,7 @@ export function Sidebar() {
 						color={COLORS.primary}
 						size={38}
 					/>
-					<span className='text-2xl font-bold relative'>
+					<span className='text-2xl text-white font-bold relative'>
 						{SITE_NAME}
 						<span className='absolute -top-1 -right-6 text-xs opacity-40 rotate-[18deg] font-normal'>
 							beta
