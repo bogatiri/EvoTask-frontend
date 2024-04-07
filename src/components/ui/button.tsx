@@ -18,6 +18,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        primary: "bg-sky-700 text-primary-foreground hover:bg-sky-700/90",
+        transparent: "bg-transparent text-white hover:bg-white/20",
+        gray: "bg-neutral-200 text-secondary-foreground hover:bg-neutral-300",
         'btn-primary':
         ' whitespace-nowrap hover:text-primary-foreground bg-gradient-to-t from-[#24232C] to-[#100F18] text-primary-foreground border hover:border-primary border-[#464553] hover:bg-accent hover:bg-primary hover:border-muted-foreground text-lg font-normal',
       'btn-secondary':

@@ -10,7 +10,7 @@ export function Statistics() {
 	return isLoading ? (
 		<Loader />
 	) : (
-		<div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 sm:gap-6  gap-12 mt-7'>
+		<div className='m-big-layout grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 sm:gap-6  gap-12 mt-7'>
 			{data?.statistics.length ? (
 				data.statistics.map(statistic => (
 					<div

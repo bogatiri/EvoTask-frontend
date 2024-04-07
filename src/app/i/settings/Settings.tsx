@@ -29,7 +29,7 @@ export function Settings() {
 	}
 
 	return (
-		<div>
+		<div className='m-big-layout'>
 			<form
 				className='w-2/4'
 				onSubmit={handleSubmit(onSubmit)}

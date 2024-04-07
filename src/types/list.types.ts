@@ -12,6 +12,11 @@ export interface IListResponse extends IBase {
 	order: number
 	description?: string
 	type?: EnumListType
+	board: {
+		connect: {
+			id: string
+		}
+	}
 }
 
 export type TypeListFormState = Partial<Omit<IListResponse, 'id' | 'updatedAt'>>

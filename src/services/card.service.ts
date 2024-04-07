@@ -10,6 +10,11 @@ interface ICardOrderUpdate {
 class CardService {
 	private BASE_URL = '/user/cards'
 
+	async getCardById(id: string) {
+    const response = await axiosWithAuth.get<ICardResponse[]>(`${this.BASE_URL}/${id}`)
+    return response.data
+  }
+
 	async getCards() {
 		const response = await axiosWithAuth.get<ICardResponse[]>(this.BASE_URL)
 		return response

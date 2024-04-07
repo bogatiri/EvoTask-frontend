@@ -19,7 +19,7 @@ export function TasksView() {
 	if (isLoading) return <Loader />
 
 	return (
-		<div>
+		<div className='m-big-layout'>
 			<SwitcherView
 				setType={setType}
 				type={type}

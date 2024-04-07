@@ -8,6 +8,7 @@ class DASHBOARD {
 	TIME_BLOCKING = `${this.root}/time-blocking`
 	SETTINGS = `${this.root}/settings`
 	SCRUMBAN = `${this.root}/scrumban`
+	AAA = `${this.root}/aaa`
 }
 
 export const DASHBOARD_PAGES = new DASHBOARD()

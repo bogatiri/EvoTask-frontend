@@ -21,7 +21,7 @@ export function useLocalStorage<T>({
 				setValue(JSON.parse(item))
 			}
 		} catch (e) {
-			console.log(e)
+			console.error('govno')
 		} finally {
 			setIsLoading(false)
 		}

@@ -35,5 +35,15 @@ export const MENU: IMenuItem[] = [
 		icon: Settings,
 		link: DASHBOARD_PAGES.SETTINGS,
 		name: 'Settings'
+	},
+	{
+		icon: Settings,
+		link: DASHBOARD_PAGES.SCRUMBAN,
+		name: 'Scrumban'
+	},
+	{
+		icon: Settings,
+		link: DASHBOARD_PAGES.AAA,
+		name: 'aaa'
 	}
 ]
