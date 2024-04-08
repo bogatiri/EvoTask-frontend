@@ -2,6 +2,11 @@ import type { IListResponse, TypeListFormState } from '@/types/list.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 
+interface IListOrderUpdate {
+	id: string
+	order: number
+}
+
 class ListService {
 	private BASE_URL = '/user/lists'
 
@@ -24,6 +29,14 @@ class ListService {
 		const response = await axiosWithAuth.put(`${this.BASE_URL}/${id}`, data)
 		return response
 	}
+
+	async updateOrder(listsWithNewOrder: IListOrderUpdate[]) {
+		const response = await axiosWithAuth.put(`${this.BASE_URL}/update-order`, {
+			lists: listsWithNewOrder
+		})
+		return response.data
+	}
+
 
 	async deleteList(id: string) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)

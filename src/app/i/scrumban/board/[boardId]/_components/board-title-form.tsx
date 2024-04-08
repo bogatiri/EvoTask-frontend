@@ -36,12 +36,12 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 				/>
 			</div>
 			<div>
-				<button
+				<Button
 					onClick={() => deleteBoard(board!.id)}
 					className='text-foreground opacity-50 transition-opacity hover:opacity-100'
 				>
 					{isDeletePending ? <Loader size={15} /> : <Trash size={15} />}
-				</button>
+				</Button>
 			</div>
 		</div>
 	)

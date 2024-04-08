@@ -15,6 +15,11 @@ class CardService {
     return response.data
   }
 
+	async getCardByCardId(id: string) {
+    const response = await axiosWithAuth.get<ICardResponse>(`${this.BASE_URL}/card/${id}`)
+    return response.data
+  }
+
 	async getCards() {
 		const response = await axiosWithAuth.get<ICardResponse[]>(this.BASE_URL)
 		return response
@@ -26,7 +31,7 @@ class CardService {
 	}
 
 	async updateOrder(cardsWithNewOrder: ICardOrderUpdate[]) {
-		const response = await axiosWithAuth.put(`${this.BASE_URL}/updateOrder`, {
+		const response = await axiosWithAuth.put(`${this.BASE_URL}/update-order`, {
 			cards: cardsWithNewOrder
 		})
 		return response.data

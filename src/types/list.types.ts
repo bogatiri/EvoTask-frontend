@@ -1,3 +1,4 @@
+import { ICardResponse } from './card.types'
 import type { IBase } from './root.types'
 
 export enum EnumListType {
@@ -12,6 +13,7 @@ export interface IListResponse extends IBase {
 	order: number
 	description?: string
 	type?: EnumListType
+	cards: ICardResponse[]
 	board: {
 		connect: {
 			id: string

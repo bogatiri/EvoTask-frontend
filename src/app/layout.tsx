@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import { Toaster } from 'sonner'
 
+import { ModalProvider } from '@/components/providers/modal-provider'
+
 import { SITE_NAME } from '@/constants/seo.constants'
 
 import './globals.scss'
@@ -32,13 +34,13 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={zen.className}>
 				<Providers>
-					{children}
-
 					<Toaster
 						theme='dark'
 						position='bottom-right'
 						duration={1500}
 					/>
+					<ModalProvider />
+					{children}
 				</Providers>
 			</body>
 		</html>

@@ -4,7 +4,6 @@ import { MoreHorizontal, X } from 'lucide-react'
 import { ElementRef, useRef } from 'react'
 import { toast } from 'sonner'
 
-// import { copyList } from "@/actions/copy-list";
 import { FormSubmit } from '@/components/form/form-submit'
 import { Button } from '@/components/ui/button'
 import {

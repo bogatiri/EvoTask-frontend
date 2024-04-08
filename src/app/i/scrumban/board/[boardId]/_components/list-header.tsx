@@ -6,7 +6,6 @@ import { toast } from 'sonner'
 import { useState, useRef, ElementRef } from 'react'
 
 import { useAction } from '@/hooks/use-action'
-// import { updateList } from '@/actions/update-list'
 import { FormInput } from '@/components/form/form-input'
 
 import { ListOptions } from './list-options'
@@ -21,7 +20,6 @@ interface ListHeaderProps {
 
 export const ListHeader = ({ data, onAddCard, onListDelete }: ListHeaderProps) => {
   const [name, setName] = useState(data?.name)
-  console.log('name', data.name)
   const [isEditing, setIsEditing] = useState(false)
 
   const formRef = useRef<ElementRef<'form'>>(null)
