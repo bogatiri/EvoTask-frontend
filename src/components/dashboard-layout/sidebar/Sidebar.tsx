@@ -13,7 +13,7 @@ import { SITE_NAME } from '@/constants/seo.constants'
 
 export function Sidebar() {
 	return (
-		<aside className='border-r border-r-border h-full bg-sidebar flex flex-col justify-between'>
+		<aside className='border-r w-full border-r-border h-full bg-sidebar flex flex-col justify-between'>
 			<div>
 				<Link
 					href='/'

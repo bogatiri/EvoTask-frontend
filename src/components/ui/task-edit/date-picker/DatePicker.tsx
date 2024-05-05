@@ -41,7 +41,7 @@ export function DatePicker({
 
 	return (
 		<div
-			className='relative'
+			className='relative w-full'
 			ref={ref}
 		>
 			<button onClick={() => setIsShow(!isShow)}>
@@ -49,7 +49,7 @@ export function DatePicker({
 			</button>
 			{value && (
 				<button
-					className='absolute -top-2 -right-4 opacity-30 hover:opacity-100 transition-opacity'
+					className='absolute -top-2 -right-1 opacity-30 hover:opacity-100 transition-opacity'
 					onClick={() => onChange('')}
 				>
 					<X size={14} />
@@ -58,7 +58,7 @@ export function DatePicker({
 			{isShow && (
 				<div
 					className={cn(
-						'absolute p-2.5 slide bg-sidebar z-10 shadow rounded-lg',
+						'absolute bg-background border border-border p-2.5 slide bg-sidebar z-10 shadow rounded-lg',
 						position === 'left' ? '-left-4' : ' -right-4'
 					)}
 					style={{

@@ -24,30 +24,6 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedImageId, setSelectedImageId] = useState(null)
 
-  // useEffect(() => {
-  //   const fetchImages = async () => {
-  //     try {
-  //       const result = await unsplash.photos.getRandom({
-  //         collectionIds: ['317099'],
-  //         count: 9,
-  //       })
-
-  //       if (result && result.response) {
-  //         const newImages = result.response as Array<Record<string, any>>
-  //         setImages(newImages)
-  //       } else {
-  //         console.error('Failed to get images from Unsplash')
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //       setImages(defaultImages)
-  //     } finally {
-  //       setIsLoading(false)
-  //     }
-  //   }
-
-  //   fetchImages()
-  // }, [])
 
 	if (isLoading) {
     setIsLoading(false)

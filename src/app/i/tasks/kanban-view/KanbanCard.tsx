@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import Checkbox from '@/components/ui/checkbox'
+import Checkbox from '@/components/ui/check'
 import {
 	Dialog,
 	DialogContent,

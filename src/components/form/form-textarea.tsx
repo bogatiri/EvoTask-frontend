@@ -19,6 +19,7 @@ interface FormTextareaProps {
   className?: string
   onBlur?: () => void
   onClick?: () => void
+  onChange?: (e: any) => void
   onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement> | undefined
   defaultValue?: string
 }
@@ -35,6 +36,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
       onBlur,
       onClick,
       onKeyDown,
+      onChange,
       className,
       defaultValue,
     },
@@ -62,6 +64,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             placeholder={placeholder}
             name={id}
             id={id}
+            onChange={onChange}
             disabled={pending || disabled}
             className={cn(
               'resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm',

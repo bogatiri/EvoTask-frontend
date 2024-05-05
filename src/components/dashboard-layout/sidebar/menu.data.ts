@@ -41,9 +41,4 @@ export const MENU: IMenuItem[] = [
 		link: DASHBOARD_PAGES.SCRUMBAN,
 		name: 'Scrumban'
 	},
-	{
-		icon: Settings,
-		link: DASHBOARD_PAGES.AAA,
-		name: 'aaa'
-	}
 ]

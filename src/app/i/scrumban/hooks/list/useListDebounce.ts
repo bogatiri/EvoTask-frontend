@@ -2,22 +2,22 @@ import debounce from 'lodash.debounce'
 import { useCallback, useEffect } from 'react'
 import { UseFormWatch } from 'react-hook-form'
 
-import { TypeListFormState } from '@/types/list.types'
+import { TypeListFormState, TypeListUpdateFormState } from '@/types/list.types'
 
 import { useCreateList } from './useCreateList'
 import { useUpdateList } from './useUpdateList'
 
 interface IUseListDebounce {
-	watch: UseFormWatch<TypeListFormState>
-	itemId: string
+	watch: UseFormWatch<TypeListUpdateFormState>
+	listId: string
 }
 
-export function useListDebounce({ watch, itemId }: IUseListDebounce) {
+export function useListDebounce({ watch, listId }: IUseListDebounce) {
 	const { createList } = useCreateList()
 	const { updateList } = useUpdateList()
 
 	const debouncedCreateList = useCallback(
-		debounce((formData: TypeListFormState) => {
+		debounce((formData: TypeListUpdateFormState) => {
 			createList(formData)
 		}, 444),
 		[]
@@ -25,15 +25,15 @@ export function useListDebounce({ watch, itemId }: IUseListDebounce) {
 
 	// Теперь debouncedUpdateList будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateList = useCallback(
-		debounce((formData: TypeListFormState) => {
-			updateList({ id: itemId, data: formData })
+		debounce((formData: TypeListUpdateFormState) => {
+			updateList({ id: listId, data: formData })
 		}, 444),
 		[]
 	)
 
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
-			if (itemId) {
+			if (listId) {
 				debouncedUpdateList({
 					...formData,
 				})

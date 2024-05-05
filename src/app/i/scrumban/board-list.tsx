@@ -27,6 +27,7 @@ export const BoardList = () => {
 		const updatedBoards = [...boards!, newBoard]
 		setItems(updatedBoards)
 	}
+	
 
 	return (
 		<div className='space-y-4 m-big-layout'>
@@ -58,9 +59,10 @@ export const BoardList = () => {
 						<p className='text-sm'>Create new board</p>
 
 						<Hint
-							sideOffset={40}
+							sideOffset={70}
+							
 							description={`
-                Free Workspaces can have up to 5 open boards. For unlimited boards upgrade this workspace.
+							What makes EvoTask different is that it gives you the ability to create an unlimited number of options for accessing boards, tasks, and other elements of your workspace.
               `}
 						>
 							<HelpCircle className='absolute bottom-2 right-2 h-[14px] w-[14px]' />

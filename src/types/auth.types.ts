@@ -1,6 +1,7 @@
 export interface IAuthForm {
 	email: string
 	password: string
+	code: string
 }
 
 export enum EnumUserRole {
@@ -22,7 +23,7 @@ export interface IUser {
 	email: string
 
 	role? : EnumUserRole
-
+	avatar? : string
 	workInterval?: number
 	breakInterval?: number
 	intervalsCount?: number

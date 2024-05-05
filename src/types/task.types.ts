@@ -8,7 +8,7 @@ export enum EnumTaskPriority {
 
 export interface ITaskResponse extends IBase {
 	name: string
-	priority?: EnumTaskPriority
+	priority?: EnumTaskPriority | undefined
 	isCompleted: boolean
 }
 

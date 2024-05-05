@@ -1,3 +1,4 @@
+import { IUser } from './auth.types'
 import type { IBase } from './root.types'
 
 export interface IBoardResponse extends IBase {
@@ -8,6 +9,7 @@ export interface IBoardResponse extends IBase {
   imageFullUrl?:string 
   imageUserName?:string 
   imageLinkHTML?:string 
+	users: IUser[]
 }
 
 export type TypeBoardFormState = Partial<

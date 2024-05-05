@@ -78,6 +78,14 @@ export function Settings() {
 						/>
 
 						<Field
+							id='avatar'
+							label='avatar '
+							placeholder='Enter avatar url '
+							{...register('avatar')}
+							extra='mb-4'
+						/>
+
+						<Field
 							id='breakInterval'
 							label='Break interval (min.): '
 							placeholder='Enter break interval (min.): '

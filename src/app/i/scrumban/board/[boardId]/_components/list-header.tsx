@@ -1,127 +1,75 @@
 'use client'
 
-import { toast } from 'sonner'
-// import { List } from '@prisma/client'
-// import { useEventListener } from 'usehooks-ts'
-import { useState, useRef, ElementRef } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
-import { useAction } from '@/hooks/use-action'
-import { FormInput } from '@/components/form/form-input'
+import { TransparentField } from '@/components/ui/fields/TransparentField'
+import { TypeSelect } from '@/components/ui/list-edit/TypeSelect'
+
+import { IListResponse, TypeListFormState, TypeListUpdateFormState } from '@/types/list.types'
+
+import { useListDebounce } from '../../../hooks/list/useListDebounce'
 
 import { ListOptions } from './list-options'
-import { IListResponse } from '@/types/list.types'
+import { SingleSelect } from '@/components/ui/task-edit/SingleSelect'
 
 interface ListHeaderProps {
-  data: IListResponse
-  onAddCard: () => void
-  onListDelete: (id: string) => void
-  
+	data: IListResponse
+	onAddCard: () => void
+	onListDelete: (id: string) => void
+	onListCopy: (newCard: IListResponse) => void
 }
 
-export const ListHeader = ({ data, onAddCard, onListDelete }: ListHeaderProps) => {
-  const [name, setName] = useState(data?.name)
-  const [isEditing, setIsEditing] = useState(false)
+export const ListHeader = ({
+	data,
+	onAddCard,
+	onListDelete,
+	onListCopy
+}: ListHeaderProps) => {
+	const { register, control, watch } = useForm<TypeListUpdateFormState>({
+		defaultValues: {
+			name: data?.name,
+			description: data?.description,
+			order: data?.order,
+			type: data?.type
+		}
+	})
+	useListDebounce({ watch, listId: data!.id })
 
-  const formRef = useRef<ElementRef<'form'>>(null)
-  const inputRef = useRef<ElementRef<'input'>>(null)
-
-  const enableEditing = () => {
-    setIsEditing(true)
-    setTimeout(() => {
-      inputRef.current?.focus()
-      inputRef.current?.select()
-    })
-  }
-
-  const disableEditing = () => {
-    setIsEditing(false)
-  }
-
-  // const { execute } = useAction(updateList, {
-  //   onSuccess: (data) => {
-  //     toast.success(`Renamed to "${data.title}"`)
-  //     setTitle(data.title)
-  //     disableEditing()
-  //   },
-  //   onError: (error) => {
-  //     toast.error(error)
-  //   },
-  // })
-
-  // const handleSubmit = (formData: FormData) => {
-  //   const title = formData.get('title') as string
-  //   const id = formData.get('id') as string
-  //   const boardId = formData.get('boardId') as string
-
-  //   if (title === data.title) {
-  //     return disableEditing()
-  //   }
-
-  //   execute({
-  //     title,
-  //     id,
-  //     boardId,
-  //   })
-  // }
-
-  // const onBlur = () => {
-  //   formRef.current?.requestSubmit()
-  // }
-
-  // const onKeyDown = (e: KeyboardEvent) => {
-  //   if (e.key === 'Escape') {
-  //     formRef.current?.requestSubmit()
-  //   }
-  // }
-
-  // useEventListener('keydown', onKeyDown)
-
-  return (
-    <div className="pt-2 px-2 text-sm font-semibold flex justify-between items-start- gap-x-2">
-      {isEditing ? (
-        <form
-          ref={formRef}
-          // action={handleSubmit}
-          className="flex-1 px-[2px]"
-        >
-          <input
-            hidden
-            id="id"
-            name="id"
-            value={data?.id}
-          />
-          <input
-            hidden
-            id="boardId"
-            name="boardId"
-            value={data?.id}
-          />
-          <FormInput
-            ref={inputRef}
-            // onBlur={onBlur}
-            id="title"
-            placeholder="Enter list title.."
-            defaultValue={name}
-            className="text-sm px-[7px] py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition truncate bg-transparent focus:bg-white"
-          />
-          <button
-            type="submit"
-            hidden
-          />
-        </form>
-      ) : (
-        <div
-          onClick={enableEditing}
-          className="w-full text-blue-900 text-sm px-2.5 py-1 h-7 font-medium border-transparent"
-        >
-          {name}
-        </div>
-      )}
-      <ListOptions
-      onListDelete={onListDelete}
-        onAddCard={onAddCard}
-        data={data}
-      />
-    </div>
-  )
+	return (
+		<div className='pt-2 px-2 text-sm  rounded-md m-2 font-semibold flex justify-between items-start- gap-x-2'>
+			<div className='flex rounded-md w-full flex-col gap-3 '>
+				<div className='flex'>
+				<TransparentField {...register('name')} />
+				<ListOptions
+				onListCopy={onListCopy}
+				onListDelete={onListDelete}
+				onAddCard={onAddCard}
+				data={data}
+				register={register}
+				control={control}
+				watch={watch}
+			/>
+				</div>
+				<div className='grid grid-cols-2 gap-2'>
+					<Controller
+						control={control}
+						name='type'
+						render={({ field: { value, onChange } }) => (
+							<TypeSelect
+								data={['backlog', 'to_do', 'in_progress', 'done'].map(item => ({
+									value: item,
+									label: item
+								}))}
+								onChange={onChange}
+								value={value || ''}
+							/>
+						)}
+					/>
+					<p className='justify-self-center text-xs'>
+						{data.cards?.length} cards this list
+					</p>
+				</div>
+			</div>
+		</div>
+	)
 }

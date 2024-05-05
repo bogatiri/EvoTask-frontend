@@ -15,7 +15,7 @@ import {
 	navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
 
-import Logo from '../../../public/cypresslogo.svg'
+import Logo from '../../../public/evotasklogo.svg'
 
 import { cn } from '@/lib/utils'
 
@@ -81,7 +81,7 @@ const Header = () => {
 			>
 				<Image
 					src={Logo}
-					alt='Cypress Logo'
+					alt='EvoTask Logo'
 					width={25}
 					height={25}
 				/>
@@ -195,9 +195,9 @@ const Header = () => {
               lg:w-[600px]
               '
 							>
-								{components.map(component => (
+								{components.map((component, index) => (
 									<ListItem
-										key={component.title}
+									key={index}
 										title={component.title}
 										href={component.href}
 									>

@@ -8,6 +8,7 @@ import { SITE_NAME } from '@/constants/seo.constants'
 
 import './globals.scss'
 import { Providers } from './providers'
+import { cn } from '@/lib/utils'
 
 const zen = Noto_Sans({
 	subsets: ['cyrillic', 'latin'],
@@ -32,7 +33,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={zen.className}>
+			<body className={cn(zen.className, '')}>
 				<Providers>
 					<Toaster
 						theme='dark'

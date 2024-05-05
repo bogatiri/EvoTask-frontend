@@ -34,9 +34,13 @@ class ListService {
 		const response = await axiosWithAuth.put(`${this.BASE_URL}/update-order`, {
 			lists: listsWithNewOrder
 		})
-		return response.data
+		return response
 	}
 
+	async copyList({listId, boardId} : {listId: string, boardId: string}){
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/copy`, {listId, boardId})
+		return response
+	}
 
 	async deleteList(id: string) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)

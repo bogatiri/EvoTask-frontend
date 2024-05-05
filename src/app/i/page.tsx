@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
 	return (
-		<div>
+		<div className='overflow-y-hidden'>
 			<Heading title='Statistics' />
 			<Statistics />
 		</div>

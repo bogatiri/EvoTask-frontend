@@ -1,3 +1,4 @@
+import { IUser } from './auth.types'
 import type { IBase } from './root.types'
 
 export enum EnumCardPriority {
@@ -8,16 +9,29 @@ export enum EnumCardPriority {
 
 export interface ICardResponse extends IBase {
 	name: string
-	isCompleted: boolean
+	completed: boolean
+	priority?: EnumCardPriority | undefined
 	order: number
 	description?: string
-	priority?: EnumCardPriority
 	list:{
 		connect: {
 			id: string
 		}
 	}
-	listId?: string
+	users: IUser[] | []
+	listId: string
 }
 
-export type TypeCardFormState = Partial<Omit<ICardResponse, 'id' | 'updatedAt'>>
+export type TypeCardFormState = Partial<Omit<ICardResponse, 'id'>>
+
+export interface ICardResponses extends IBase {
+	name?: string;
+	order?: number;
+	description?: string;
+	priority?: EnumCardPriority | undefined
+	completed?: boolean;
+
+	listId?: string;
+}
+
+export type TypeCardUpdateFormState = Partial<Omit<ICardResponses, 'id' >> 

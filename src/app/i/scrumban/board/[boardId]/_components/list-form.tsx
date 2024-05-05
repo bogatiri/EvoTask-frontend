@@ -56,6 +56,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 				toast.success(`List "${data.name}" created`)
 				disableEditing()
 				router.refresh()
+
 				onListCreate(data)
 			},
 			onError: error => {
@@ -75,7 +76,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 			name,
 			board: {
 				connect: {
-					id: boardId
+					id:boardId
 				}
 			}
 		})
@@ -87,7 +88,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 				<form
 					action={onSubmit}
 					ref={formRef}
-					className='w-full p-3 rounded-md bg-white space-y-4 shadow-md'
+					className='w-full p-3 rounded-md bg-[#0e0f0f] space-y-4 shadow-md'
 				>
 					<FormInput
 						ref={inputRef}
@@ -104,6 +105,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 					<div className='flex items-center gap-x-1'>
 						<FormSubmit>Add list</FormSubmit>
 						<Button
+						asChild
 							onClick={disableEditing}
 							size='sm'
 							variant='ghost'
@@ -120,7 +122,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 		<ListWrapper>
 			<button
 				onClick={enableEditing}
-				className='w-full rounded-md bg-white/80 hover:bg-white/50 transition p-3 flex items-center font-medium text-sm'
+				className='w-full rounded-md bg-[#0e0f0f]/50 hover:bg-[#0e0f0f]/80 transition p-3 flex items-center font-medium text-sm'
 			>
 				<Plus className='h-4 w-4 mr-2' />
 				Add a list

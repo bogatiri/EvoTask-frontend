@@ -30,11 +30,24 @@ class CardService {
 		return response
 	}
 
+	async copyCard({cardId, listId} : {cardId: string, listId: string}){
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/copy`, {cardId, listId})
+		return response
+	}
+
+	async addUserToCard({email, boardId, cardId} : {email: string, boardId: string, cardId: string}) {
+		const response = await axiosWithAuth.put(
+			`${this.BASE_URL}/${boardId}/users`,
+			{ email, cardId }
+		)
+		return response
+	}
+
 	async updateOrder(cardsWithNewOrder: ICardOrderUpdate[]) {
 		const response = await axiosWithAuth.put(`${this.BASE_URL}/update-order`, {
 			cards: cardsWithNewOrder
 		})
-		return response.data
+		return response
 	}
 
 	async updateCard(id: string, data: TypeCardFormState) {

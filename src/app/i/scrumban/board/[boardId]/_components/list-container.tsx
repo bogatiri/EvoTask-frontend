@@ -8,10 +8,11 @@ import { IListResponse } from '@/types/list.types'
 
 import { useAction } from '@/hooks/use-action'
 
-import { ListForm } from './list-form'
-import { ListItem } from './list-item'
 import { cardService } from '@/services/card.service'
 import { listService } from '@/services/list.service'
+import { ICardResponse } from '@/types/card.types'
+import { ListForm } from './list-form'
+import { ListItem } from './list-item'
 
 interface ListContainerProps {
 	list: IListResponse[]
@@ -28,7 +29,13 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 
 export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 	const [orderedData, setOrderedData] = useState(list)
+
 	const onListCreate = (newList: IListResponse) => {
+		const updatedLists = [...orderedData!, newList]
+		setOrderedData(updatedLists)
+	}
+
+	const onListCopy = (newList: IListResponse) => {
 		const updatedLists = [...orderedData!, newList]
 		setOrderedData(updatedLists)
 	}
@@ -37,11 +44,42 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 		setOrderedData(currentLists => currentLists.filter(list => list.id !== id))
 	}
 
+	const onCardCreate = (listId: string, newCard: ICardResponse) => {
+    setOrderedData(currentLists =>
+      currentLists.map(list =>
+        list.id === listId
+          ? { ...list, cards: [...list.cards, newCard] }
+          : list
+      )
+    );
+  };
+
+	const onCardCopy = (listId: string, newCard: ICardResponse) => {
+    setOrderedData(currentLists =>
+      currentLists.map(list =>
+        list.id === listId
+          ? { ...list, cards: [...list.cards, newCard] }
+          : list
+      )
+    );
+  };
+
+	const onCardDelete = (listId: string, cardId: string) => {
+    setOrderedData(currentLists =>
+      currentLists.map(list =>
+        list.id === listId
+          ? { ...list, cards: list.cards.filter(card => card.id !== cardId) }
+          : list
+      )
+    );
+  };
+
+
 	const { execute: executeUpdateListOrder } = useAction(
 		listService.updateOrder.bind(listService),
 		{
 			onSuccess: () => {
-				toast.success('List reordered')
+				toast.success(`List reordered`)
 			},
 			onError: error => {
 				toast.error(error)
@@ -174,12 +212,16 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 					<ol
 						{...provided.droppableProps}
 						ref={provided.innerRef}
-						className='flex gap-x-3 mt-24 h-full'
+						className='flex gap-x-3 mt-2 h-auto px-6'
 					>
 						{orderedData.map((list, index) => {
 							return (
 								<ListItem
+								onListCopy={onListCopy}
+									onCardDelete={onCardDelete}
+									onCardCreate={onCardCreate}
 									onListDelete={onListDelete}
+									onCardCopy={onCardCopy}
 									key={list.id}
 									index={index}
 									list={list}

@@ -22,6 +22,8 @@ class UserService {
 		const response = await axiosWithAuth.put(this.BASE_URL, data)
 		return response.data
 	}
+
+
 }
 
 export const userService = new UserService()

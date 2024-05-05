@@ -2,13 +2,13 @@ import debounce from 'lodash.debounce'
 import { useCallback, useEffect } from 'react'
 import { UseFormWatch } from 'react-hook-form'
 
-import { TypeCardFormState } from '@/types/card.types'
+import { TypeCardFormState, TypeCardUpdateFormState } from '@/types/card.types'
 
 import { useCreateCard } from './useCreateCard'
 import { useUpdateCard } from './useUpdateCard'
 
 interface IUseCardDebounce {
-	watch: UseFormWatch<TypeCardFormState>
+	watch: UseFormWatch<TypeCardUpdateFormState>
 	cardId: string
 }
 
@@ -17,7 +17,7 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 	const { updateCard } = useUpdateCard()
 
 	const debouncedCreateCard = useCallback(
-		debounce((formData: TypeCardFormState) => {
+		debounce((formData: TypeCardUpdateFormState) => {
 			createCard(formData)
 		}, 444),
 		[]
@@ -25,7 +25,7 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 
 	// Теперь debouncedUpdateCard будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateCard = useCallback(
-		debounce((formData: TypeCardFormState) => {
+		debounce((formData: TypeCardUpdateFormState) => {
 			updateCard({ id: cardId, data: formData })
 		}, 444),
 		[]
@@ -34,8 +34,10 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
 			if (cardId) {
+				console.log(formData)
 				debouncedUpdateCard({
-					...formData
+					...formData,
+					priority: formData.priority || undefined
 				})
 			} else {
 				debouncedCreateCard(formData)

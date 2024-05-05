@@ -5,16 +5,14 @@ import { twMerge } from 'tailwind-merge'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { CardContent, CardDescription, CardTitle } from '@/components/ui/card'
+import {  CardDescription, CardTitle } from '@/components/ui/card'
 
 import Banner from '../../../public/appBanner.png'
 import Cal from '../../../public/icons/cal.png'
-import CheckIcon from '../../../public/icons/check.svg'
-import Diamond from '../../../public/icons/diamond.svg'
 
 import CustomCard from './custom-card'
 import TitleSection from './title-section'
-import { CLIENTS, PRICING_CARDS, PRICING_PLANS, USERS } from '@/lib/constants'
+import { CLIENTS, USERS } from '@/lib/constants'
 
 const HomePage = () => {
 	return (
@@ -123,7 +121,7 @@ const HomePage = () => {
 				>
 					{[...Array(2)].map(arr => (
 						<div
-							key={arr}
+						key={randomUUID()}
 							className='flex
                 flex-nowrap
                 animate-slide
@@ -131,7 +129,7 @@ const HomePage = () => {
 						>
 							{CLIENTS.map(client => (
 								<div
-									key={client.alt}
+								key={randomUUID()}
 									className=' relative
                     w-[200px]
                     m-20
@@ -242,13 +240,14 @@ const HomePage = () => {
 						>
 							{USERS.map((testimonial, index) => (
 								<CustomCard
-									key={testimonial.name}
-									className='w-[500px]
+								key={randomUUID()}	
+								className='w-[500px]
+
                   shrink-0s
                   rounded-xl
                   bg-gradient-to-t
                 from-border 
-								  to-background
+									to-background
                 '
 									cardHeader={
 										<div
@@ -282,7 +281,7 @@ const HomePage = () => {
 					))}
 				</div>
 			</section>
-			<section
+			{/* <section
 				className='mt-20
         px-4
         sm:px-6
@@ -395,7 +394,7 @@ const HomePage = () => {
 						/>
 					))}
 				</div>
-			</section>
+			</section> */}
 		</>
 	)
 }

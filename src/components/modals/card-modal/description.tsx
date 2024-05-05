@@ -1,133 +1,106 @@
 'use client'
 
-import { toast } from 'sonner'
-import { AlignLeft } from 'lucide-react'
-import { useParams } from 'next/navigation'
-import { useState, useRef, ElementRef } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { AlertCircle, AlignLeft, CircleDashed, CircleIcon } from 'lucide-react'
+import { useParams } from 'next/navigation'
+import { ElementRef, useRef, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { useEventListener, useOnClickOutside } from 'usehooks-ts'
 
-import { useAction } from '@/hooks/use-action'
-// import { updateCard } from '@/actions/update-card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { FormTextarea } from '@/components/form/form-textarea'
 import { FormSubmit } from '@/components/form/form-submit'
+import { FormTextarea } from '@/components/form/form-textarea'
 import { Button } from '@/components/ui/button'
-import { ICardResponse } from '@/types/card.types'
+import { Skeleton } from '@/components/ui/skeleton'
+import { SingleSelect } from '@/components/ui/task-edit/SingleSelect'
+
+import { ICardResponse, TypeCardFormState } from '@/types/card.types'
+
+import { bindUpdateCard } from '@/hooks/update-card'
+import { useAction } from '@/hooks/use-action'
+
+// import { updateCard } from '@/actions/update-card'
+import { useCardDebounce } from '@/app/i/scrumban/hooks/card/useCardDebounce'
+import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 
 interface DescriptionProps {
-  data: ICardResponse
+	data: ICardResponse
 }
 
 export const Description = ({ data }: DescriptionProps) => {
-  const params = useParams()
-  const queryClient = useQueryClient()
+	const params = useParams()
+	const queryClient = useQueryClient()
 
-  const [isEditing, setIsEditing] = useState(false)
+	const [isEditing, setIsEditing] = useState(false)
 
-  const formRef = useRef<ElementRef<'form'>>(null)
-  const textareaRef = useRef<ElementRef<'textarea'>>(null)
+	const formRef = useRef<ElementRef<'form'>>(null)
+	const textareaRef = useRef<ElementRef<'textarea'>>(null)
+	const [description, setDescription] = useState(data?.description || '')
 
-  const enableEditing = () => {
-    setIsEditing(true)
-    setTimeout(() => {
-      textareaRef.current?.focus()
-    })
-  }
+	const { register, control, watch } = useForm<TypeCardFormState>({
+		defaultValues: {
+			name: data.name,
+			completed: data.completed,
+			createdAt: data.createdAt,
+			priority: data.priority,
+      description: data.description
+		}
+	})
 
-  const disableEditing = () => {
-    setIsEditing(false)
-  }
+	useCardDebounce({ watch, cardId: data.id })
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      disableEditing()
-    }
-  }
+	// useEffect(() => {
+	//   setDescription(data?.description || '');
+	// }, [description]);
 
-  useEventListener('keydown', onKeyDown)
-  useOnClickOutside(formRef, disableEditing)
+	const enableEditing = () => {
+		setIsEditing(true)
+		setTimeout(() => {
+			textareaRef.current?.focus()
+		})
+	}
 
-  // const { execute, fieldErrors } = useAction(updateCard, {
-  //   onSuccess: (data) => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: ['card', data.id],
-  //     })
-  //     queryClient.invalidateQueries({
-  //       queryKey: ['card-logs', data.id],
-  //     })
-  //     toast.success(`Card "${data.title}" updated`)
-  //     disableEditing()
-  //   },
-  //   onError: (error) => {
-  //     toast.error(error)
-  //   },
-  // })
+	const disableEditing = () => {
+		setIsEditing(false)
+	}
 
-  const onSubmit = (formData: FormData) => {
-    const description = formData.get('description') as string
-    const boardId = params.boardId as string
+	const onKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			disableEditing()
+		}
+	}
 
-    // execute({
-    //   id: data.id,
-    //   description,
-    //   boardId,
-    // })
-  }
+	useEventListener('keydown', onKeyDown)
+	useOnClickOutside(formRef, disableEditing)
 
-  return (
-    <div className="flex items-start gap-x-3 w-full">
-      <AlignLeft className="h-5 w-5 mt-0.5 text-neutral-700" />
-      <div className="w-full">
-        <p className="font-semibold text-neutral-700 mb-2">Description</p>
-        {isEditing ? (
-          <form
-            action={onSubmit}
-            ref={formRef}
-            className="space-y-2"
-          >
-            <FormTextarea
-              id="description"
-              className="w-full mt-2"
-              placeholder="Add a more detailed description"
-              defaultValue={data.description || undefined}
-              // errors={fieldErrors}
-              ref={textareaRef}
-            />
-            <div className="flex items-center gap-x-2">
-              <FormSubmit>Save</FormSubmit>
-              <Button
-                type="button"
-                onClick={disableEditing}
-                size="sm"
-                variant="ghost"
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
-        ) : (
-          <div
-            onClick={enableEditing}
-            role="button"
-            className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md"
-          >
-            {data.description || 'Add a more detailed description...'}
+
+	return (
+		<div className='flex flex-col items-start gap-x-3 w-full'>
+				<div className=' w-full'>
+          <div className='flex gap-x-3'>
+					<AlignLeft className='h-5 w-5 mt-0.5 text-neutral-700' />
+					<p className='font-semibold text-neutral-700 mb-2'>Description</p>
           </div>
-        )}
-      </div>
-    </div>
-  )
+      <TransparentFieldTextarea {...register('description')} />
+				</div>
+      <div>
+        <div className='flex gap-x-3'>
+          <AlertCircle/>
+			<p className='font-semibold text-neutral-700 mb-2'>Priority</p>
+        </div>
+        </div>
+		</div>
+	)
 }
 
 Description.Skeleton = function DescriptionSkeleton() {
-  return (
-    <div className="flex items-start gap-x-3 w-full">
-      <Skeleton className="h-6 w-6 bg-neutral-200" />
-      <div className="w-full">
-        <Skeleton className="w-24 h-6 mb-2 bg-neutral-200" />
-        <Skeleton className="w-full h-[78px] bg-neutral-200" />
-      </div>
-    </div>
-  )
+	return (
+		<div className='flex items-start gap-x-3 w-full'>
+			<Skeleton className='h-6 w-6 bg-neutral-200' />
+			<div className='w-full'>
+				<Skeleton className='w-24 h-6 mb-2 bg-neutral-200' />
+				<Skeleton className='w-full h-[78px] bg-neutral-200' />
+			</div>
+		</div>
+	)
 }

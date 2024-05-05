@@ -14,7 +14,11 @@ const badge = tv({
 			gray: 'bg-gray-500/20',
 			high: 'bg-red-400/60',
 			medium: 'bg-orange-400/70',
-			low: 'bg-blue-400/70'
+			low: 'bg-blue-400/70',
+			backlog: 'bg-red-400/70',
+			to_do:'bg-orange-400/70',
+			in_progress: 'bg-yellow-400/70',
+			done: 'bg-green-400/70'
 		}
 	},
 	defaultVariants: {

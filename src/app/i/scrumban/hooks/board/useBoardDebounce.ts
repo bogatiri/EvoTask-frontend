@@ -34,6 +34,7 @@ export function useBoardDebounce({ watch, boardId }: IUseBoardDebounce) {
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
 			if (boardId) {
+				console.log(formData)
 				debouncedUpdateBoard({
 					...formData,
 				})

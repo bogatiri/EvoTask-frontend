@@ -18,29 +18,15 @@ interface ListItemProps {
 	list: IListResponse
 	index: number
 	onListDelete: (id: string) => void
+	onCardDelete: (listId: string, id: string) => void
+	onCardCreate: (listId: string, newCard: ICardResponse) => void
+	onCardCopy: (listId: string, newCard: ICardResponse) => void
+	onListCopy: ( newList: IListResponse) => void
 }
 
-export const ListItem = ({ list, index, onListDelete }: ListItemProps) => {
+export const ListItem = ({ list, index, onListDelete, onCardCreate, onCardDelete, onCardCopy, onListCopy }: ListItemProps) => {
 	const textareaRef = useRef<ElementRef<'textarea'>>(null)
 	const [isEditing, setIsEditing] = useState(false)
-
-	const { card, isLoading, error } = useCardById(list.id)
-
-	const [cards, setCards] = useState<ICardResponse[]>([])
-
-	useEffect(() => {
-		setCards(card!)
-	}, [card])
-
-	const onCardCreate = (newCard: ICardResponse) => {
-		const newCards = [...cards!, newCard]
-		setCards(newCards)
-	}
-
-	const onDeleteCard = (id: string) => {
-		setCards(cards.filter(card => card.id !== id))
-		console.log(cards)
-	}
 
 	const disableEditing = () => {
 		setIsEditing(false)
@@ -53,8 +39,6 @@ export const ListItem = ({ list, index, onListDelete }: ListItemProps) => {
 		})
 	}
 
-	if (isLoading) return <div>Loading...</div>
-	if (!isLoading && card !== undefined) {
 		return (
 			<Draggable
 				draggableId={list!.id}
@@ -68,9 +52,10 @@ export const ListItem = ({ list, index, onListDelete }: ListItemProps) => {
 					>
 						<div
 							{...provided.dragHandleProps}
-							className='w-full rounded-md bg-[#f1f2f4] shadow-md pb-2'
+							className='w-full rounded-md bg-[#0e0f0f] shadow-md pb-2'
 						>
 							<ListHeader
+							onListCopy={onListCopy}
 								onListDelete={onListDelete}
 								onAddCard={enableEditing}
 								data={list}
@@ -79,20 +64,38 @@ export const ListItem = ({ list, index, onListDelete }: ListItemProps) => {
 								droppableId={list!.id}
 								type='card'
 							>
-								{provided => (
+								{(provided, snapshot) => (
 									<ol
 										ref={provided.innerRef}
 										{...provided.droppableProps}
-										className={cn('mx-1 px-1 py-0.5 flex flex-col gap-y-2')}
+										className={cn('mx-1 px-1 py-0.5 flex flex-col gap-y-2', snapshot.isDraggingOver ? 'border border--border border-dashed rounded-md' : '' )}
 									>
 										{list.cards &&
 											list.cards.map((card, index) => (
-												<CardItem
-													onDeleteCard={onDeleteCard}
+
+												<Draggable
+												key={card.id}
+												draggableId={card.id}
+												index={index}
+											>
+												{(provided, snapshot) => (
+													<div
+														ref={provided.innerRef}
+														{...provided.draggableProps}
+														{...provided.dragHandleProps}
+		
+													>
+										<CardItem
+										onCardCopy={onCardCopy}
+													onDeleteCard={onCardDelete}
 													index={index}
 													key={card.id}
 													data={card}
 												/>
+													</div>
+												)}
+											</Draggable>
+		
 											))}
 										{provided.placeholder}
 									</ol>
@@ -111,5 +114,5 @@ export const ListItem = ({ list, index, onListDelete }: ListItemProps) => {
 				)}
 			</Draggable>
 		)
-	}
+	
 }

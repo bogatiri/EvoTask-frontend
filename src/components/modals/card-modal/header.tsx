@@ -12,7 +12,10 @@ import { useAction } from '@/hooks/use-action'
 import { Skeleton } from '@/components/ui/skeleton'
 import { FormInput } from '@/components/form/form-input'
 import { cardService } from '@/services/card.service'
-import { ICardResponse } from '@/types/card.types'
+import { ICardResponse, TypeCardFormState } from '@/types/card.types'
+import { useForm } from 'react-hook-form'
+import { useCardDebounce } from '@/app/i/scrumban/hooks/card/useCardDebounce'
+import { TransparentField } from '@/components/ui/fields/TransparentField'
 
 interface HeaderProps {
   data: ICardResponse
@@ -55,19 +58,29 @@ export const Header = ({ data }: HeaderProps) => {
     if (title === data.name) {
       return
     }
-
     // execute({
     //   title,
     //   boardId,
     //   id: data.id,
     // })
   }
-
+    const { register, control, watch } = useForm<TypeCardFormState>({
+      defaultValues: {
+        name: data.name,
+        completed: data.completed,
+        createdAt: data.createdAt,
+        priority: data.priority,
+        description: data.description
+      }
+    })
+    useCardDebounce({ watch, cardId: data.id })
   return (
     <div className="flex items-start gap-x-3 mb-6 w-full">
       <Layout className="h-5 w-5 mt-1 text-neutral-700" />
       <div className="w-full">
-        <form action={onSubmit}>
+      <TransparentField {...register('name')} />
+
+        {/* <form action={onSubmit}>
           <FormInput
             ref={inputRef}
             onBlur={onBlur}
@@ -75,10 +88,11 @@ export const Header = ({ data }: HeaderProps) => {
             defaultValue={title}
             className="font-semibold text-xl px-1 text-neutral-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-0.5 truncate"
           />
-        </form>
-        <p className="text-sm text-muted-foreground">
+        </form> */}
+        {/* <p className="text-sm text-muted-foreground">
+          
           in list <span className="underline">{data.name}</span>
-        </p>
+        </p> */}
       </div>
     </div>
   )

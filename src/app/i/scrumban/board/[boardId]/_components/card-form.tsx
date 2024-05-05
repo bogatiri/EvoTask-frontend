@@ -21,7 +21,7 @@ interface CardFormProps {
 	enableEditing: () => void
 	disableEditing: () => void
 	isEditing: boolean
-	onCardCreate: (newCard: ICardResponse) => void
+	onCardCreate: (listId: string, newCard: ICardResponse) => void
 }
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
@@ -51,7 +51,8 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 				onSuccess: data => {
 					toast.success(`Card "${data.name}" created`)
 					disableEditing()
-					onCardCreate(data)
+					console.log(data)
+					onCardCreate(data.listId, data)
 					router.refresh()
 				},
 				onError: error => {

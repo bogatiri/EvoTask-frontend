@@ -13,6 +13,7 @@ import { Actions } from './actions'
 import { useCardModal } from '@/app/i/scrumban/hooks/card/use-card-modal'
 import { ICardResponse } from '@/types/card.types'
 import { cardService } from '@/services/card.service'
+import { useEffect, useState } from 'react'
 // import { Activity } from './activity'
 
 export const CardModal = () => {
@@ -24,6 +25,8 @@ export const CardModal = () => {
     queryKey: ['card', id],
     queryFn: () => cardService.getCardByCardId(id!),
   })
+
+  const [data, setData] = useState(cardData?.description)
 
   return (
     <Dialog

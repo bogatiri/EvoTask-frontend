@@ -1,4 +1,4 @@
-import { IAuthForm, IAuthResponse } from '@/types/auth.types'
+import { IAuthForm, IAuthResponse, IUser } from '@/types/auth.types'
 
 import { axiosClassic } from '@/api/interceptors'
 
@@ -12,9 +12,33 @@ export const authService = {
 		)
 
 		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
-
+			console.log(response)
 		return response
 	},
+
+	async sendConfirmationCode(data:IAuthForm) {
+    const response = await axiosClassic.post('/auth/send-code', data );
+    return response.data; 
+  },
+
+  async confirmCode(email: string, code: string, data: IAuthForm) {
+		const password = data.password
+    const response = await axiosClassic.post<IAuthResponse>('/auth/check-code', {
+			'checkCodeDto':{
+				email,
+				code
+			},
+			'dto': {
+				email,
+				password
+			}
+		});
+    if (response.data.accessToken) {
+      saveTokenStorage(response.data.accessToken);
+    }
+
+    return response;
+  },
 
 	async getNewTokens() {
 		const response = await axiosClassic.post<IAuthResponse>(

@@ -13,11 +13,11 @@ export interface IOption {
 interface ISingleSelect {
 	data: IOption[]
 	onChange: (value: string) => void
-	value: string
+	value: string | undefined
 	isColorSelect?: boolean
 }
 
-export function SingleSelect({
+export function TypeSelect({
 	data,
 	onChange,
 	value,
@@ -33,7 +33,7 @@ export function SingleSelect({
 			})}
 			ref={ref}
 		>
-			<div
+			<button
 			className='flex left-0'
 				onClick={e => {
 					e.preventDefault()
@@ -52,9 +52,9 @@ export function SingleSelect({
 				) : (
 					<Badge>Click for select</Badge>
 				)}
-			</div>
+			</button>
 			{value && (
-				<div
+				<button
 					className='absolute top-0 right-0 opacity-30 hover:opacity-100 transition-opacity'
 					onClick={e => {
 						e.preventDefault()
@@ -62,7 +62,7 @@ export function SingleSelect({
 					}}
 				>
 					<X size={14} />
-				</div>
+				</button>
 			)}
 			{isShow && (
 				<div
