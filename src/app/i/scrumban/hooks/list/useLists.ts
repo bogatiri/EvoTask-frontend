@@ -25,7 +25,8 @@ export function useListById(listId: string, options = { enabled: true }) {
     queryKey: ['list', listId], 
     queryFn: () => listService.getListById(listId),
 		enabled: options.enabled 
-  })
+  }
+)
 
   return { list, isLoading, error }
 }

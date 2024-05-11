@@ -6,26 +6,31 @@ type Message = {
 	dto: string
 }
 
-export const useSocketConnect = () => {
-	const [messages, setMessages] = useState<Message[]>([])
+export const useSocketConnect = (chatId: string | undefined) => {
+	const [message, setMessages] = useState<any>()
 
 	const connectSocket = () => {
 		SocketApi.createConnection()
 
-		SocketApi.socket?.on('client-path', newMessage => {
-			setMessages(prevMessages => [...prevMessages, newMessage])
+		if (SocketApi.socket) {
+			SocketApi.socket.emit('joinRoom', { chatId });
+		
+		
+
+		SocketApi.socket?.on('new-message', newMessage => {
+			setMessages(newMessage)
 		})
 	}
-
+}
 	useEffect(() => {
 		connectSocket()
 
 		return () => {
 			if (SocketApi.socket) {
-				SocketApi.socket.off('client-path')
+				SocketApi.socket.off('new-message')
 			}
 		}
-	}, [])
+	}, [chatId])
 
-	return { messages } // Возвращаем массив сообщений
+	return { message } 
 }

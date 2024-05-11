@@ -10,10 +10,15 @@ class ChatService {
 		return response
 	}
 
-	async createChat(data: TypeChatFormState) {
-		const response = await axiosWithAuth.post(this.BASE_URL, data)
+	async getorCreateChat(boardId: string) {
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/get-or-create`, boardId)
 		return response
 	}
+
+	async getChatById(id: string) {
+    const response = await axiosWithAuth.get<IChatResponse>(`${this.BASE_URL}/${id}`)
+    return response.data
+  }
 
 	async updateChat(id: string, data: TypeChatFormState) {
 		const response = await axiosWithAuth.put(`${this.BASE_URL}/${id}`, data)

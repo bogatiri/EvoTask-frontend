@@ -1,6 +1,7 @@
 import type { ICardResponse, TypeCardFormState } from '@/types/card.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
+import axios from 'axios'
 
 interface ICardOrderUpdate {
 	id: string
@@ -36,11 +37,15 @@ class CardService {
 	}
 
 	async addUserToCard({email, boardId, cardId} : {email: string, boardId: string, cardId: string}) {
-		const response = await axiosWithAuth.put(
+		try {
+					const response = await axiosWithAuth.put(
 			`${this.BASE_URL}/${boardId}/users`,
 			{ email, cardId }
 		)
 		return response
+		} catch (error) {
+			throw error
+		}
 	}
 
 	async updateOrder(cardsWithNewOrder: ICardOrderUpdate[]) {

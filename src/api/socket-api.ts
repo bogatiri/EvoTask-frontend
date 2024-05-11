@@ -5,8 +5,13 @@ class SocketApi{
 	static socket: null | Socket = null
 
 	static createConnection() : void{
-		this.socket = io('http://localhost:4200')
-
+		const authToken = localStorage.getItem('authToken')
+		this.socket = io('http://localhost:4201', {
+			query: {
+				authToken
+			}
+		})
+		
 		this.socket.on('connect', () => {
 			console.log('connected')
 		})

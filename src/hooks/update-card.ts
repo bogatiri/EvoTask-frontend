@@ -13,6 +13,6 @@ export const bindUpdateCard = async ({ id, data }: IBindUpdateCard) => {
     return response;
   } catch (error) {
     console.error('Error updating card:', error);
-    throw error; // Возвращаем ошибку, чтобы она могла быть обработана в onError
+    throw error; 
   }
 };

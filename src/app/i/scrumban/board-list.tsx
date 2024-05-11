@@ -14,20 +14,8 @@ import { useBoards } from './hooks/board/useBoards'
 
 export const BoardList = () => {
 	const { items, setItems } = useBoards()
-	const [boards, setBoards] = useState<IBoardResponse[]>(items!)
 
-	useEffect(() => {
-		if (items) {
-			setItems(items)
-			setBoards(items)
-		}
-	}, [items, boards])
 
-	const onBoardCreate = (newBoard: IBoardResponse) => {
-		const updatedBoards = [...boards!, newBoard]
-		setItems(updatedBoards)
-	}
-	
 
 	return (
 		<div className='space-y-4 m-big-layout'>
@@ -36,7 +24,7 @@ export const BoardList = () => {
 				Your boards
 			</div>
 			<div className='grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 lg:grid-cols-4 gap-4'>
-				{boards?.map(board => (
+				{items?.map(board => (
 					<Link
 						key={board.id}
 						href={`/i/scrumban/board/${board.id}`}
@@ -48,7 +36,6 @@ export const BoardList = () => {
 					</Link>
 				))}
 				<FormPopover
-					onBoardCreate={onBoardCreate}
 					sideOffset={10}
 					side='right'
 				>

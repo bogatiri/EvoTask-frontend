@@ -6,14 +6,18 @@ import { removeFromStorage, saveTokenStorage } from './auth-token.service'
 
 export const authService = {
 	async main(type: 'login' | 'register', data: IAuthForm) {
-		const response = await axiosClassic.post<IAuthResponse>(
-			`/auth/${type}`,
-			data
-		)
-
-		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
-			console.log(response)
-		return response
+		try {
+			
+			const response = await axiosClassic.post<IAuthResponse>(
+				`/auth/${type}`,
+				data
+			)
+	
+			if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+			return response
+		} catch (error) {
+			console.error(error)
+		}
 	},
 
 	async sendConfirmationCode(data:IAuthForm) {
@@ -23,21 +27,32 @@ export const authService = {
 
   async confirmCode(email: string, code: string, data: IAuthForm) {
 		const password = data.password
-    const response = await axiosClassic.post<IAuthResponse>('/auth/check-code', {
-			'checkCodeDto':{
-				email,
-				code
-			},
-			'dto': {
-				email,
-				password
+		try {
+			const response = await axiosClassic.post<IAuthResponse>('/auth/check-code', {
+				'checkCodeDto':{
+					email,
+					code
+				},
+				'dto': {
+					email,
+					password
+				}
+			});
+			if (response.data.accessToken) {
+				saveTokenStorage(response.data.accessToken);
 			}
-		});
-    if (response.data.accessToken) {
-      saveTokenStorage(response.data.accessToken);
-    }
+	
+			return response;
+		} catch (error : any) {
+			if (error.response) {
 
-    return response;
+				console.error(error.response.data);
+				return Promise.reject(error.response.data || 'Error');
+		} else {
+				console.error(error);
+				return Promise.reject('Error');
+		}
+		}
   },
 
 	async getNewTokens() {

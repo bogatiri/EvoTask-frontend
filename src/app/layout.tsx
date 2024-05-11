@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import { Toaster } from 'sonner'
 
-import { ModalProvider } from '@/components/providers/modal-provider'
 
 import { SITE_NAME } from '@/constants/seo.constants'
 
@@ -40,7 +39,6 @@ export default function RootLayout({
 						position='bottom-right'
 						duration={1500}
 					/>
-					<ModalProvider />
 					{children}
 				</Providers>
 			</body>

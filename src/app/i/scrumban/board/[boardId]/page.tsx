@@ -11,25 +11,19 @@ export default function BoardIdPage() {
 
 	const boardId = board?.id
 	const isBoardLoaded = !isBoardLoading && boardId !== undefined
-	const {
-		list,
-		isLoading: isListLoading,
-		error
-	} = useListById(boardId!, { enabled: isBoardLoaded })
+	const { list, isLoading: isListLoading } = useListById(boardId!, {
+		enabled: isBoardLoaded
+	})
 	if (isBoardLoading || isListLoading) return <div>Loading...</div>
-
 	if (!isBoardLoading && !isListLoading) {
 		return (
 			<div
 				className=' flex flex-col relative size-full bg-no-repeat bg-cover bg-center'
 				style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
 			>
-				<div className='p-4 text-lg text-card-foreground overflow-x-auto '>
+				<div className='p-4 text-lg text-card-foreground h-full overflow-x-auto '>
 					<BoardNavbar board={board} />
-					<ListContainer
-						boardId={board!.id}
-						list={list!}
-					/>
+					<ListContainer list={list!} />
 				</div>
 			</div>
 		)

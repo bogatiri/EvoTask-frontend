@@ -1,30 +1,19 @@
 'use client'
 
 import { Plus, X } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { ElementRef, useRef, useState } from 'react'
-import { toast } from 'sonner'
 import { useEventListener, useOnClickOutside } from 'usehooks-ts'
 
 import { FormInput } from '@/components/form/form-input'
 import { FormSubmit } from '@/components/form/form-submit'
 import { Button } from '@/components/ui/button'
 
-import { IListResponse } from '@/types/list.types'
-
-import { useAction } from '@/hooks/use-action'
-
 import { useCreateList } from '../../../hooks/list/useCreateList'
 
 import { ListWrapper } from './list-wrapper'
-import { listService } from '@/services/list.service'
 
-interface IListFormProps {
-	onListCreate: (newLists: IListResponse) => void
-}
-
-export const ListForm = ({ onListCreate }: IListFormProps) => {
-	const router = useRouter()
+export const ListForm = () => {
 	const params = useParams()
 
 	const formRef = useRef<ElementRef<'form'>>(null)
@@ -49,37 +38,18 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 		}
 	}
 
-	const { execute, fieldErrors } = useAction(
-		listService.createList.bind(listService),
-		{
-			onSuccess: data => {
-				toast.success(`List "${data.name}" created`)
-				disableEditing()
-				router.refresh()
-
-				onListCreate(data)
-			},
-			onError: error => {
-				toast.error(error)
-			}
-		}
-	)
-
 	useEventListener('keydown', onKeyDown)
 	useOnClickOutside(formRef, disableEditing)
 	const { createList } = useCreateList()
 
 	const onSubmit = (formData: FormData) => {
 		const name = formData.get('title') as string
-		const boardId = formData.get('boardId') as string
-		execute({
+		const board = formData.get('boardId') as string
+		createList({
 			name,
-			board: {
-				connect: {
-					id:boardId
-				}
-			}
+			board
 		})
+		disableEditing()
 	}
 
 	if (isEditing) {
@@ -93,7 +63,6 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 					<FormInput
 						ref={inputRef}
 						id='title'
-						errors={fieldErrors}
 						className='text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition'
 						placeholder='Enter list title...'
 					/>
@@ -105,7 +74,7 @@ export const ListForm = ({ onListCreate }: IListFormProps) => {
 					<div className='flex items-center gap-x-1'>
 						<FormSubmit>Add list</FormSubmit>
 						<Button
-						asChild
+							asChild
 							onClick={disableEditing}
 							size='sm'
 							variant='ghost'

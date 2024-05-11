@@ -1,6 +1,7 @@
 import type { IBoardResponse, TypeBoardFormState } from '@/types/board.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
+import axios from 'axios'
 
 class BoardService {
 	private BASE_URL = '/user/boards'
@@ -18,11 +19,16 @@ class BoardService {
 	}
 
 	async addUserToBoard({email, boardId} : {email: string, boardId: string}) {
-		const response = await axiosWithAuth.put(
-			`${this.BASE_URL}/${boardId}/users`,
-			{ email }
-		)
-		return response
+		try {
+			
+			const response = await axiosWithAuth.put(
+				`${this.BASE_URL}/${boardId}/users`,
+				{ email }
+			)
+			return response
+		} catch (error) {
+			throw error
+		}
 	}
 
 	async createBoard(data: TypeBoardFormState) {
@@ -31,8 +37,13 @@ class BoardService {
 	}
 
 	async updateBoard(id: string, data: TypeBoardFormState) {
-		const response = await axiosWithAuth.put(`${this.BASE_URL}/${id}`, data)
-		return response
+		try {
+			
+			const response = await axiosWithAuth.put(`${this.BASE_URL}/${id}`, data)
+			return response
+		} catch (error) {
+			throw error
+		}
 	}
 
 	async deleteBoard(id: string) {

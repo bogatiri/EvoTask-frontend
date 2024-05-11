@@ -47,6 +47,8 @@ export function ListRow({ item, setItems }: IListRow) {
 					<button aria-describedby='todo-item'>
 						<GripVertical className={styles.grip} />
 					</button>
+				<div
+				onClick={event => event.stopPropagation()}>
 
 					<Controller
 						control={control}
@@ -58,6 +60,7 @@ export function ListRow({ item, setItems }: IListRow) {
 							/>
 						)}
 					/>
+						</div>
 
 					<TransparentField {...register('name')} />
 				</span>

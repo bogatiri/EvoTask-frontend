@@ -1,7 +1,8 @@
 export interface IAuthForm {
 	email: string
 	password: string
-	code: string
+	code: string,
+	accessToken: string
 }
 
 export enum EnumUserRole {

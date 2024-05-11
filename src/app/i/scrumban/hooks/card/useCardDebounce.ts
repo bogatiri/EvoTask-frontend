@@ -34,7 +34,6 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 	useEffect(() => {
 		const { unsubscribe } = watch(formData => {
 			if (cardId) {
-				console.log(formData)
 				debouncedUpdateCard({
 					...formData,
 					priority: formData.priority || undefined

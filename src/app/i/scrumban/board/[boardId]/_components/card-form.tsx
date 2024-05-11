@@ -1,9 +1,7 @@
 'use client'
 
 import { Plus, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { ElementRef, KeyboardEventHandler, forwardRef, useRef } from 'react'
-import { toast } from 'sonner'
 import { useEventListener, useOnClickOutside } from 'usehooks-ts'
 
 import { FormSubmit } from '@/components/form/form-submit'
@@ -12,21 +10,17 @@ import { Button } from '@/components/ui/button'
 
 import { ICardResponse } from '@/types/card.types'
 
-import { useAction } from '@/hooks/use-action'
-
-import { cardService } from '@/services/card.service'
+import { useCreateCard } from '../../../hooks/card/useCreateCard'
 
 interface CardFormProps {
 	listId: string
 	enableEditing: () => void
 	disableEditing: () => void
 	isEditing: boolean
-	onCardCreate: (listId: string, newCard: ICardResponse) => void
 }
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
-	({ listId, enableEditing, disableEditing, isEditing, onCardCreate }, ref) => {
-		const router = useRouter()
+	({ listId, enableEditing, disableEditing, isEditing }, ref) => {
 		const formRef = useRef<ElementRef<'form'>>(null)
 
 		const onKeyDown = (e: KeyboardEvent) => {
@@ -45,33 +39,16 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 			}
 		}
 
-		const { execute, fieldErrors } = useAction(
-			cardService.createCard.bind(cardService),
-			{
-				onSuccess: data => {
-					toast.success(`Card "${data.name}" created`)
-					disableEditing()
-					console.log(data)
-					onCardCreate(data.listId, data)
-					router.refresh()
-				},
-				onError: error => {
-					toast.error(error)
-				}
-			}
-		)
+		const { createCard } = useCreateCard()
 
 		const onSubmit = (formData: FormData) => {
 			const name = formData.get('title') as string
-			const listId = formData.get('listId') as string
-			execute({
+			const list = formData.get('listId') as string
+			createCard({
 				name,
-				list: {
-					connect: {
-						id: listId
-					}
-				}
+				list
 			})
+			disableEditing()
 		}
 
 		if (isEditing) {
@@ -86,7 +63,6 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 						onKeyDown={onTextareakeyDown}
 						ref={ref}
 						placeholder='Enter a title for this card...'
-						errors={fieldErrors}
 					/>
 					<input
 						hidden

@@ -7,7 +7,6 @@ import {
 	UseFormRegister,
 	UseFormWatch
 } from 'react-hook-form'
-import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,17 +23,12 @@ import { TypeSelect } from '@/components/ui/list-edit/TypeSelect'
 
 import { IListResponse, TypeListFormState } from '@/types/list.types'
 
-import { useAction } from '@/hooks/use-action'
-
+import { useCopyList } from '../../../hooks/list/useCopyList'
+import { useDeleteList } from '../../../hooks/list/useDeleteList'
 import { useListDebounce } from '../../../hooks/list/useListDebounce'
-
-import { listService } from '@/services/list.service'
 
 interface ListOptionsProps {
 	data: IListResponse | undefined
-	onAddCard: () => void
-	onListDelete: (id: string) => void
-	onListCopy: (newList: IListResponse) => void
 	register: UseFormRegister<TypeListFormState>
 	control: Control<TypeListFormState>
 	watch: UseFormWatch<TypeListFormState>
@@ -42,70 +36,42 @@ interface ListOptionsProps {
 
 export const ListOptions = ({
 	data,
-	onAddCard,
-	onListDelete,
 	register,
 	control,
-	watch,
-	onListCopy
+	watch
 }: ListOptionsProps) => {
 	useListDebounce({ watch, listId: data!.id })
 
-	// const closeRef = useRef<ElementRef<'button'>>(null)
-
-	const { execute: executeDelete } = useAction(
-		listService.deleteList.bind(listService),
-		{
-			onSuccess: data => {
-				toast.success(`List "${data.name}" deleted`)
-				// closeRef.current?.click()
-			},
-			onError: error => {
-				toast.error(error)
-			}
-		}
-	)
+	const { deleteList, isDeletePending } = useDeleteList()
 
 	const onDelete = (event: React.MouseEvent) => {
 		event.stopPropagation()
-		onListDelete(data!.id)
-		executeDelete(data!.id)
+		deleteList(data!.id)
 	}
 
-	const { execute: executeListCopy, isLoading: isLoadingCopy } = useAction(
-		listService.copyList.bind(listService),
-		{
-			onSuccess: data => {
-				onListCopy(data)
-				toast.success(`List "${data.name}" copied`)
-			},
-			onError: error => {
-				toast.error(error)
-			}
-		}
-	)	
+	const { copyList, isPending } = useCopyList()
 
 	const onCopy = (event: React.MouseEvent) => {
 		event.stopPropagation()
-	  const listId = data!.id
-	  const boardId = data!.boardId
-	  executeListCopy({ listId, boardId });
-	};
+		const listId = data!.id
+		const boardId = data!.boardId
+		copyList({ listId, boardId })
+	}
 
 	return (
 		<Dialog>
 			<DialogTrigger>
-
-					<MoreHorizontal className=' hover:bg-accent hover:text-accent-foreground h-6 w-6 rounded-md p-1' />
-
+				<MoreHorizontal className=' hover:bg-accent hover:text-accent-foreground h-6 w-6 rounded-md p-1' />
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle autoFocus={false}>
 						<div className='flex gap-3'>
-
-						<List/>
-						<TransparentField autoFocus={false} {...register('name')} />
+							<List />
+							<TransparentField
+								autoFocus={false}
+								{...register('name')}
+							/>
 						</div>
 					</DialogTitle>
 					<DialogDescription>
@@ -137,7 +103,7 @@ export const ListOptions = ({
 						</div>
 					</div>
 					<div className='flex flex-col gap-3'>
-						<Button	
+						<Button
 							type='submit'
 							size='sm'
 							className='px-3'
@@ -147,14 +113,14 @@ export const ListOptions = ({
 							<span className='ml-1'>Delete</span>
 						</Button>
 						<Button
-									onClick={onCopy}
-									type='submit'
-									size='sm'
-									className='px-3'
-								>
-									<Copy className='h-4 w-4' />
-									<span className='ml-1'>Copy</span>
-								</Button>
+							onClick={onCopy}
+							type='submit'
+							size='sm'
+							className='px-3'
+						>
+							<Copy className='h-4 w-4' />
+							<span className='ml-1'>Copy</span>
+						</Button>
 					</div>
 				</div>
 			</DialogContent>

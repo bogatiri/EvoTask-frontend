@@ -1,21 +1,36 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-import { TypeListFormState } from '@/types/list.types'
+import { toast } from 'sonner'
 
 import { listService } from '@/services/list.service'
+import { isAxiosError } from 'axios'
 
 export function useCreateList() {
 	const queryClient = useQueryClient()
 
-	const { mutate: createList } = useMutation({
-		mutationKey: ['create list'],
-		mutationFn: (data: TypeListFormState) => listService.createList(data),
-		onSuccess() {
-			queryClient.invalidateQueries({
-				queryKey: ['lists']
-			})
-		}
-	})
+		const { mutate: createList, isPending } = useMutation(
+			{
+				mutationKey: ['create list'],
+				mutationFn: ({
+					name,
+					board,
+				}: {
+					name: string
+					board: string
+				}) => listService.createList({ name,board  }),
+				onSuccess: data => {
+					toast.success(`List "${data.data.name}" created`)
+					queryClient.invalidateQueries({queryKey:['list']})
+				},
+				onError(error: unknown) {
+					if (isAxiosError(error)) {
+						const message = error.response?.data?.message || 'An error occurred'
+						toast.error(message)
+					} else {
+						toast.error('An error occurred')
+					}
+				}
+			}
+		)
 
 	return { createList }
 }

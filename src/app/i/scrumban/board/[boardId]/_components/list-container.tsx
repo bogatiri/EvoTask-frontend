@@ -2,21 +2,17 @@
 
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 import { IListResponse } from '@/types/list.types'
 
-import { useAction } from '@/hooks/use-action'
+import { useUpdateOrderCard } from '../../../hooks/card/useUpdateOrderCard'
+import { useUpdateOrderList } from '../../../hooks/list/useUpdateOrderList'
 
-import { cardService } from '@/services/card.service'
-import { listService } from '@/services/list.service'
-import { ICardResponse } from '@/types/card.types'
 import { ListForm } from './list-form'
 import { ListItem } from './list-item'
 
 interface ListContainerProps {
 	list: IListResponse[]
-	boardId: string
 }
 
 function reorder<T>(list: T[], startIndex: number, endIndex: number) {
@@ -27,79 +23,12 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 	return result
 }
 
-export const ListContainer = ({ list, boardId }: ListContainerProps) => {
+export const ListContainer = ({ list }: ListContainerProps) => {
 	const [orderedData, setOrderedData] = useState(list)
 
-	const onListCreate = (newList: IListResponse) => {
-		const updatedLists = [...orderedData!, newList]
-		setOrderedData(updatedLists)
-	}
+	const { updateOrderList } = useUpdateOrderList()
 
-	const onListCopy = (newList: IListResponse) => {
-		const updatedLists = [...orderedData!, newList]
-		setOrderedData(updatedLists)
-	}
-
-	const onListDelete = (id: string) => {
-		setOrderedData(currentLists => currentLists.filter(list => list.id !== id))
-	}
-
-	const onCardCreate = (listId: string, newCard: ICardResponse) => {
-    setOrderedData(currentLists =>
-      currentLists.map(list =>
-        list.id === listId
-          ? { ...list, cards: [...list.cards, newCard] }
-          : list
-      )
-    );
-  };
-
-	const onCardCopy = (listId: string, newCard: ICardResponse) => {
-    setOrderedData(currentLists =>
-      currentLists.map(list =>
-        list.id === listId
-          ? { ...list, cards: [...list.cards, newCard] }
-          : list
-      )
-    );
-  };
-
-	const onCardDelete = (listId: string, cardId: string) => {
-    setOrderedData(currentLists =>
-      currentLists.map(list =>
-        list.id === listId
-          ? { ...list, cards: list.cards.filter(card => card.id !== cardId) }
-          : list
-      )
-    );
-  };
-
-
-	const { execute: executeUpdateListOrder } = useAction(
-		listService.updateOrder.bind(listService),
-		{
-			onSuccess: () => {
-				toast.success(`List reordered`)
-			},
-			onError: error => {
-				toast.error(error)
-			}
-		}
-	)
-
-	const { execute: executeUpdateCardOrder } = useAction(
-		cardService.updateOrder.bind(cardService),
-		{
-			onSuccess: () => {
-				toast.success('Card reordered')
-			},
-			onError: error => {
-				toast.error(error)
-			}
-		}
-	)
-
-
+	const { updateOrderCard } = useUpdateOrderCard()
 
 	useEffect(() => {
 		setOrderedData(list)
@@ -126,7 +55,7 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 			)
 
 			setOrderedData(items)
-			executeUpdateListOrder(items)
+			updateOrderList(items)
 		}
 
 		// User moves a card
@@ -170,18 +99,17 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 				sourceList.cards = reorderedCards
 
 				setOrderedData(newOrderedData)
-				executeUpdateCardOrder(
-					reorderedCards
-				)
+				console.log('new', newOrderedData)
+				updateOrderCard(reorderedCards)
 				//User moves the card to another list
 			} else {
 				// Remove card from the source list
 				const [movedCard] = sourceList.cards.splice(source.index, 1)
 
-			 	// Assign the new listId to the moved card
+				// Assign the new listId to the moved card
 				movedCard.listId = destination.droppableId
 
-			 	// Add card to the destination list
+				// Add card to the destination list
 				destList.cards.splice(destination.index, 0, movedCard)
 
 				sourceList.cards.forEach((card, idx) => {
@@ -194,9 +122,9 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 				})
 
 				setOrderedData(newOrderedData)
-				executeUpdateCardOrder(
-					destList.cards
-				)
+				console.log('destlist', destList)
+				const reorderedCards = destList.cards
+				updateOrderCard(destList.cards)
 			}
 		}
 	}
@@ -217,11 +145,6 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 						{orderedData.map((list, index) => {
 							return (
 								<ListItem
-								onListCopy={onListCopy}
-									onCardDelete={onCardDelete}
-									onCardCreate={onCardCreate}
-									onListDelete={onListDelete}
-									onCardCopy={onCardCopy}
 									key={list.id}
 									index={index}
 									list={list}
@@ -229,7 +152,7 @@ export const ListContainer = ({ list, boardId }: ListContainerProps) => {
 							)
 						})}
 						{provided.placeholder}
-						<ListForm onListCreate={onListCreate} />
+						<ListForm />
 						<div className='flex-shrink-0 w-1' />
 					</ol>
 				)}

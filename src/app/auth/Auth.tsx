@@ -63,7 +63,9 @@ export function Auth() {
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) =>
 			authService.main(isLoginForm ? 'login' : 'register', data),
-		onSuccess() {
+		onSuccess: data => {
+			localStorage.setItem('authToken', data!.data!.accessToken!)
+			localStorage.setItem('userId', data!.data.user.id.toString())
 			toast.success('Successfully login!'), reset(), push(DASHBOARD_PAGES.HOME)
 		}
 	})
@@ -83,29 +85,24 @@ export function Auth() {
 	const [stage, setStage] = useState('initial') // 'initial', 'codeSent', 'verified'
 
 	// const handleRegister = (data: IAuthForm) => {
-	// 	console.log(data)
 	// 	setIsOpen(true)
 	// 	sendCode(data)
 	// 	setIsLoginForm(false)
 	// }
 
 	const handleLogin = (data: IAuthForm) => {
-		console.log(data)
 		setIsLoginOpen(true)
 		sendCode(data)
 		setIsLoginForm(true)
 	}
 
 	const handleConfirmCode: SubmitHandler<IAuthForm> = data => {
-		console.log(data.email, code, data)
 		mutate({ email: data.email, code, data })
 	}
 
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
-		console.log(data)
 		auth(data)
 	}
-
 	return (
 		<div className='flex min-h-screen'>
 			<form

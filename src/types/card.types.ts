@@ -13,12 +13,13 @@ export interface ICardResponse extends IBase {
 	priority?: EnumCardPriority | undefined
 	order: number
 	description?: string
-	list:{
-		connect: {
-			id: string
-		}
-	}
+	// list?:{
+	// 	connect: {
+	// 		id: string
+	// 	}
+	// }
 	users: IUser[] | []
+	list: string
 	listId: string
 }
 

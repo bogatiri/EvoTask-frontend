@@ -1,4 +1,5 @@
 import { IUser } from './auth.types'
+import { IChatResponse } from './chat.types'
 import type { IBase } from './root.types'
 
 export interface IBoardResponse extends IBase {
@@ -10,6 +11,7 @@ export interface IBoardResponse extends IBase {
   imageUserName?:string 
   imageLinkHTML?:string 
 	users: IUser[]
+	chats: IChatResponse[]
 }
 
 export type TypeBoardFormState = Partial<
