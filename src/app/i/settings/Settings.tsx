@@ -21,7 +21,6 @@ export function Settings() {
 
 	const onSubmit: SubmitHandler<TypeUserForm> = data => {
 		const { password, ...rest } = data
-
 		mutate({
 			...rest,
 			password: password || undefined

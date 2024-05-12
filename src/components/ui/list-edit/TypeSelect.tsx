@@ -15,13 +15,15 @@ interface ISingleSelect {
 	onChange: (value: string) => void
 	value: string | undefined
 	isColorSelect?: boolean
+	text?:string
 }
 
 export function TypeSelect({
 	data,
 	onChange,
 	value,
-	isColorSelect
+	isColorSelect,
+	text
 }: ISingleSelect) {
 	const { isShow, setIsShow, ref } = useOutside(false)
 	const getValue = () => data.find(item => item.value === value)?.value
@@ -50,7 +52,7 @@ export function TypeSelect({
 						{getValue()}
 					</Badge>
 				) : (
-					<Badge>Click for select</Badge>
+					<Badge>{text}</Badge>
 				)}
 			</button>
 			{value && (

@@ -22,7 +22,12 @@ export interface IUser {
 	id: number
 	name?: string
 	email: string
-
+	phone?: string
+	lastName?:string
+	post?: string
+	organization?: string
+	createdAt: Date
+	about?: string
 	role? : EnumUserRole
 	avatar? : string
 	workInterval?: number
@@ -35,4 +40,8 @@ export interface IAuthResponse {
 	user: IUser
 }
 
+
+
 export type TypeUserForm = Omit<IUser, 'id'> & { password?: string }
+export type TypeUserFormState = Partial<IUser>
+

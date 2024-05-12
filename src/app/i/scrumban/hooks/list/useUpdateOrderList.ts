@@ -18,7 +18,6 @@ export function useUpdateOrderList() {
 		mutationFn: ( reorderedLists: IListResponse[] ) =>
 			listService.updateOrder(reorderedLists),
 		onSuccess: data => {
-			console.log('data', data.data)
 			toast.success(`List reordered`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
 		},

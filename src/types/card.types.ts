@@ -18,6 +18,7 @@ export interface ICardResponse extends IBase {
 	// 		id: string
 	// 	}
 	// }
+	points?: string
 	users: IUser[] | []
 	list: string
 	listId: string

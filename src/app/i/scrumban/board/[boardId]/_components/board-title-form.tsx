@@ -3,18 +3,19 @@
 import {
 	AlignLeft,
 	ChevronsUpDown,
+	CornerDownLeft,
 	List,
 	Loader,
 	MessageCircle,
 	MoreHorizontal,
+	Plus,
 	SendHorizonal,
 	Trash
 } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
-// import { zodResolver } from "@hookform/resolvers/zod"
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Command, CommandGroup } from '@/components/ui/command'
@@ -30,6 +31,14 @@ import {
 import { TransparentField } from '@/components/ui/fields/TransparentField'
 import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 import { Input } from '@/components/ui/input'
+import {
+	Menubar,
+	MenubarContent,
+	MenubarItem,
+	MenubarMenu,
+	MenubarSeparator,
+	MenubarTrigger
+} from '@/components/ui/menubar'
 import {
 	Popover,
 	PopoverContent,
@@ -52,20 +61,29 @@ import { useSocketConnect } from '@/hooks/useConnectSocket'
 
 import SocketApi from '@/api/socket-api'
 
+import { useAddUserToBoard } from '../../../hooks/board/useAddUserToBoard'
 import { useBoardDebounce } from '../../../hooks/board/useBoardDebounce'
 import { useDeleteBoard } from '../../../hooks/board/useDeleteBoard'
 import { useChatById } from '../../../hooks/chat/useChats'
+import { useCreateSprint } from '../../../hooks/sprint/useCreateSprint'
+import { useSprints } from '../../../hooks/sprint/useSprints'
 
-import { boardService } from '@/services/board.service'
-import { useAddUserToBoard } from '../../../hooks/board/useAddUserToBoard'
+import SprintNavbar from './sprint-navbar'
 
 interface IBoardTitleForm {
 	board: IBoardResponse | undefined
+	onSprintPick: (sprintId: string) => void
+	backToMainBoard: () => void
 }
 
-export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
+export const BoardTitleForm = ({
+	board,
+	onSprintPick,
+	backToMainBoard
+}: IBoardTitleForm) => {
 	const [email, setEmail] = useState('')
 	const [text, setText] = useState('')
+	const [isOpen, setIsOpen] = useState(false)
 	const creator = board!.users[0]
 
 	const { register, control, watch } = useForm<TypeBoardFormState>({
@@ -79,12 +97,13 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 	useBoardDebounce({ watch, boardId: board!.id })
 
 	const { deleteBoard, isDeletePending } = useDeleteBoard()
+	const { createSprint } = useCreateSprint()
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value)
 	}
 
-		const {addUserToBoard} = useAddUserToBoard()
+	const { addUserToBoard } = useAddUserToBoard()
 
 	const onAddUserToBoard = () => {
 		const boardId = board!.id
@@ -139,14 +158,60 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 		})
 	}
 
+	const handleCreateSprint = () => {
+		const boardId = board!.id
+		createSprint({ boardId })
+	}
+
+	const { items, setItems } = useSprints(board!.id)
 	return (
 		<>
 			<div className='flex w-full justify-between items-center border-b border-border p-2'>
-				<div className='w-full'>
+				<div className='w-full flex flex-col gap-3'>
 					<TransparentField
 						className='text-lg w-[400px] font-bold px-[7px] h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-foreground'
 						{...register('name')}
 					/>
+				</div>
+				<div>
+					<Menubar>
+						<MenubarMenu>
+							<MenubarTrigger>
+								<span className='mx-3 my-1.5 '>Sprints</span>
+							</MenubarTrigger>
+							<MenubarContent>
+								<MenubarItem
+									className='cursor-pointer'
+									onClick={handleCreateSprint}
+								>
+									<span className='ml-1'>Create a new sprint</span> <Plus />
+								</MenubarItem>
+								<MenubarSeparator />
+								{items?.map((item, index) => (
+									<div key={index}>
+										<div onClick={() => onSprintPick(item.id)}>
+											<SprintNavbar
+												item={item}
+												index={index}
+												isOpen={isOpen}
+											/>
+										</div>
+										<MenubarSeparator />
+									</div>
+								))}
+								<MenubarItem
+									className='cursor-pointer'
+									onClick={() => backToMainBoard()}
+								>
+									<span>Back to main board</span>
+									<CornerDownLeft
+										className='mr-1'
+										size={16}
+									/>
+								</MenubarItem>
+							</MenubarContent>
+						</MenubarMenu>
+					</Menubar>
 				</div>
 				<div>
 					<Dialog>
@@ -193,7 +258,10 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 												Description
 											</p>
 										</div>
-										<TransparentFieldTextarea {...register('description')} />
+										<TransparentFieldTextarea
+											placeholder='You can write a description to your board'
+											{...register('description')}
+										/>
 									</div>
 								</div>
 								<div className='flex flex-col gap-3'>
@@ -293,7 +361,7 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 														className='resize-none'
 														onKeyDown={e => {
 															if (e.key === 'Enter' && !e.shiftKey) {
-																e.preventDefault() // Предотвратить перенос на новую строку
+																e.preventDefault()
 																sendMessage()
 															}
 														}}
@@ -354,35 +422,37 @@ export const BoardTitleForm = ({ board }: IBoardTitleForm) => {
 												<CommandGroup className='w-auto'>
 													{board!.users.length > 0 ? (
 														board!.users?.map((user, index) => (
-															<div
+															<Link
+																href={`/i/profile/${user.id}`}
 																key={user.id}
-																className='flex gap-1 w-full cursor-pointer opacity-70 hover:opacity-100 border-b p-1 justify-between mt-2 items-center '
 															>
-																{user.avatar ? (
-																	<Avatar className='h-8 w-8 border border-border'>
-																		<AvatarImage
-																			src={user.avatar}
-																		></AvatarImage>
-																	</Avatar>
-																) : (
-																	<Avatar className='h-8 w-8 border border-border'>
-																		<AvatarFallback>
-																			{user.name
-																				? user.name.charAt(0).toUpperCase()
-																				: user.email.charAt(0).toUpperCase()}
-																		</AvatarFallback>
-																	</Avatar>
-																)}
-																{user.name ? (
-																	<p className='font-semibold text-neutral-700 text-sm mb-2'>
-																		{user.name}
-																	</p>
-																) : (
-																	<p className='font-semibold text-sm text-neutral-700 mb-2'>
-																		{user.email}
-																	</p>
-																)}
-															</div>
+																<div className='flex gap-1 w-full cursor-pointer opacity-70 hover:opacity-100 border-b p-1 justify-between mt-2 items-center '>
+																	{user.avatar ? (
+																		<Avatar className='h-8 w-8 border border-border'>
+																			<AvatarImage
+																				src={user.avatar}
+																			></AvatarImage>
+																		</Avatar>
+																	) : (
+																		<Avatar className='h-8 w-8 border border-border'>
+																			<AvatarFallback>
+																				{user.name
+																					? user.name.charAt(0).toUpperCase()
+																					: user.email.charAt(0).toUpperCase()}
+																			</AvatarFallback>
+																		</Avatar>
+																	)}
+																	{user.name ? (
+																		<p className='font-semibold text-neutral-700 text-sm mb-2'>
+																			{user.name}
+																		</p>
+																	) : (
+																		<p className='font-semibold text-sm text-neutral-700 mb-2'>
+																			{user.email}
+																		</p>
+																	)}
+																</div>
+															</Link>
 														))
 													) : (
 														<div>no users</div>

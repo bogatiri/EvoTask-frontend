@@ -48,6 +48,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
 									value: item,
 									label: item
 								}))}
+								text='Type'
 								onChange={onChange}
 								value={value || ''}
 							/>

@@ -15,12 +15,14 @@ interface ISingleSelect {
 	onChange: (value: string) => void
 	value: string
 	isColorSelect?: boolean
+	text?: string
 }
 
 export function SingleSelect({
 	data,
 	onChange,
 	value,
+	text,
 	isColorSelect
 }: ISingleSelect) {
 	const { isShow, setIsShow, ref } = useOutside(false)
@@ -49,9 +51,10 @@ export function SingleSelect({
 					>
 						{getValue()}
 					</Badge>
-				) : (
-					<Badge>Click for select</Badge>
-				)}
+				) : text ? 
+				(
+					<Badge>{text}</Badge>
+				) : <Badge>Click for select</Badge>}
 			</div>
 			{value && (
 				<div
@@ -74,7 +77,7 @@ export function SingleSelect({
 					}}
 				>
 					{data.map(item => (
-						<button
+						<div
 							key={item.value}
 							onClick={e => {
 								e.preventDefault()
@@ -91,7 +94,7 @@ export function SingleSelect({
 							}
 						>
 							<Badge variant={item.value}>{item.label}</Badge>
-						</button>
+						</div>
 					))}
 				</div>
 			)}

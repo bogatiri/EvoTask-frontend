@@ -99,7 +99,6 @@ export const ListContainer = ({ list }: ListContainerProps) => {
 				sourceList.cards = reorderedCards
 
 				setOrderedData(newOrderedData)
-				console.log('new', newOrderedData)
 				updateOrderCard(reorderedCards)
 				//User moves the card to another list
 			} else {
@@ -122,7 +121,6 @@ export const ListContainer = ({ list }: ListContainerProps) => {
 				})
 
 				setOrderedData(newOrderedData)
-				console.log('destlist', destList)
 				const reorderedCards = destList.cards
 				updateOrderCard(destList.cards)
 			}

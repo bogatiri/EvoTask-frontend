@@ -1,17 +1,25 @@
 'use client'
 
-import { GanttChartSquare } from 'lucide-react'
+import { GanttChartSquare, User } from 'lucide-react'
 import Link from 'next/link'
-import Logo from '../../../public/cypresslogo.svg';
+import { useEffect, useState } from 'react'
+
 import { COLORS } from '@/constants/color.constants'
+import { SITE_NAME } from '@/constants/seo.constants'
+
+import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 
 import { LogoutButton } from './LogoutButton'
 import { MenuItem } from './MenuItem'
 import { MENU } from './menu.data'
-import { SITE_NAME } from '@/constants/seo.constants'
-
 
 export function Sidebar() {
+	const [currentUser, setCurrentUser] = useState('')
+	useEffect(() => {
+		const localUserId = localStorage.getItem('userId')
+		setCurrentUser(localUserId ?? '')
+	}, [])
+
 	return (
 		<aside className='border-r w-full border-r-border h-full bg-sidebar flex flex-col justify-between'>
 			<div>
@@ -31,7 +39,16 @@ export function Sidebar() {
 					</span>
 				</Link>
 				<div className='p-3 relative'>
-					<LogoutButton />
+					<LogoutButton />{' '}
+					<div>
+						<Link
+							href={`${DASHBOARD_PAGES.PROFILE}/${currentUser}`}
+							className='flex gap-2.5 items-center py-1.5 mt-2 px-layout transition-colors hover:bg-border rounded-lg'
+						>
+							<User />
+							<span>Profile</span>
+						</Link>
+					</div>
 					{MENU.map(item => (
 						<MenuItem
 							item={item}

@@ -20,6 +20,8 @@ export function useCreateList() {
 				onSuccess: data => {
 					toast.success(`List "${data.data.name}" created`)
 					queryClient.invalidateQueries({queryKey:['list']})
+					queryClient.invalidateQueries({queryKey:['sprint']})
+
 				},
 				onError(error: unknown) {
 					if (isAxiosError(error)) {

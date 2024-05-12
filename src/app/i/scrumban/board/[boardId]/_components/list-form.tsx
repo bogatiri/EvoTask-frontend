@@ -15,7 +15,6 @@ import { ListWrapper } from './list-wrapper'
 
 export const ListForm = () => {
 	const params = useParams()
-
 	const formRef = useRef<ElementRef<'form'>>(null)
 	const inputRef = useRef<ElementRef<'input'>>(null)
 

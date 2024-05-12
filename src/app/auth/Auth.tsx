@@ -66,7 +66,7 @@ export function Auth() {
 		onSuccess: data => {
 			localStorage.setItem('authToken', data!.data!.accessToken!)
 			localStorage.setItem('userId', data!.data.user.id.toString())
-			toast.success('Successfully login!'), reset(), push(DASHBOARD_PAGES.HOME)
+			toast.success('Successfully login!'), reset(), push(DASHBOARD_PAGES.SCRUMBAN)
 		}
 	})
 

@@ -3,7 +3,9 @@
 import {
 	AlertCircle,
 	AlignLeft,
+	BarChart,
 	CalendarX2,
+	Coins,
 	Copy,
 	GripVertical,
 	MessageCircle,
@@ -86,7 +88,8 @@ export const CardItem = ({ data }: CardItemProps) => {
 			priority: data?.priority,
 			description: data?.description,
 			list: data!.list,
-			order: data?.order
+			order: data?.order,
+			points: data?.points
 		}
 	})
 
@@ -138,9 +141,12 @@ export const CardItem = ({ data }: CardItemProps) => {
 							</div>
 							<div className='flex mt-4 items-center justify-between w-full'>
 								<div className='flex gap-2'>
-									<span className='flex items-center justify-center text-xs opacity-50'>
+									{/* <span className='flex items-center justify-center text-xs opacity-50'>
 										Priority:
-									</span>
+									</span> */}
+									<div className='flex gap-1'>
+
+									<BarChart/>
 									<Controller
 										control={control}
 										name='priority'
@@ -150,11 +156,31 @@ export const CardItem = ({ data }: CardItemProps) => {
 													value: item,
 													label: item
 												}))}
+												text='Priority'
 												onChange={onChange}
 												value={value || ''}
 											/>
 										)}
-									/>
+										/>
+										</div>
+									<div className='flex gap-1'>
+
+									<Coins/>
+																		<Controller
+										control={control}
+										name='points'
+										render={({ field: { value, onChange } }) => (
+											<SingleSelect
+												data={['1', '2', '3', '4'].map(item => ({
+													value: item,
+													label: item
+												}))}
+												text='Points'
+												onChange={onChange}
+												value={value || ''}
+											/>
+										)}
+									/></div>
 								</div>
 								<Trash
 									size={15}

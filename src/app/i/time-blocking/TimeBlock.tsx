@@ -27,7 +27,8 @@ export function TimeBlock({ item }: { item: ITimeBlockResponse }) {
 				className={styles.block}
 				style={{
 					backgroundColor: item.color || 'lightgray',
-					height: `${item.duration}px`
+					height: `${item.duration}px`,
+					maxHeight:'300px'
 				}}
 			>
 				<div className='flex items-center'>

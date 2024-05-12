@@ -23,6 +23,7 @@ export function useCreateCard() {
 					})
 					toast.success(`User "${data.data.name}" added`)
 					queryClient.invalidateQueries({queryKey:['list']})
+					queryClient.invalidateQueries({queryKey:['sprint']})
 				},
 				onError(error: unknown) {
 					if (isAxiosError(error)) {

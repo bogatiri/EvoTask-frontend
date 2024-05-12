@@ -18,7 +18,6 @@ export function useUpdateOrderCard() {
 		mutationFn: ( reorderedCards: ICardResponse[] ) =>
 			cardService.updateOrder(reorderedCards),
 		onSuccess: data => {
-			console.log('data', data.data)
 			toast.success(`Card reordered`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
 		},

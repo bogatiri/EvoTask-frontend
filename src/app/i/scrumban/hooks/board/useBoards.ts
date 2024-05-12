@@ -16,7 +16,6 @@ export function useBoards() {
 	useEffect(() => {
 		setItems(data?.data)
 	}, [data?.data])
-
 	return { items, setItems }
 }
 
@@ -25,6 +24,5 @@ export function useBoardById(boardId: string) {
     queryKey: ['board', boardId], 
     queryFn: () => boardService.getBoardById(boardId) 
   })
-
   return { board, isLoading, error }
 }

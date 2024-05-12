@@ -18,7 +18,14 @@ const badge = tv({
 			backlog: 'bg-red-400/70',
 			to_do:'bg-orange-400/70',
 			in_progress: 'bg-yellow-400/70',
-			done: 'bg-green-400/70'
+			done: 'bg-green-400/70',
+			1:'bg-green-400/70',
+			2:'bg-yellow-400/70',
+			3:'bg-orange-400/70',
+			4:'bg-red-400/70',
+			planned:'bg-yellow-400/70',
+			active:'bg-orange-400/70',
+			completed:'bg-green-400/70'
 		}
 	},
 	defaultVariants: {

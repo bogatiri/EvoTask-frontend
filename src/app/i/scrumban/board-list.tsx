@@ -2,13 +2,10 @@
 
 import { HelpCircle, User2 } from 'lucide-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 import { FormPopover } from '@/components/form/form-popover'
 import { Hint } from '@/components/hint'
 import { Skeleton } from '@/components/ui/skeleton'
-
-import { IBoardResponse } from '@/types/board.types'
 
 import { useBoards } from './hooks/board/useBoards'
 

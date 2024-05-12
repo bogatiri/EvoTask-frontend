@@ -12,8 +12,10 @@ export function LogoutButton() {
 	const { mutate } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
-		onSuccess: () => router.push('/')
-	})
+		onSuccess: () => {
+			router.push('/')
+			localStorage.clear()
+}})
 
 	return (
 		<div className='absolute top-1 right-1'>

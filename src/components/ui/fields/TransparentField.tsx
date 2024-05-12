@@ -9,6 +9,7 @@ export const TransparentField = forwardRef<
 >(({ className, ...rest }, ref) => {
 	return (
 		<input
+			autoComplete='off'
 			className={cn(
 				'bg-transparent border-none focus:outline-0 focus:shadow-transparent w-full',
 				className

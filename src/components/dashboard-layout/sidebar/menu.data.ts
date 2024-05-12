@@ -3,7 +3,8 @@ import {
 	KanbanSquare,
 	LayoutDashboard,
 	Settings,
-	Timer
+	Timer,
+	FolderKanban
 } from 'lucide-react'
 
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
@@ -11,6 +12,7 @@ import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 import type { IMenuItem } from './menu.interface'
 
 export const MENU: IMenuItem[] = [
+
 	{
 		icon: LayoutDashboard,
 		link: DASHBOARD_PAGES.HOME,
@@ -31,14 +33,15 @@ export const MENU: IMenuItem[] = [
 		link: DASHBOARD_PAGES.TIME_BLOCKING,
 		name: 'Time blocking'
 	},
+
+	{
+		icon: FolderKanban,
+		link: DASHBOARD_PAGES.SCRUMBAN,
+		name: 'Scrumban'
+	},
 	{
 		icon: Settings,
 		link: DASHBOARD_PAGES.SETTINGS,
 		name: 'Settings'
-	},
-	{
-		icon: Settings,
-		link: DASHBOARD_PAGES.SCRUMBAN,
-		name: 'Scrumban'
 	},
 ]
