@@ -1,6 +1,7 @@
 import { IUser } from './auth.types'
 import { IChatResponse } from './chat.types'
 import type { IBase } from './root.types'
+import { IRolesResponse } from '@/types/roles.types'
 
 export interface IBoardResponse extends IBase {
 	name: string
@@ -11,6 +12,7 @@ export interface IBoardResponse extends IBase {
   imageUserName?:string 
   imageLinkHTML?:string 
 	users: IUser[]
+	roles: IRolesResponse[]
 	chats: IChatResponse[]
 }
 

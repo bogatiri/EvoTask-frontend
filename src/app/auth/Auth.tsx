@@ -103,10 +103,11 @@ export function Auth() {
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
 		auth(data)
 	}
+
 	return (
 		<div className='flex min-h-screen'>
 			<form
-				className='w-1/4 m-auto shadow bg-sidebar border-border border rounded-xl p-layout'
+				className='min-w-[25%] m-auto shadow bg-sidebar border-border border rounded-xl p-layout'
 				// onSubmit={handleSubmit(onSubmit)}
 			>
 				<Heading title='Auth' />
@@ -159,6 +160,12 @@ export function Auth() {
 									maxLength={6}
 									value={code}
 									onChange={code => setCode(code)}
+									onKeyDown={e => {
+										if (e.key === 'Enter' && !e.shiftKey) {
+											e.preventDefault()
+											handleSubmit(handleConfirmCode)
+										}
+									}}
 								>
 									<InputOTPGroup>
 										<InputOTPSlot index={0} />

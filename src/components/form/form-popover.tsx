@@ -1,7 +1,7 @@
 'use client'
 
 import { X } from 'lucide-react'
-import { ElementRef, useRef } from 'react'
+import { ElementRef, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -21,15 +21,20 @@ interface FormPopoverProps {
 	side?: 'left' | 'right' | 'top' | 'bottom'
 	align?: 'start' | 'center' | 'end'
 	sideOffset?: number
+	isPicked: boolean
+	pickImage: () => void
 }
 
 export const FormPopover = ({
 	children,
 	side = 'bottom',
 	align,
+	isPicked,
+	pickImage,
 	sideOffset = 0
 }: FormPopoverProps) => {
 	const closeRef = useRef<ElementRef<'button'>>(null)
+
 
 	const { createBoard } = useCreateBoard()
 
@@ -55,11 +60,11 @@ export const FormPopover = ({
 			<PopoverTrigger asChild>{children}</PopoverTrigger>
 			<PopoverContent
 				align={align}
-				className='w-80 pt-3'
+				className='pt-3 w-[444px]'
 				side={side}
 				sideOffset={sideOffset}
 			>
-				<div className='text-sm font-medium text-center text-neutral-600 pb-4'>
+				<div className='text-md font-medium text-center text-neutral-600 pb-4'>
 					Create board
 				</div>
 				<PopoverClose
@@ -70,22 +75,31 @@ export const FormPopover = ({
 						className='h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600'
 						variant='ghost'
 					>
-						<X className='h-4 w-4' />
+						<X className='h-5 w-5' />
 					</Button>
 				</PopoverClose>
 				<form
 					action={onSubmit}
 					className='space-y-4'
 				>
-					<div className='space-y-4'>
-						<FormPicker id='image' />
+					<div
+						className='space-y-4'
+					>
+						<FormPicker
+							pickImage={pickImage}
+							id='image'
+						/>
 						<FormInput
 							id='title'
 							label='Board title'
 							type='text'
 						/>
 					</div>
-					<FormSubmit className='w-full'>Create</FormSubmit>
+					{isPicked ? (
+						<FormSubmit className='w-full text-base'>Create</FormSubmit>
+					) : (
+						<div className='text-center'>Need to pick some background</div>
+					)}
 				</form>
 			</PopoverContent>
 		</Popover>

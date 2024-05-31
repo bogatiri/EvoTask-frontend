@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
-
 import { defaultImages } from '@/constants/images'
 
 import { FormErrors } from './form-errors'
@@ -14,16 +13,16 @@ import { cn } from '@/lib/utils'
 interface FormPickerProps {
 	id: string
 	errors?: Record<string, string[] | undefined>
+	pickImage: () => void
 }
 
-export const FormPicker = ({ id, errors }: FormPickerProps) => {
+export const FormPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 	const { pending } = useFormStatus()
 
 	const [images, setImages] =
 		useState<Array<Record<string, any>>>(defaultImages)
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedImageId, setSelectedImageId] = useState(null)
-
 
 	if (isLoading) {
     setIsLoading(false)
@@ -36,7 +35,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
 
 	return (
 		<div className='relative'>
-			<div className='grid grid-cols-3 gap-2 mb-2'>
+			<div className='grid grid-cols-4 gap-2 mb-2'>
 				{images.map(image => (
 					<div
 						key={image.id}
@@ -47,6 +46,7 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
 						onClick={() => {
 							if (pending) return
 							setSelectedImageId(image.id)
+							pickImage()
 						}}
 					>
 						<input

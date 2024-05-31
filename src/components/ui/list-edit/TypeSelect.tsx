@@ -1,5 +1,4 @@
 import cn from 'clsx'
-import { X } from 'lucide-react'
 
 import { Badge } from '@/components/ui/Badge'
 
@@ -55,17 +54,17 @@ export function TypeSelect({
 					<Badge>{text}</Badge>
 				)}
 			</button>
-			{value && (
-				<button
-					className='absolute top-0 right-0 opacity-30 hover:opacity-100 transition-opacity'
-					onClick={e => {
-						e.preventDefault()
-						onChange('')
-					}}
-				>
-					<X size={14} />
-				</button>
-			)}
+			{/* {value && (
+				// <button
+				// 	className='absolute top-0 right-0 opacity-30 hover:opacity-100 transition-opacity'
+				// 	onClick={e => {
+				// 		e.preventDefault()
+				// 		onChange('')
+				// 	}}
+				// >
+				// 	<X size={14} />
+				// </button>
+			)} */}
 			{isShow && (
 				<div
 					className={cn(

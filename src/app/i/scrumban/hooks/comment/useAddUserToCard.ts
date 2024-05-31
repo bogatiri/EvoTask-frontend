@@ -1,25 +1,31 @@
-import { boardService } from '@/services/board.service'
+import { cardService } from '@/services/card.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-export function useAddUserToBoard(){
+export function useAddUserToCard(){
 	const queryClient = useQueryClient()
 
 
-	const { mutate: addUserToBoard, isPending } = useMutation(
+	const { mutate: addUserToCard, isPending } = useMutation(
 		{
 			mutationKey: ['add user'],
 			mutationFn: ({
 				email,
-				boardId
+				boardId,
+				cardId
 			}: {
 				email: string
 				boardId: string
-			}) => boardService.addUserToBoard({ email, boardId }),
+				cardId: string
+			}) => cardService.addUserToCard({ email, boardId, cardId }),
 			onSuccess: data => {
+				queryClient.invalidateQueries({
+					queryKey: ['add user to card']
+				})
 				toast.success(`User "${data.data[1].name}" added`)
-				queryClient.invalidateQueries({queryKey:['board']})
+				queryClient.invalidateQueries({queryKey:['list']})
+				queryClient.invalidateQueries({ queryKey: ['board'] })
 			},
 			onError(error: unknown) {
 				if (isAxiosError(error)) {
@@ -32,5 +38,5 @@ export function useAddUserToBoard(){
 		}
 	)
 
-	return{addUserToBoard, isPending}
+	return{addUserToCard, isPending}
 }

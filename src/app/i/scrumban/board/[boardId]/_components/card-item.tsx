@@ -9,10 +9,13 @@ import {
 	Copy,
 	GripVertical,
 	MessageCircle,
+	MessageSquareText,
 	Paperclip,
 	Send,
+	SendHorizonal,
 	Trash
 } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
@@ -56,6 +59,8 @@ import { useAddUserToCard } from '../../../hooks/card/useAddUserToCard'
 import { useCardDebounce } from '../../../hooks/card/useCardDebounce'
 import { useCopyCard } from '../../../hooks/card/useCopyCard'
 import { useDeleteCard } from '../../../hooks/card/useDeleteCard'
+import { useCreateComment } from '../../../hooks/comment/useCreateComment'
+import { usePickCard } from '../../../hooks/card/usePickCard'
 
 interface CardItemProps {
 	data: ICardResponse
@@ -63,23 +68,38 @@ interface CardItemProps {
 
 export const CardItem = ({ data }: CardItemProps) => {
 	const [email, setEmail] = useState('')
-	const creator = data.users[0]
+	const [comment, setComment] = useState('')
+	const creator = data.creator
 
 	const { copyCard } = useCopyCard()
+
+	const { pickCard } = usePickCard()
+
 
 	const { deleteCard, isDeletePending } = useDeleteCard()
 
 	const { addUserToCard, isPending } = useAddUserToCard()
 
+	const { createComment } = useCreateComment()
+
 	const { board, isLoading: isBoardLoading } = useBoardId()
 
 	const boardId = board!.id
+
 
 	const onAddUserToCard = () => {
 		const cardId = data?.id
 		addUserToCard({ email, boardId, cardId })
 		setEmail('')
 	}
+
+	const onCreateComment = () => {
+		const cardId = data?.id
+		const text = comment
+		createComment({ text, cardId })
+		setComment('')
+	}
+
 	const { register, control, watch } = useForm<TypeCardFormState>({
 		defaultValues: {
 			name: data?.name,
@@ -93,11 +113,29 @@ export const CardItem = ({ data }: CardItemProps) => {
 		}
 	})
 
+	const formatDate = (isoString: string) => {
+		const date = new Date(isoString)
+
+		date.setHours(date.getHours())
+
+		return date.toLocaleTimeString('en-GB', {
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: false
+		})
+	}
+
 	useCardDebounce({ watch, cardId: data!.id })
 
 	const onDelete = (event: React.MouseEvent) => {
 		event.stopPropagation()
 		deleteCard(data!.id)
+	}
+
+	const onPick = (event: React.MouseEvent) => {
+		event.stopPropagation()
+		const cardId = data!.id
+		pickCard({ cardId })
 	}
 
 	const onCopy = (event: React.MouseEvent) => {
@@ -110,6 +148,13 @@ export const CardItem = ({ data }: CardItemProps) => {
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value)
 	}
+
+	const handleInputCommentChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setComment(event.target.value)
+	}
+
 
 	return (
 		<>
@@ -145,42 +190,41 @@ export const CardItem = ({ data }: CardItemProps) => {
 										Priority:
 									</span> */}
 									<div className='flex gap-1'>
-
-									<BarChart/>
-									<Controller
-										control={control}
-										name='priority'
-										render={({ field: { value, onChange } }) => (
-											<SingleSelect
-												data={['high', 'medium', 'low'].map(item => ({
-													value: item,
-													label: item
-												}))}
-												text='Priority'
-												onChange={onChange}
-												value={value || ''}
-											/>
-										)}
+										<BarChart />
+										<Controller
+											control={control}
+											name='priority'
+											render={({ field: { value, onChange } }) => (
+												<SingleSelect
+													data={['high', 'medium', 'low'].map(item => ({
+														value: item,
+														label: item
+													}))}
+													text='Priority'
+													onChange={onChange}
+													value={value || ''}
+												/>
+											)}
 										/>
-										</div>
-									<div className='flex gap-1'>
-
-									<Coins/>
-																		<Controller
-										control={control}
-										name='points'
-										render={({ field: { value, onChange } }) => (
-											<SingleSelect
-												data={['1', '2', '3', '4'].map(item => ({
-													value: item,
-													label: item
-												}))}
-												text='Points'
-												onChange={onChange}
-												value={value || ''}
-											/>
-										)}
-									/></div>
+									</div>
+									<div className='flex  gap-3'>
+										<Coins />
+										<Controller
+											control={control}
+											name='points'
+											render={({ field: { value, onChange } }) => (
+												<SingleSelect
+													data={['1', '2', '3', '4'].map(item => ({
+														value: item,
+														label: item
+													}))}
+													text='Points'
+													onChange={onChange}
+													value={value || ''}
+												/>
+											)}
+										/>
+									</div>
 								</div>
 								<Trash
 									size={15}
@@ -291,6 +335,15 @@ export const CardItem = ({ data }: CardItemProps) => {
 									<span className='ml-1'>Copy</span>
 								</Button>
 								<Button
+									onClick={onPick}
+									type='submit'
+									size='sm'
+									className='px-3'
+								>
+									<Copy className='h-4 w-4' />
+									<span className='ml-1'>Pick this card</span>
+								</Button>
+								<Button
 									type='submit'
 									size='sm'
 									className='px-3'
@@ -342,33 +395,40 @@ export const CardItem = ({ data }: CardItemProps) => {
 											<CommandGroup className='w-auto'>
 												{data.users.length > 0 ? (
 													data.users?.map((user, index) => (
-														<div
+														<Link
 															key={user.id}
-															className='flex gap-1 cursor-pointer opacity-70 hover:opacity-100 border-b p-1  justify-between mt-2 items-center '
+															href={`/i/profile/${user.id}`}
 														>
-															{user.avatar ? (
-																<Avatar className='h-8 w-8 border border-border'>
-																	<AvatarImage src={user.avatar}></AvatarImage>
-																</Avatar>
-															) : (
-																<Avatar className='h-8 w-8 border border-border'>
-																	<AvatarFallback>
-																		{user.name
-																			? user.name.charAt(0).toUpperCase()
-																			: user.email.charAt(0).toUpperCase()}
-																	</AvatarFallback>
-																</Avatar>
-															)}
-															{user.name ? (
-																<p className='font-semibold text-neutral-700 text-sm mb-2'>
-																	{user.name}
-																</p>
-															) : (
-																<p className='font-semibold text-sm text-neutral-700 mb-2'>
-																	{user.email}
-																</p>
-															)}
-														</div>
+															<div
+																key={user.id}
+																className='flex gap-1 cursor-pointer opacity-70 hover:opacity-100 border-b p-1  justify-between mt-2 items-center '
+															>
+																{user.avatar ? (
+																	<Avatar className='h-8 w-8 border border-border'>
+																		<AvatarImage
+																			src={user.avatar}
+																		></AvatarImage>
+																	</Avatar>
+																) : (
+																	<Avatar className='h-8 w-8 border border-border'>
+																		<AvatarFallback>
+																			{user.name
+																				? user.name.charAt(0).toUpperCase()
+																				: user.email.charAt(0).toUpperCase()}
+																		</AvatarFallback>
+																	</Avatar>
+																)}
+																{user.name ? (
+																	<p className='font-semibold text-neutral-700 text-sm mb-2'>
+																		{user.name}
+																	</p>
+																) : (
+																	<p className='font-semibold text-sm text-neutral-700 mb-2'>
+																		{user.email}
+																	</p>
+																)}
+															</div>
+														</Link>
 													))
 												) : (
 													<div>no users</div>
@@ -379,14 +439,98 @@ export const CardItem = ({ data }: CardItemProps) => {
 								</Popover>
 							</div>
 						</div>
-						<div className=' w-full'>
-							<div className='flex gap-x-3'>
-								<AlignLeft className='h-5 w-5 mt-0.5 text-neutral-700' />
-								<p className='font-semibold text-neutral-700 mb-2'>
-									Description
-								</p>
+						<div className='grid grid-cols-2 w-full gap-2'>
+							<div className='h-full'>
+								<div className='flex  gap-x-3'>
+									<AlignLeft className='h-5 w-5 mt-0.5 text-neutral-700' />
+									<p className='font-semibold text-neutral-700 mb-2'>
+										Description
+									</p>
+								</div>
+								<TransparentFieldTextarea
+									className='h-[200px]'
+									{...register('description')}
+								/>
 							</div>
-							<TransparentFieldTextarea {...register('description')} />
+							<div className='flex flex-col flex-grow justify-between'>
+								<div>
+									<div className='flex gap-x-3'>
+										<MessageSquareText className='h-5 w-5 mt-0.5 text-neutral-700' />
+										<p className='font-semibold text-neutral-700 mb-2'>
+											Comments
+										</p>
+									</div>
+									<ul className='border border-border rounded-md space-y-2 h-[150px] overflow-y-auto flex flex-col p-4'>
+										{data.comments ? (
+											data.comments.map((comment, index) => (
+												<div
+													className='flex gap-2'
+													key={index}
+												>
+													<div className='flex items-center'>
+														{comment.user.avatar ? (
+															<Link href={`/i/profile/${comment.user.id}`}>
+																<Avatar className='h-8 w-8 border border-border'>
+																	<AvatarImage
+																		src={comment.user.avatar}
+																	></AvatarImage>
+																</Avatar>
+															</Link>
+														) : (
+															<Link href={`/i/profile/${comment.user.id}`}>
+																<Avatar className='h-8 w-8 border border-border'>
+																	<AvatarFallback>
+																		{comment.user.name
+																			? comment.user.name
+																					.charAt(0)
+																					.toUpperCase()
+																			: comment.user.email
+																					.charAt(0)
+																					.toUpperCase()}
+																	</AvatarFallback>
+																</Avatar>
+															</Link>
+														)}
+													</div>
+													<div className='rounded-lg px-4 py-2 max-w-xs mr-auto  text-white bg-gray-900'>
+														<div className='flex gap-2'>
+															<span className='block break-all max-w-[200px] text-sm'>
+																{comment.text}
+															</span>
+															<span className='block text-xs text-right text-gray-600 self-end'>
+																{formatDate(comment.createdAt)}
+															</span>
+														</div>
+													</div>
+												</div>
+											))
+										) : (
+											<p>No Comments</p>
+										)}
+									</ul>
+								</div>
+								<div className='flex gap-2 w-full justify-between mt-2 mb-2'>
+									<div className='w-full'>
+										<Input
+											value={comment}
+											className='w-full'
+											onChange={handleInputCommentChange}
+											onKeyDown={e => {
+												if (e.key === 'Enter' && !e.shiftKey) {
+													e.preventDefault()
+													onCreateComment()
+												}
+											}}
+										/>
+									</div>
+									<div
+										className='opacity-70 hover:opacity-100 cursor-pointer hover:bg-blueSecondary rounded-md p-2'
+										onClick={onCreateComment}
+									>
+										<SendHorizonal />
+									</div>
+								</div>
+							</div>
 						</div>
 						<DialogFooter className='sm:justify-start'>
 							<div className=' w-full flex gap-3 justify-between'>

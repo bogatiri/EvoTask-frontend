@@ -20,7 +20,7 @@ class UserService {
 
 	async getUserById(id: string) {
 		const response = await axiosWithAuth.get(`${this.BASE_URL}/${id}`)
-		return response.data
+		return response.data.user
 	}
 
 	async update(data: TypeUserFormState) {

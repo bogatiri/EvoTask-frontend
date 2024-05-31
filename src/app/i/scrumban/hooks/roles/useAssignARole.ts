@@ -1,24 +1,27 @@
-import { boardService } from '@/services/board.service'
+import { roleService } from '@/services/roles.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-export function useAddUserToBoard(){
+export function useAssignARole(){
 	const queryClient = useQueryClient()
 
 
-	const { mutate: addUserToBoard, isPending } = useMutation(
+	const { mutate: assignARole, isPending } = useMutation(
 		{
-			mutationKey: ['add user'],
+			mutationKey: ['assign role'],
 			mutationFn: ({
-				email,
-				boardId
+				userId,
+				boardId,
+				id
 			}: {
-				email: string
-				boardId: string
-			}) => boardService.addUserToBoard({ email, boardId }),
+				userId: string
+				boardId: string,
+				id: string
+			}) => roleService.assignARole({ userId, boardId, id }),
 			onSuccess: data => {
-				toast.success(`User "${data.data[1].name}" added`)
+				console.log(data)
+				toast.success(`User added`)
 				queryClient.invalidateQueries({queryKey:['board']})
 			},
 			onError(error: unknown) {
@@ -32,5 +35,5 @@ export function useAddUserToBoard(){
 		}
 	)
 
-	return{addUserToBoard, isPending}
+	return{assignARole, isPending}
 }

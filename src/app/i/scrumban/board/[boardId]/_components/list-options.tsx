@@ -58,6 +58,7 @@ export const ListOptions = ({
 		copyList({ listId, boardId })
 	}
 
+
 	return (
 		<Dialog>
 			<DialogTrigger>
@@ -103,6 +104,7 @@ export const ListOptions = ({
 						</div>
 					</div>
 					<div className='flex flex-col gap-3'>
+					
 						<Button
 							type='submit'
 							size='sm'

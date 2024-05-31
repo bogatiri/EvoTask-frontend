@@ -24,10 +24,9 @@ import { useSprintDebounce } from '../../../hooks/sprint/useSprintDebounce'
 interface ISprintNavbarProps {
 	item: ISprintResponse
 	index: number
-	isOpen: boolean
 }
 
-const SprintNavbar = ({ item, index, isOpen }: ISprintNavbarProps) => {
+const SprintNavbar = ({ item, index }: ISprintNavbarProps) => {
 	const { deleteSprint, isDeletePending } = useDeleteSprint()
 
 	const { register, control, watch, reset } = useForm<TypeSprintFormState>({
@@ -51,6 +50,10 @@ const SprintNavbar = ({ item, index, isOpen }: ISprintNavbarProps) => {
 			})
 		}
 	}, [item, reset])
+
+	const handleDeleteSprint =() => {
+		deleteSprint(item.id)
+	}
 
 	useSprintDebounce({ watch, sprintId: item!.id })
 	return (
@@ -149,7 +152,7 @@ const SprintNavbar = ({ item, index, isOpen }: ISprintNavbarProps) => {
 					<DialogClose className=' inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-primary text-primary-foreground hover:bg-primary/90'>
 						<div
 							className='flex text-base items-center gap-4'
-							onClick={() => deleteSprint(item.id)}
+							onClick={handleDeleteSprint}
 						>
 							<span>Delete sprint</span>
 							<Trash size={18} />

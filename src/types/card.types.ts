@@ -1,4 +1,5 @@
 import { IUser } from './auth.types'
+import { ICommentResponse } from './comment.types'
 import type { IBase } from './root.types'
 
 export enum EnumCardPriority {
@@ -18,7 +19,9 @@ export interface ICardResponse extends IBase {
 	// 		id: string
 	// 	}
 	// }
+	comments?: ICommentResponse[] | []
 	points?: string
+	creator: IUser,
 	users: IUser[] | []
 	list: string
 	listId: string

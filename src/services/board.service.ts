@@ -1,7 +1,6 @@
 import type { IBoardResponse, TypeBoardFormState } from '@/types/board.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
-import axios from 'axios'
 
 class BoardService {
 	private BASE_URL = '/user/boards'

@@ -1,7 +1,9 @@
 'use client'
 
-import { GanttChartSquare, User } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { GanttChartSquare, LogOut, User } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { COLORS } from '@/constants/color.constants'
@@ -9,9 +11,9 @@ import { SITE_NAME } from '@/constants/seo.constants'
 
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 
-import { LogoutButton } from './LogoutButton'
 import { MenuItem } from './MenuItem'
 import { MENU } from './menu.data'
+import { authService } from '@/services/auth.service'
 
 export function Sidebar() {
 	const [currentUser, setCurrentUser] = useState('')
@@ -20,8 +22,19 @@ export function Sidebar() {
 		setCurrentUser(localUserId ?? '')
 	}, [])
 
+	const router = useRouter()
+
+	const { mutate } = useMutation({
+		mutationKey: ['logout'],
+		mutationFn: () => authService.logout(),
+		onSuccess: () => {
+			router.push('/')
+			localStorage.clear()
+		}
+	})
+
 	return (
-		<aside className='border-r w-full border-r-border h-full bg-sidebar flex flex-col justify-between'>
+		<aside className='border-r w-full border-r-border h-full bg-sidebar flex flex-col justify-between flex-grow'>
 			<div>
 				<Link
 					href='/'
@@ -39,7 +52,6 @@ export function Sidebar() {
 					</span>
 				</Link>
 				<div className='p-3 relative'>
-					<LogoutButton />{' '}
 					<div>
 						<Link
 							href={`${DASHBOARD_PAGES.PROFILE}/${currentUser}`}
@@ -57,18 +69,29 @@ export function Sidebar() {
 					))}
 				</div>
 			</div>
-			<footer className='text-xs opacity-40 font-normal text-center p-layout'>
-				2024 &copy; Powered By{' '}
-				<a
-					href='https://t.me/ro4evalexey'
-					target='_blank'
-					rel='noreferrer'
-					className='hover:text-primary text-brand-300 transition-colors'
-				>
-					{SITE_NAME}
-				</a>
-				. <br /> All rights reserved.
-			</footer>
+			<div>
+				<div className='border-b border-b-border'>
+					<div
+						className='flex gap-2.5 items-center  py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg cursor-pointer '
+						onClick={() => mutate()}
+					>
+						<LogOut />
+						<span>Logout</span>
+					</div>
+				</div>
+				<footer className='text-xs opacity-40 font-normal text-center p-layout'>
+					2024 &copy; Powered By{' '}
+					<a
+						href='https://t.me/ro4evalexey'
+						target='_blank'
+						rel='noreferrer'
+						className='hover:text-primary text-brand-300 transition-colors'
+					>
+						{SITE_NAME}
+					</a>
+					. <br /> All rights reserved.
+				</footer>{' '}
+			</div>
 		</aside>
 	)
 }

@@ -6,13 +6,8 @@ export enum EnumTokens {
 }
 
 export const getAccessToken = () => {
-	try {
-		
 		const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
 		return accessToken || null
-	} catch (error) {
-		console.error(error)
-	}
 }
 
 export const saveTokenStorage = (accessToken: string) => {

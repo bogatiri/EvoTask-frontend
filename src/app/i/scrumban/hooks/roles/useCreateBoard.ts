@@ -19,6 +19,7 @@ export function useCreateBoard() {
 		onSuccess: data => {
 			toast.success(`Board "${data.data.board.name}" created`)
 			push(`${DASHBOARD_PAGES.SCRUMBAN}/board/${data.data.board.id}`)
+
 			queryClient.invalidateQueries({ queryKey: ['boards'] })
 		},
 		onError(error: unknown) {

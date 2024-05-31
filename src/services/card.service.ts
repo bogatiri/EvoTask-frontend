@@ -15,6 +15,7 @@ class CardService {
     const response = await axiosWithAuth.get<ICardResponse[]>(`${this.BASE_URL}/${id}`)
     return response.data
   }
+	
 
 	async getCardByCardId(id: string) {
     const response = await axiosWithAuth.get<ICardResponse>(`${this.BASE_URL}/card/${id}`)
@@ -28,6 +29,11 @@ class CardService {
 
 	async createCard(data: TypeCardFormState) {
 		const response = await axiosWithAuth.post(this.BASE_URL, data)
+		return response
+	}
+	
+	async pickCard({cardId} : {cardId: string}){
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/pick`, {cardId})
 		return response
 	}
 

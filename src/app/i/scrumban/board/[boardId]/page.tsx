@@ -35,9 +35,12 @@ export default function BoardIdPage() {
 		enabled: isBoardLoaded && sprintId !== null
 	})
 
+
 	const onSprintPick = (pickedSprintId: string) => {
 		setSprintId(pickedSprintId) 
 	}
+
+
 
 	const backToMainBoard = () => {
 		setSprintId(null)
@@ -60,7 +63,7 @@ export default function BoardIdPage() {
 						<BoardNavbar
 							onSprintPick={onSprintPick}
 							backToMainBoard={backToMainBoard}
-							board={board}
+							board={board!}
 						/>
 						<ListContainer list={listsToShow!} />
 					</div>

@@ -8,10 +8,15 @@ import { Hint } from '@/components/hint'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { useBoards } from './hooks/board/useBoards'
+import { useState } from 'react'
 
 export const BoardList = () => {
 	const { items, setItems } = useBoards()
+	const [isPicked, setIsPicked] = useState(false)
 
+	const pickImage = () => {
+		setIsPicked(true)
+	}
 
 
 	return (
@@ -35,16 +40,17 @@ export const BoardList = () => {
 				<FormPopover
 					sideOffset={10}
 					side='right'
+					isPicked={isPicked}
+					pickImage={pickImage}
 				>
 					<div
 						role='button'
 						className='aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition'
+						onClick={() => setIsPicked(false)}
 					>
 						<p className='text-sm'>Create new board</p>
-
 						<Hint
 							sideOffset={70}
-							
 							description={`
 							What makes EvoTask different is that it gives you the ability to create an unlimited number of options for accessing boards, tasks, and other elements of your workspace.
               `}

@@ -61,7 +61,7 @@ export default function UserId() {
 	}, [user, reset])
 
 	useUserDebounce({ watch })
-
+	
 	if (user) {
 		const [dateStr, timeStr] = user.createdAt.toString().split('T')
 
@@ -133,7 +133,7 @@ export default function UserId() {
 								</div>
 							</div>
 						</div>
-						<span className='cursor-default select-none'>Name:</span>
+						<span className='cursor-default select-none ml-2'>Name:</span>
 						<div className='border border-border rounded-md p-2 '>
 							<TransparentField
 								autoComplete='off'
@@ -143,7 +143,7 @@ export default function UserId() {
 								{...register('name')}
 							/>
 						</div>
-						<span className='cursor-default select-none'>Last Name:</span>
+						<span className='cursor-default select-none ml-2'>Last Name:</span>
 
 						<div className='border border-border rounded-md p-2'>
 							<TransparentField
@@ -154,7 +154,7 @@ export default function UserId() {
 								{...register('lastName')}
 							/>
 						</div>
-						<span className='cursor-default select-none'>Phone Number:</span>
+						<span className='cursor-default select-none ml-2'>Phone Number:</span>
 
 						<div className='border border-border rounded-md p-2'>
 							<TransparentField
@@ -166,7 +166,7 @@ export default function UserId() {
 							/>
 						</div>
 						<div>
-							<span className='cursor-default select-none'>Organization:</span>
+							<span className='cursor-default select-none ml-2'>Organization:</span>
 
 							<div className='border border-border mt-4 rounded-md p-2 '>
 								<TransparentField
@@ -179,7 +179,7 @@ export default function UserId() {
 							</div>
 						</div>
 						<div>
-							<span className='cursor-default select-none'>Designation:</span>
+							<span className='cursor-default select-none ml-2'>Designation:</span>
 
 							<div className='border border-border mt-4 rounded-md p-2 '>
 								<TransparentField
@@ -191,7 +191,7 @@ export default function UserId() {
 								/>
 							</div>
 						</div>
-						<span className='cursor-default select-none'>About:</span>
+						<span className='cursor-default select-none ml-2'>About:</span>
 						<div className='col-span-2'>
 							<TransparentFieldTextarea
 								placeholder='About...'
