@@ -6,7 +6,7 @@ class SocketApi{
 
 	static createConnection() : void{
 		const authToken = localStorage.getItem('authToken')
-		this.socket = io('http://localhost:4201', {
+		this.socket = io('http://192.168.0.7:4201', {
 			query: {
 				authToken
 			}

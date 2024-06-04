@@ -14,14 +14,11 @@ export function useCreateCard() {
 					name,
 					list,
 				}: {
-					name: string
-					list: string
+					name: string | undefined
+					list: string | undefined
 				}) => cardService.createCard({ name, list  }),
 				onSuccess: data => {
-					queryClient.invalidateQueries({
-						queryKey: ['create card']
-					})
-					toast.success(`User "${data.data.name}" added`)
+					toast.success(`card "${data.data.name}" created`)
 					queryClient.invalidateQueries({queryKey:['list']})
 					queryClient.invalidateQueries({queryKey:['sprint']})
 				},

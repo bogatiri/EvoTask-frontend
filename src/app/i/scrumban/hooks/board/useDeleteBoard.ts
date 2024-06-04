@@ -17,7 +17,7 @@ export function useDeleteBoard() {
 			queryClient.invalidateQueries({
 				queryKey: ['boards'],
 			}),
-			toast.success('Successfully deleted!'),
+			toast.success('Board deleted!'),
 			push(DASHBOARD_PAGES.SCRUMBAN);
 			
 		}

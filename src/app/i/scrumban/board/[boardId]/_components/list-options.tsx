@@ -1,14 +1,8 @@
 'use client'
 
-import { Copy, List, MoreHorizontal, Trash } from 'lucide-react'
-import {
-	Control,
-	Controller,
-	UseFormRegister,
-	UseFormWatch
-} from 'react-hook-form'
+import { List, MoreHorizontal } from 'lucide-react'
+import { Control, UseFormRegister, UseFormWatch } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button'
 import {
 	Dialog,
 	DialogContent,
@@ -18,17 +12,17 @@ import {
 	DialogTrigger
 } from '@/components/ui/dialog'
 import { TransparentField } from '@/components/ui/fields/TransparentField'
-import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
-import { TypeSelect } from '@/components/ui/list-edit/TypeSelect'
+import Delete from '@/components/ui/items-options/delete'
+import Description from '@/components/ui/items-options/description'
+import ListType from '@/components/ui/items-options/list-type'
 
 import { IListResponse, TypeListFormState } from '@/types/list.types'
 
-import { useCopyList } from '../../../hooks/list/useCopyList'
-import { useDeleteList } from '../../../hooks/list/useDeleteList'
+import Copy from '../../../../../../components/ui/items-options/copy'
 import { useListDebounce } from '../../../hooks/list/useListDebounce'
 
 interface ListOptionsProps {
-	data: IListResponse | undefined
+	data: IListResponse
 	register: UseFormRegister<TypeListFormState>
 	control: Control<TypeListFormState>
 	watch: UseFormWatch<TypeListFormState>
@@ -41,23 +35,6 @@ export const ListOptions = ({
 	watch
 }: ListOptionsProps) => {
 	useListDebounce({ watch, listId: data!.id })
-
-	const { deleteList, isDeletePending } = useDeleteList()
-
-	const onDelete = (event: React.MouseEvent) => {
-		event.stopPropagation()
-		deleteList(data!.id)
-	}
-
-	const { copyList, isPending } = useCopyList()
-
-	const onCopy = (event: React.MouseEvent) => {
-		event.stopPropagation()
-		const listId = data!.id
-		const boardId = data!.boardId
-		copyList({ listId, boardId })
-	}
-
 
 	return (
 		<Dialog>
@@ -81,48 +58,18 @@ export const ListOptions = ({
 				</DialogHeader>
 				<div className='flex flex-col-[0.5fr_1fr] justify-between gap-4'>
 					<div className='flex flex-col gap-y-3 w-full'>
-						<div className='w-[35%]'>
-							<Controller
-								control={control}
-								name='type'
-								render={({ field: { value, onChange } }) => (
-									<TypeSelect
-										data={['backlog', 'to_do', 'in_progress', 'done'].map(
-											item => ({
-												value: item,
-												label: item
-											})
-										)}
-										onChange={onChange}
-										value={value || ''}
-									/>
-								)}
-							/>
-						</div>
-						<div className='w-full'>
-							<TransparentFieldTextarea {...register('description')} />
-						</div>
+						<ListType control={control} />
+						<Description
+							register={register}
+							placeholder='you can add a description to list'
+						/>
 					</div>
 					<div className='flex flex-col gap-3'>
-					
-						<Button
-							type='submit'
-							size='sm'
-							className='px-3'
-							onClick={onDelete}
-						>
-							<Trash size={15} />
-							<span className='ml-1'>Delete</span>
-						</Button>
-						<Button
-							onClick={onCopy}
-							type='submit'
-							size='sm'
-							className='px-3'
-						>
-							<Copy className='h-4 w-4' />
-							<span className='ml-1'>Copy</span>
-						</Button>
+						<Delete listId={data.id} />
+						<Copy
+							listId={data.id}
+							boardId={data.boardId}
+						/>
 					</div>
 				</div>
 			</DialogContent>

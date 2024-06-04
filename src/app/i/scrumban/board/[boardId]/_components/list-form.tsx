@@ -13,7 +13,11 @@ import { useCreateList } from '../../../hooks/list/useCreateList'
 
 import { ListWrapper } from './list-wrapper'
 
-export const ListForm = () => {
+interface IListForm{
+	sprintId?: string | undefined
+}
+
+const ListForm = ({sprintId}: IListForm) => {
 	const params = useParams()
 	const formRef = useRef<ElementRef<'form'>>(null)
 	const inputRef = useRef<ElementRef<'input'>>(null)
@@ -44,10 +48,16 @@ export const ListForm = () => {
 	const onSubmit = (formData: FormData) => {
 		const name = formData.get('title') as string
 		const board = formData.get('boardId') as string
-		createList({
-			name,
-			board
-		})
+		sprintId
+			? createList({
+					name,
+					board,
+					sprintId
+				})
+			: createList({
+					name,
+					board
+				})
 		disableEditing()
 	}
 
@@ -57,7 +67,7 @@ export const ListForm = () => {
 				<form
 					action={onSubmit}
 					ref={formRef}
-					className='w-full p-3 rounded-md bg-[#0e0f0f] space-y-4 shadow-md'
+					className='w-full p-3 rounded-md mt-2 bg-[#0e0f0f] space-y-4 shadow-md'
 				>
 					<FormInput
 						ref={inputRef}
@@ -90,7 +100,7 @@ export const ListForm = () => {
 		<ListWrapper>
 			<button
 				onClick={enableEditing}
-				className='w-full rounded-md bg-[#0e0f0f]/50 hover:bg-[#0e0f0f]/80 transition p-3 flex items-center font-medium text-sm'
+				className='w-full rounded-md bg-[#0e0f0f]/50 hover:bg-[#0e0f0f]/80 transition p-3 mt-2 flex items-center font-medium text-sm'
 			>
 				<Plus className='h-4 w-4 mr-2' />
 				Add a list
@@ -98,3 +108,5 @@ export const ListForm = () => {
 		</ListWrapper>
 	)
 }
+
+export default ListForm

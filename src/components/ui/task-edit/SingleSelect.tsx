@@ -30,7 +30,7 @@ export function SingleSelect({
 
 	return (
 		<div
-			className={cn('relative min-w-24 cursor-pointer ', {
+			className={cn('relative min-w-20 cursor-pointer ', {
 				'w-max': isColorSelect
 			})}
 			ref={ref}

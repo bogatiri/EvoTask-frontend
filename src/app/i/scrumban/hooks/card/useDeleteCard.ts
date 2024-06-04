@@ -12,9 +12,6 @@ export function useDeleteCard() {
 			mutationKey: ['delete card'],
 			mutationFn: (id: string) => cardService.deleteCard(id),
 			onSuccess: data => {
-				queryClient.invalidateQueries({
-					queryKey: ['delete card']
-				})
 				toast.success(`Card "${data.data.name}" deleted`)
 				queryClient.invalidateQueries({queryKey:['list']})
 			},

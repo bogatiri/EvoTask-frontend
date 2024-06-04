@@ -20,9 +20,6 @@ export function useAddUserToCard(){
 				cardId: string
 			}) => cardService.addUserToCard({ email, boardId, cardId }),
 			onSuccess: data => {
-				queryClient.invalidateQueries({
-					queryKey: ['add user to card']
-				})
 				toast.success(`User "${data.data[1].name}" added`)
 				queryClient.invalidateQueries({queryKey:['list']})
 				queryClient.invalidateQueries({ queryKey: ['board'] })

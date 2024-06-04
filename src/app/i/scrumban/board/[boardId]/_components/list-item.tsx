@@ -5,9 +5,9 @@ import { ElementRef, useRef, useState } from 'react'
 
 import { IListResponse } from '@/types/list.types'
 
-import { CardForm } from './card-form'
-import { CardItem } from './card-item'
-import { ListHeader } from './list-header'
+import CardForm from './card-form'
+import CardItem from './card-item'
+import ListHeader from './list-header'
 import { cn } from '@/lib/utils'
 
 interface ListItemProps {
@@ -15,7 +15,7 @@ interface ListItemProps {
 	index: number
 }
 
-export const ListItem = ({ list, index }: ListItemProps) => {
+const ListItem = ({ list, index }: ListItemProps) => {
 	const textareaRef = useRef<ElementRef<'textarea'>>(null)
 	const [isEditing, setIsEditing] = useState(false)
 
@@ -29,6 +29,7 @@ export const ListItem = ({ list, index }: ListItemProps) => {
 			textareaRef.current?.focus()
 		})
 	}
+
 
 	return (
 		<Draggable
@@ -75,6 +76,7 @@ export const ListItem = ({ list, index }: ListItemProps) => {
 														{...provided.dragHandleProps}
 													>
 														<CardItem
+															boardId={list.boardId}
 															key={card.id}
 															data={card}
 														/>
@@ -99,3 +101,5 @@ export const ListItem = ({ list, index }: ListItemProps) => {
 		</Draggable>
 	)
 }
+
+export default ListItem

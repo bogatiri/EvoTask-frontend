@@ -20,7 +20,6 @@ export function useAssignARole(){
 				id: string
 			}) => roleService.assignARole({ userId, boardId, id }),
 			onSuccess: data => {
-				console.log(data)
 				toast.success(`User added`)
 				queryClient.invalidateQueries({queryKey:['board']})
 			},

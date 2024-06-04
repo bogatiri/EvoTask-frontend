@@ -8,19 +8,19 @@ import { FormSubmit } from '@/components/form/form-submit'
 import { FormTextarea } from '@/components/form/form-textarea'
 import { Button } from '@/components/ui/button'
 
-import { ICardResponse } from '@/types/card.types'
-
 import { useCreateCard } from '../../../hooks/card/useCreateCard'
+import { useCreateSubtask } from '../../../hooks/card/useCreateSubtask'
 
 interface CardFormProps {
-	listId: string
+	listId?: string
+	parentId?: string
 	enableEditing: () => void
 	disableEditing: () => void
 	isEditing: boolean
 }
 
-export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
-	({ listId, enableEditing, disableEditing, isEditing }, ref) => {
+const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
+	({ listId, enableEditing, disableEditing, isEditing, parentId }, ref) => {
 		const formRef = useRef<ElementRef<'form'>>(null)
 
 		const onKeyDown = (e: KeyboardEvent) => {
@@ -41,8 +41,10 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 
 		const { createCard } = useCreateCard()
 
+		const { createSubtask } = useCreateSubtask()
+
 		const onSubmit = (formData: FormData) => {
-			const name = formData.get('title') as string
+			const name = formData.get('name') as string
 			const list = formData.get('listId') as string
 			createCard({
 				name,
@@ -51,27 +53,46 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 			disableEditing()
 		}
 
+		const onCreateSubtask = (formData: FormData) => {
+			const name = formData.get('name') as string
+			const parentId = formData.get('parentId') as string
+			createSubtask({
+				name,
+				parentId
+			})
+			disableEditing()
+		}
+
 		if (isEditing) {
 			return (
 				<form
 					ref={formRef}
-					action={onSubmit}
-					className='m-1 py-0.5 px-1 space-y-4'
+					action={parentId ? onCreateSubtask : onSubmit}
+					className=' w-full py-1 px-2 space-y-4'
 				>
 					<FormTextarea
-						id='title'
+						id='name'
 						onKeyDown={onTextareakeyDown}
 						ref={ref}
-						placeholder='Enter a title for this card...'
+						placeholder='Enter a name for this card...'
 					/>
-					<input
-						hidden
-						id='listId'
-						name='listId'
-						defaultValue={listId}
-					/>
+					{listId ? (
+						<input
+							hidden
+							id='listId'
+							name='listId'
+							defaultValue={listId}
+						/>
+					) : (
+						<input
+							hidden
+							id='parentId'
+							name='parentId'
+							defaultValue={parentId}
+						/>
+					)}
 					<div className='flex items-center gap-x-1'>
-						<FormSubmit>Add card</FormSubmit>
+						<FormSubmit>{parentId ? 'Add a subtask' : 'Add a card'}</FormSubmit>
 						<Button
 							onClick={disableEditing}
 							size='sm'
@@ -85,7 +106,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 		}
 
 		return (
-			<div className='pt-2 px-2'>
+			<div className='pt-2 px-2 w-full'>
 				<Button
 					onClick={enableEditing}
 					className='h-auto px-2 py-1.5 w-full justify-start text-muted-foreground text-sm'
@@ -93,11 +114,13 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
 					variant='ghost'
 				>
 					<Plus className='h-4 w-4 mr-2' />
-					Add a card
+					{parentId ? 'Add a subtask' : 'Add a card'}
 				</Button>
 			</div>
 		)
 	}
 )
+
+export default CardForm
 
 CardForm.displayName = 'CardForm'

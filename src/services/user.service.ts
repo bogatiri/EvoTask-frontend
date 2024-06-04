@@ -1,4 +1,4 @@
-import { IUser, TypeUserForm, TypeUserFormState } from '@/types/auth.types'
+import { IUser, TypeUserFormState } from '@/types/auth.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 
@@ -20,7 +20,29 @@ class UserService {
 
 	async getUserById(id: string) {
 		const response = await axiosWithAuth.get(`${this.BASE_URL}/${id}`)
-		return response.data.user
+		return response.data
+	}
+
+	async setAvatar({ id, file }: { id: string; file: File }) {
+		const formData = new FormData()
+		formData.append('avatar', file)
+
+		const response = await axiosWithAuth.post(
+			`${this.BASE_URL}/${id}`,
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+		)
+
+		return response
+	}
+
+	async getAvatar(avatar: string){
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/avatar`, {avatar})
+		return response.data
 	}
 
 	async update(data: TypeUserFormState) {

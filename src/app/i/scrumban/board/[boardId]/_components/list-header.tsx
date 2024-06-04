@@ -1,9 +1,9 @@
 'use client'
 
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { TransparentField } from '@/components/ui/fields/TransparentField'
-import { TypeSelect } from '@/components/ui/list-edit/TypeSelect'
+import ListType from '@/components/ui/items-options/list-type'
 
 import { IListResponse, TypeListUpdateFormState } from '@/types/list.types'
 
@@ -15,7 +15,7 @@ interface ListHeaderProps {
 	data: IListResponse
 }
 
-export const ListHeader = ({ data }: ListHeaderProps) => {
+const ListHeader = ({ data }: ListHeaderProps) => {
 	const { register, control, watch } = useForm<TypeListUpdateFormState>({
 		defaultValues: {
 			name: data?.name,
@@ -39,21 +39,7 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
 					/>
 				</div>
 				<div className='grid grid-cols-2 gap-2'>
-					<Controller
-						control={control}
-						name='type'
-						render={({ field: { value, onChange } }) => (
-							<TypeSelect
-								data={['backlog', 'to_do', 'in_progress', 'done'].map(item => ({
-									value: item,
-									label: item
-								}))}
-								text='Type'
-								onChange={onChange}
-								value={value || ''}
-							/>
-						)}
-					/>
+					<ListType control={control} />
 					<p className='justify-self-center text-xs'>
 						{data.cards?.length} cards this list
 					</p>
@@ -62,3 +48,5 @@ export const ListHeader = ({ data }: ListHeaderProps) => {
 		</div>
 	)
 }
+
+export default ListHeader

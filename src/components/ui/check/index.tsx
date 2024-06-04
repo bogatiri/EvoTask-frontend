@@ -18,13 +18,14 @@ const Checkbox = (props: {
 		| 'gray'
 	[x: string]: any
 }) => {
+
 	const { extra, color, id, ...rest } = props
 	return (
 		<input
 			id={id}
 			type='checkbox'
 			className={`defaultCheckbox relative inline-flex h-[20px] min-h-[20px] w-[20px] min-w-[20px] appearance-none items-center opacity-40 hover:opacity-100 checked:opacity-100
-      justify-center rounded-full border border-dashed border-gray-300 text-white/0 outline-none transition ease-linear
+      justify-center rounded-md border border-dashed border-gray-300 text-white/0 outline-none transition ease-linear
       checked:border-none checked:text-white hover:cursor-pointer dark:border-white/10 ${
 				color === 'red'
 					? 'checked:border-none checked:bg-red-500 dark:checked:bg-red-400'

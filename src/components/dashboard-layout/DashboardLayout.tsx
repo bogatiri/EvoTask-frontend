@@ -17,6 +17,9 @@ import { useProfile } from '@/hooks/useProfile'
 import { Header } from './header/Header'
 import { Sidebar } from './sidebar/Sidebar'
 import { useUserDebounce } from '@/app/i/profile/hooks/useUserDebounce'
+import { usePathname } from 'next/navigation'
+import { ArrowBigDown } from 'lucide-react'
+import SmallSidebar from './sidebar/SmallSidebar'
 
 export default function DashboardLayout({
 	children
@@ -24,19 +27,19 @@ export default function DashboardLayout({
 	const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
 	const { data, isLoading, isSuccess } = useProfile()
+	console.log(data)
 	const [sidebar, setSidebar] = useState<number | null>(
 		isLoading ? null : +data!.user.sidebarWidth
 	)
-	console.log(data)
 	const refA = useRef<ImperativePanelHandle>(null)
 
 	useEffect(() => {
 		if (data) {
+			console.log('data', data)
 			setSidebar(+data.user.sidebarWidth)
 			if (refA.current) {
 				setTimeout(() => refA.current?.resize(+data.user.sidebarWidth), 10)
 				const a = refA.current?.getSize()
-				console.log('s', a)
 			}
 			setIsInitialized(true)
 		}
@@ -51,8 +54,6 @@ export default function DashboardLayout({
 	const onResize = (size: number) => {
 		if (isInitialized) {
 			setSidebar(size)
-			console.log('size', size)
-			console.log('sidebar', sidebar)
 			{
 				sidebar !== size && setValue('sidebarWidth', sidebar!.toString())
 			}
@@ -60,6 +61,8 @@ export default function DashboardLayout({
 	}
 
 	useUserDebounce({ watch })
+
+	const pathName = usePathname()
 
 	return (
 		<>
@@ -71,17 +74,26 @@ export default function DashboardLayout({
 					direction='horizontal'
 				>
 					<ResizablePanel
-						minSize={4}
-						defaultSize={sidebar!}
+					className='hidden xl:block'
+						minSize={9}
+						defaultSize={sidebar! }
+						maxSize={20}
 						onResize={onResize}
 						ref={refA}
 					>
-						<Sidebar />
+						<Sidebar
+						sidebar={sidebar}
+						/>
 					</ResizablePanel>
-					<ResizableHandle withHandle />
-					<ResizablePanel>
+					<div className='xl:hidden fixed z-50'>
+					<SmallSidebar/>
+					</div>
+					<ResizableHandle  />
+					<ResizablePanel defaultSize={100-sidebar!}>
 						<main className='overflow-x-hidden h-full max-h-screen relative'>
-							<Header />
+							{(!pathName.includes('board') && (
+								<Header />
+							))}
 							{children}
 						</main>
 					</ResizablePanel>

@@ -13,7 +13,6 @@ export interface ISprintResponse extends IBase {
 	goal?: string
 	startDate?: string
 	endDate?: string
-	// users: IUser[] | []
 	list: IListResponse[]
 	boardId: string
 }
@@ -30,4 +29,4 @@ export interface ISprintResponses extends IBase {
 	listId?: string
 }
 
-export type TypeSprintUpdateFormState = Partial<Omit<ISprintResponses, 'id'>>
+export type TypeSprintUpdateFormState = Partial<Omit<ISprintResponse, 'id' | 'list'>>

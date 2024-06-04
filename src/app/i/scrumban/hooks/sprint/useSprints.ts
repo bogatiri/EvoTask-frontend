@@ -16,12 +16,12 @@ export function useSprints(boardId: string) {
 	useEffect(() => {
 		setItems(data?.data)
 	}, [data?.data])
-
+	
 	return { items, setItems }
 }
 
 export function useSprintById(sprintId: string, options = { enabled: true }) {
-  const { data: sprint, isLoading, error,   } = useQuery<ISprintResponse>({
+  const { data: sprint, isLoading, error   } = useQuery<ISprintResponse>({
     queryKey: ['sprint', sprintId], 
     queryFn: () => sprintService.getSprintBySprintId(sprintId),
 		enabled: options.enabled 

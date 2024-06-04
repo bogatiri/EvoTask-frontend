@@ -8,8 +8,8 @@ import { useBoardId } from '../../hooks/board/useBoardId'
 import { useListById } from '../../hooks/list/useLists'
 import { useSprintById } from '../../hooks/sprint/useSprints'
 
-import { BoardNavbar } from './_components/board-navbar'
-import { ListContainer } from './_components/list-container'
+import BoardNavbar from './_components/board-navbar'
+import ListContainer from './_components/list-container'
 
 export default function BoardIdPage() {
 	const { board, isLoading: isBoardLoading } = useBoardId()
@@ -27,28 +27,30 @@ export default function BoardIdPage() {
 	}, [list])
 
 	useEffect(() => {
-    document.title = `EvoTask | ${board?.name}` || 'ScrumBan';
-  }, [board]);
+		document.title = `EvoTask | ${board?.name}` || 'ScrumBan'
+	}, [board])
 
-	const [sprintId, setSprintId] = useState<string | null>(null) 
+	const [sprintId, setSprintId] = useState<string | null>(null)
 	const { sprint, isLoading: isSprintLoading } = useSprintById(sprintId!, {
 		enabled: isBoardLoaded && sprintId !== null
 	})
 
-
 	const onSprintPick = (pickedSprintId: string) => {
-		setSprintId(pickedSprintId) 
+		setSprintId(pickedSprintId)
 	}
-
-
 
 	const backToMainBoard = () => {
 		setSprintId(null)
 		setLists(list)
 	}
+
+	
+
+
 	if (isBoardLoading || isListLoading) return <div>Loading...</div>
 	if (!isBoardLoading && !isListLoading) {
 		if (lists) {
+			
 			const isSprintLoaded = sprint && !isSprintLoading
 			const sprintLists =
 				isSprintLoaded && sprint.list.length > 0 ? sprint.list : []
@@ -59,13 +61,13 @@ export default function BoardIdPage() {
 					className=' flex flex-col relative size-full bg-no-repeat bg-cover bg-center'
 					style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
 				>
-					<div className='p-4 text-lg text-card-foreground h-full overflow-x-auto '>
+					<div className='px-4 text-lg text-card-foreground h-full overflow-x-auto '>
 						<BoardNavbar
 							onSprintPick={onSprintPick}
 							backToMainBoard={backToMainBoard}
 							board={board!}
 						/>
-						<ListContainer list={listsToShow!} />
+						<ListContainer list={lists.length > 0 ? listsToShow! : sprintLists} />
 					</div>
 				</div>
 			)

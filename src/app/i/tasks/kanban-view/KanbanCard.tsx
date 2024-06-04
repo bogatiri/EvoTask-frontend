@@ -61,21 +61,18 @@ export function KanbanCard({ item, setItems }: IKanbanCard) {
 							<button aria-describedby='todo-item'>
 								<GripVertical className={styles.grip} />
 							</button>
-<div
-onClick={event => event.stopPropagation()}>
-
-
-							<Controller
-								control={control}
-								name='isCompleted'
-								render={({ field: { value, onChange } }) => (
-									<Checkbox
-										onChange={onChange}
-										checked={value}
+							<div onClick={event => event.stopPropagation()}>
+								<Controller
+									control={control}
+									name='isCompleted'
+									render={({ field: { value, onChange } }) => (
+										<Checkbox
+											onChange={onChange}
+											checked={value}
 										/>
 									)}
-									/>
-									</div>
+								/>
+							</div>
 
 							<TransparentField {...register('name')} />
 						</div>

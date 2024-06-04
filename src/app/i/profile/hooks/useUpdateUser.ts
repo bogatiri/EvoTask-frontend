@@ -20,7 +20,7 @@ export function useUpdateUser() {
 			toast.success('User updated')
 		},
 		onError(error){
-			console.error(error)
+			console.error('qweasd',error)
 		}
 	})
 

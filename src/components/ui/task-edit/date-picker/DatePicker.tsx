@@ -1,7 +1,6 @@
 import cn from 'clsx'
 import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
-import { X } from 'lucide-react'
 import { useState } from 'react'
 import { DayPicker, type SelectSingleEventHandler } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
@@ -47,14 +46,6 @@ export function DatePicker({
 			<button onClick={() => setIsShow(!isShow)}>
 				{value ? dayjs(value).format('LL') : 'Click for select'}
 			</button>
-			{value && (
-				<button
-					className='absolute -top-2 -right-1 opacity-30 hover:opacity-100 transition-opacity'
-					onClick={() => onChange('')}
-				>
-					<X size={14} />
-				</button>
-			)}
 			{isShow && (
 				<div
 					className={cn(

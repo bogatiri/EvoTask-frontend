@@ -14,9 +14,8 @@ export function useCreateSprint() {
 				mutationFn: ({boardId} : {boardId: string}) => sprintService.createSprint({boardId}),
 				onSuccess: data => {
 					toast.success(`sprint created`)
-					const boardId = data.sprint.boardId
 					queryClient.invalidateQueries({queryKey:['list']})
-					queryClient.invalidateQueries({queryKey:['sprints']})
+					queryClient.invalidateQueries({queryKey:['board', data.sprint.boardId]})
 
 				},
 				onError(error: unknown) {

@@ -18,9 +18,6 @@ export function useCreateComment() {
 					cardId: string
 				}) => commentService.createComment({text, cardId  }),
 				onSuccess: data => {
-					queryClient.invalidateQueries({
-						queryKey: ['create comment']
-					})
 					toast.success(`Comment created`)
 					queryClient.invalidateQueries({queryKey:['list']})
 					queryClient.invalidateQueries({queryKey:['sprint']})

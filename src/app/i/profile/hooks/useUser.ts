@@ -7,11 +7,9 @@ import { IUser } from '@/types/auth.types'
 
 
 export function useUserById(userId: string) {
-  console.log(userId, 'userId')
   const { data: user, isLoading, error   } = useQuery<IUser>({
-    queryKey: ['user'], 
+    queryKey: ['user', userId], 
     queryFn: () => userService.getUserById(userId),
-    
   })
   return { user, isLoading, error }
 }

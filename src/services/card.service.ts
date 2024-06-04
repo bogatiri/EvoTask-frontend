@@ -31,6 +31,11 @@ class CardService {
 		const response = await axiosWithAuth.post(this.BASE_URL, data)
 		return response
 	}
+
+	async createSubtask(data: TypeCardFormState) {
+		const response = await axiosWithAuth.post(`${this.BASE_URL}/createSubtask`, data)
+		return response
+	}
 	
 	async pickCard({cardId} : {cardId: string}){
 		const response = await axiosWithAuth.post(`${this.BASE_URL}/pick`, {cardId})

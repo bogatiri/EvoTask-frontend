@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
-import { ISprintResponse, TypeSprintFormState } from '@/types/sprint.types'
+import { TypeSprintFormState } from '@/types/sprint.types'
 
 import { sprintService } from '@/services/sprint.service'
-import { toast } from 'sonner'
 
 export function useUpdateSprint(key?: string) {
 	const queryClient = useQueryClient()
@@ -12,12 +12,16 @@ export function useUpdateSprint(key?: string) {
 		mutationKey: ['update sprint', key],
 		mutationFn: ({ id, data }: { id: string; data: TypeSprintFormState }) =>
 			sprintService.updateSprint(id, data),
-		onSuccess() {
-			queryClient.invalidateQueries({
-				queryKey: ['sprints']
-			}),
-			toast.success(`Sprint Updated Successfully`)
-
+		onSuccess: data => {
+			if (data.success) {
+				queryClient.invalidateQueries({ queryKey: ['sprints'] }),
+					toast.success(data.message)
+			} else {
+				toast.error(data.message)
+			}
+		},
+		onError: data => {
+			toast.error(data.message)
 		}
 	})
 

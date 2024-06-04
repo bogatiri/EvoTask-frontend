@@ -8,8 +8,8 @@ import { IListResponse } from '@/types/list.types'
 import { useUpdateOrderCard } from '../../../hooks/card/useUpdateOrderCard'
 import { useUpdateOrderList } from '../../../hooks/list/useUpdateOrderList'
 
-import { ListForm } from './list-form'
-import { ListItem } from './list-item'
+import ListForm from './list-form'
+import ListItem from './list-item'
 
 interface ListContainerProps {
 	list: IListResponse[]
@@ -23,9 +23,8 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 	return result
 }
 
-export const ListContainer = ({ list }: ListContainerProps) => {
+const ListContainer = ({ list }: ListContainerProps) => {
 	const [orderedData, setOrderedData] = useState(list)
-
 	const { updateOrderList } = useUpdateOrderList()
 
 	const { updateOrderCard } = useUpdateOrderCard()
@@ -121,11 +120,11 @@ export const ListContainer = ({ list }: ListContainerProps) => {
 				})
 
 				setOrderedData(newOrderedData)
-				const reorderedCards = destList.cards
 				updateOrderCard(destList.cards)
 			}
 		}
 	}
+
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
@@ -150,7 +149,9 @@ export const ListContainer = ({ list }: ListContainerProps) => {
 							)
 						})}
 						{provided.placeholder}
-						<ListForm />
+						<ListForm
+						sprintId={orderedData.find(list => list.sprintId !== null)?.sprintId }
+						/>
 						<div className='flex-shrink-0 w-1' />
 					</ol>
 				)}
@@ -158,3 +159,5 @@ export const ListContainer = ({ list }: ListContainerProps) => {
 		</DragDropContext>
 	)
 }
+
+export default ListContainer

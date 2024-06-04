@@ -1,21 +1,27 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { GanttChartSquare, LogOut, User } from 'lucide-react'
+import { LogOut, User } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { COLORS } from '@/constants/color.constants'
 import { SITE_NAME } from '@/constants/seo.constants'
 
 import { DASHBOARD_PAGES } from '@/config/pages-url.config'
+
+import Logo from '../../../../public/evotasklogo.svg'
 
 import { MenuItem } from './MenuItem'
 import { MENU } from './menu.data'
 import { authService } from '@/services/auth.service'
 
-export function Sidebar() {
+interface ISidebarProps {
+	sidebar: number | null
+}
+
+export function Sidebar({ sidebar }: ISidebarProps) {
 	const [currentUser, setCurrentUser] = useState('')
 	useEffect(() => {
 		const localUserId = localStorage.getItem('userId')
@@ -38,31 +44,28 @@ export function Sidebar() {
 			<div>
 				<Link
 					href='/'
-					className='flex items-center gap-2.5 p-layout border-b border-b-border'
+					className='flex items-center justify-center gap-2.5 p-layout border-b border-b-border'
 				>
-					<GanttChartSquare
-						color={COLORS.primary}
-						size={38}
+					<Image
+						src={Logo}
+						alt='EvoTask Logo'
+						className='w-10 h-10'
 					/>
+					{sidebar! > 9 && (
+
 					<span className='text-2xl text-white font-bold relative'>
 						{SITE_NAME}
 						<span className='absolute -top-1 -right-6 text-xs opacity-40 rotate-[18deg] font-normal'>
 							beta
 						</span>
 					</span>
+					)}
 				</Link>
-				<div className='p-3 relative'>
-					<div>
-						<Link
-							href={`${DASHBOARD_PAGES.PROFILE}/${currentUser}`}
-							className='flex gap-2.5 items-center py-1.5 mt-2 px-layout transition-colors hover:bg-border rounded-lg'
-						>
-							<User />
-							<span>Profile</span>
-						</Link>
-					</div>
+				<div className='flex flex-col p-3 '>
 					{MENU.map(item => (
 						<MenuItem
+						currentUser={currentUser}
+							sidebar={sidebar}
 							item={item}
 							key={item.link}
 						/>
@@ -70,16 +73,16 @@ export function Sidebar() {
 				</div>
 			</div>
 			<div>
-				<div className='border-b border-b-border'>
+				<div className=' max-w-[200px] cursor-pointer'>
 					<div
-						className='flex gap-2.5 items-center  py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg cursor-pointer '
+						className={`flex gap-2.5 ${sidebar! < 10 && 'justify-center '} items-center py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg`}
 						onClick={() => mutate()}
 					>
-						<LogOut />
-						<span>Logout</span>
+						{(sidebar! > 10 || sidebar! < 10) && <LogOut />}
+						{sidebar! > 10 && <span>Logout</span>}
 					</div>
 				</div>
-				<footer className='text-xs opacity-40 font-normal text-center p-layout'>
+				<footer className='text-xs border-t border-t-border opacity-40 font-normal text-center p-layout'>
 					2024 &copy; Powered By{' '}
 					<a
 						href='https://t.me/ro4evalexey'
@@ -90,7 +93,7 @@ export function Sidebar() {
 						{SITE_NAME}
 					</a>
 					. <br /> All rights reserved.
-				</footer>{' '}
+				</footer>
 			</div>
 		</aside>
 	)

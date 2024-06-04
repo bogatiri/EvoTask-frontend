@@ -20,12 +20,12 @@ export function useLists() {
 	return { items, setItems }
 }
 
-export function useListById(listId: string, options = { enabled: true }) {
+export function useListById(boardId: string, options = { enabled: true }) {
   const { data: list, isLoading, error } = useQuery<IListResponse[]>({
-    queryKey: ['list', listId], 
-    queryFn: () => listService.getListById(listId),
-		enabled: options.enabled 
-  }
+    queryKey: ['list', boardId], 
+    queryFn: () => listService.getListById(boardId),
+		enabled: options.enabled,
+  },
 )
 
   return { list, isLoading, error }

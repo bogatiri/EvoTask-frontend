@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { toast } from 'sonner'
 
-import { cardService } from '@/services/card.service'
 import { ICardResponse } from '@/types/card.types'
+
+import { cardService } from '@/services/card.service'
 
 interface ICardOrderUpdate {
 	id: string
@@ -15,10 +16,11 @@ export function useUpdateOrderCard() {
 
 	const { mutate: updateOrderCard, isPending } = useMutation({
 		mutationKey: ['update order card'],
-		mutationFn: ( reorderedCards: ICardResponse[] ) =>
+		mutationFn: (reorderedCards: ICardResponse[]) =>
 			cardService.updateOrder(reorderedCards),
 		onSuccess: data => {
 			toast.success(`Card reordered`)
+			queryClient.invalidateQueries({ queryKey: ['sprint'] })
 			queryClient.invalidateQueries({ queryKey: ['list'] })
 		},
 		onError(error: unknown) {

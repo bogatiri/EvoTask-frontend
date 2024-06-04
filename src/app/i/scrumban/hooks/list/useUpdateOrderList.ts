@@ -20,6 +20,8 @@ export function useUpdateOrderList() {
 		onSuccess: data => {
 			toast.success(`List reordered`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
+			queryClient.invalidateQueries({ queryKey: ['sprint'] })
+
 		},
 		onError(error: unknown) {
 			if (isAxiosError(error)) {

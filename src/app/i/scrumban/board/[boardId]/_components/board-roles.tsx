@@ -1,7 +1,5 @@
 import { ChevronsUpDown, Component } from 'lucide-react'
-import Link from 'next/link'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Command, CommandGroup } from '@/components/ui/command'
 import {
 	Dialog,
@@ -11,6 +9,8 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog'
+import User from '@/components/ui/items-options/user'
+import UserAvatar from '@/components/ui/items-options/userAvatar'
 import {
 	Popover,
 	PopoverContent,
@@ -25,9 +25,10 @@ import { useAssignARole } from '../../../hooks/roles/useAssignARole'
 interface IBoardRoleProps {
 	users: IUser[]
 	roles: IRolesResponse[]
+	creator: string
 }
 
-const BoardRoles = ({ users, roles }: IBoardRoleProps) => {
+const BoardRoles = ({ users, roles, creator }: IBoardRoleProps) => {
 	const currentUser = localStorage.getItem('userId')
 	const { assignARole } = useAssignARole()
 
@@ -56,194 +57,102 @@ const BoardRoles = ({ users, roles }: IBoardRoleProps) => {
 				</div>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle autoFocus={false}>
-							<div className='flex gap-3'>
-								<div className='flex gap-2 justify-center items-center mr-5'>
-									{/* <div className='flex gap-1 items-center justify-center'>
-												<Avatar className='h-6 w-6 border border-border'>
-													<AvatarImage src={creator.avatar}></AvatarImage>
-												</Avatar>
-												<p className='font-semibold flex items-center justify-center text-sm text-neutral-700 mb-2'>
-													{creator.name}
-												</p>
-											</div> */}
-								</div>
-							</div>
-						</DialogTitle>
 						<DialogDescription>
 							You can change all of this attributes
 						</DialogDescription>
 					</DialogHeader>
 					<div className='flex flex-col gap-3'>
-						{roles && roles.map((role, index) => (
-							<div
-								className='flex justify-between items-center h-10 w-full'
-								key={index}
-							>
-								<span>{role.name}</span>
-								{(role.name === 'scrum_master' || role.name ==='project_owner')  && role.users.length !== 0 ? (
-									<Link
-										className='flex gap-1  rounded-md cursor-pointer opacity-70 hover:opacity-100  p-1 justify-between items-center'
-										href={`/i/profile/${role.users[0].id}`}
-									>
-										{role.users[0].avatar ? (
-											<Avatar className='h-8 w-8 border border-border'>
-												<AvatarImage src={role.users[0].avatar}></AvatarImage>
-											</Avatar>
-										) : (
-											<Avatar className='h-8 w-8 border border-border'>
-												<AvatarFallback>
-													{role.users[0].name
-														? role.users[0].name.charAt(0).toUpperCase()
-														: role.users[0].email.charAt(0).toUpperCase()}
-												</AvatarFallback>
-											</Avatar>
-										)}
-										{role.users[0].name ? (
-											<p className='font-semibold text-neutral-700 text-sm mb-2'>
-												{role.users[0].name}
-											</p>
-										) : (
-											<p className='font-semibold text-sm text-neutral-700 mb-2'>
-												{role.users[0].email}
-											</p>
-										)}
-									</Link>
-								) : (
-									<Popover>
-										<PopoverTrigger>
-											<div className='flex justify-between items-center'>
-												<div className='flex opacity-70 hover:opacity-100 cursor-pointer justify-start items-start gap-2 transition-opacity '>
-													{currentUser === role.userId ? (
-														<span>Select user...</span>
-													) : (
-														<div className='flex flex-col opacity-70 hover:opacity-100 cursor-pointer justify-start items-start gap-2 transition-opacity '>
-															<div className='flex pl-1'>
-																{role.users.slice(0, 4).map((user, index) => (
-																	<div
-																		key={user.id}
-																		className='flex justify-start -mr-5'
-																	>
-																		{user.avatar ? (
-																			<Avatar className='h-8 w-8 border border-border'>
-																				<AvatarImage
-																					src={user.avatar}
-																				></AvatarImage>
-																			</Avatar>
-																		) : (
-																			<Avatar className='h-8 w-8 border border-border'>
-																				<AvatarFallback>
-																					{user.name
-																						? user.name.charAt(0).toUpperCase()
-																						: user.email
-																								.charAt(0)
-																								.toUpperCase()}
-																				</AvatarFallback>
-																			</Avatar>
-																		)}
+						{roles &&
+							roles.map((role, index) => (
+								<div
+									className='flex justify-between items-center h-10 w-full'
+									key={role.id}
+								>
+									<span>{role.name}</span>
+									{(role.name === 'scrum_master' ||
+										role.name === 'project_owner') &&
+									role.users.length !== 0 ? (
+										<User
+											userToAvatar={role.users[0]}
+											user={role.users[0]}
+										/>
+									) : (
+										<Popover>
+											<PopoverTrigger>
+												<div className='flex justify-between items-center'>
+													<div className='flex opacity-70 hover:opacity-100 cursor-pointer justify-center items-center gap-2 transition-opacity '>
+														{currentUser === creator ? (
+															<span>Select user...</span>
+														) : (
+															<div className='flex flex-col min-w-[100px] opacity-70 hover:opacity-100 cursor-pointer justify-between items-start gap-2 transition-opacity '>
+																<div className='flex pl-1'>
+																	{role.users.slice(0, 4).map((user, index) => (
+																		<div
+																			key={user.id}
+																			className='flex justify-start -mr-5'
+																		>
+																			<UserAvatar userToAvatar={user} />
+																		</div>
+																	))}
+																</div>
+																{users.length > 4 && (
+																	<div className=' flex pl-2 justify-start items-center'>
+																		<span className='text-gray-500 text-xs'>
+																			and {users.length - 4} other
+																		</span>
 																	</div>
-																))}
+																)}
 															</div>
-															{users.length > 4 && (
-																<div className=' flex pl-2 justify-start items-center'>
-																	<span className='text-gray-500 text-xs'>
-																		and {users.length - 4} other
-																	</span>
-																</div>
-															)}
-														</div>
-													)}
-													<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+														)}
+														<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+													</div>
 												</div>
-											</div>
-										</PopoverTrigger>
-										<PopoverContent className='w-auto p-0 rounded-xl'>
-											<Command>
-												<CommandGroup className='w-auto'>
-													{currentUser === role.userId ? (
-														filteredUsers(users, role).length > 0 ? (
-															filteredUsers(users, role).map(user => (
-																<div
-																	className='flex gap-1 w-full rounded-md cursor-pointer opacity-70 hover:opacity-100  p-1 justify-between items-center'
-																	onClick={() =>
-																		handleAssignRole(user.id.toString(), index)
-																	}
-																>
-																	{user.avatar ? (
-																		<Avatar className='h-8 w-8 border border-border'>
-																			<AvatarImage
-																				src={user.avatar}
-																			></AvatarImage>
-																		</Avatar>
-																	) : (
-																		<Avatar className='h-8 w-8 border border-border'>
-																			<AvatarFallback>
-																				{user.name
-																					? user.name.charAt(0).toUpperCase()
-																					: user.email.charAt(0).toUpperCase()}
-																			</AvatarFallback>
-																		</Avatar>
-																	)}
-																	{user.name ? (
-																		<p className='font-semibold text-neutral-700 text-sm mb-2'>
-																			{user.name}
-																		</p>
-																	) : (
-																		<p className='font-semibold text-sm text-neutral-700 mb-2'>
-																			{user.email}
-																		</p>
-																	)}
-																</div>
+											</PopoverTrigger>
+											<PopoverContent className='w-auto p-0 rounded-xl'>
+												<Command>
+													<CommandGroup className='w-auto'>
+														{currentUser === creator ? (
+															filteredUsers(users, role).length > 0 ? (
+																filteredUsers(users, role).map(user => (
+																	<div
+																		className='flex gap-1 w-full rounded-md cursor-pointer opacity-70 hover:opacity-100  p-1 justify-between items-center'
+																		onClick={() =>
+																			handleAssignRole(
+																				user.id.toString(),
+																				index
+																			)
+																		}
+																		key={user.id}
+																	>
+																		<UserAvatar
+																			userToAvatar={user}
+																			user={user}
+																		/>
+																	</div>
+																))
+															) : (
+																<p className='select-none p-2 text-sm'>
+																	no more free users
+																</p>
+															)
+														) : role.users.length > 0 ? (
+															role.users.map((user, index) => (
+																<User
+																	key={user.id}
+																	userToAvatar={user}
+																	user={user}
+																/>
 															))
 														) : (
-															<p className='select-none p-2 text-sm'>
-																no more free users
-															</p>
-														)
-													) : role.users.length > 0 ? (
-														role.users.map((user, index) => (
-															<Link
-																href={`/i/profile/${user.id}`}
-																key={user.id}
-															>
-																<div className='flex gap-1 w-full rounded-md cursor-pointer opacity-70 hover:opacity-100  p-1 justify-between mt-2 items-center '>
-																	{user.avatar ? (
-																		<Avatar className='h-8 w-8 border border-border'>
-																			<AvatarImage
-																				src={user.avatar}
-																			></AvatarImage>
-																		</Avatar>
-																	) : (
-																		<Avatar className='h-8 w-8 border border-border'>
-																			<AvatarFallback>
-																				{user.name
-																					? user.name.charAt(0).toUpperCase()
-																					: user.email.charAt(0).toUpperCase()}
-																			</AvatarFallback>
-																		</Avatar>
-																	)}
-																	{user.name ? (
-																		<p className='font-semibold text-neutral-700 text-sm mb-2'>
-																			{user.name}
-																		</p>
-																	) : (
-																		<p className='font-semibold text-sm text-neutral-700 mb-2'>
-																			{user.email}
-																		</p>
-																	)}
-																</div>
-															</Link>
-														))
-													) : (
-														<div>no users</div>
-													)}
-												</CommandGroup>
-											</Command>
-										</PopoverContent>
-									</Popover>
-								)}
-							</div>
-						))}
+															<div>no users</div>
+														)}
+													</CommandGroup>
+												</Command>
+											</PopoverContent>
+										</Popover>
+									)}
+								</div>
+							))}
 					</div>
 				</DialogContent>
 			</Dialog>
