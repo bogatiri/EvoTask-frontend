@@ -32,6 +32,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
     "dayjs": "^1.11.10",
+    "docx": "^8.5.0",
     "input-otp": "^1.2.4",
     "js-cookie": "^3.0.5",
     "lodash.debounce": "^4.0.8",

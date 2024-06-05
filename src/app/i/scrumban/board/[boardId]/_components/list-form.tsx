@@ -67,7 +67,7 @@ const ListForm = ({sprintId}: IListForm) => {
 				<form
 					action={onSubmit}
 					ref={formRef}
-					className='w-full p-3 rounded-md mt-2 bg-[#0e0f0f] space-y-4 shadow-md'
+					className='w-full list-item p-3 rounded-md mt-2 bg-[#0e0f0f] space-y-4 shadow-md'
 				>
 					<FormInput
 						ref={inputRef}

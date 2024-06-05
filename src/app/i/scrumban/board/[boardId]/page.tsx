@@ -61,7 +61,7 @@ export default function BoardIdPage() {
 					className=' flex flex-col relative size-full bg-no-repeat bg-cover bg-center'
 					style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
 				>
-					<div className='px-4 text-lg text-card-foreground h-full overflow-x-auto '>
+					<div className='px-4 board-container text-lg text-card-foreground h-full overflow-x-auto '>
 						<BoardNavbar
 							onSprintPick={onSprintPick}
 							backToMainBoard={backToMainBoard}

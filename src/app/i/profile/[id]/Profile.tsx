@@ -130,6 +130,7 @@ export default function UserId() {
 								user={user}
 							/>
 							<UserField
+							type='number'
 								text='phone'
 								disabled={!my}
 								placeholder='7(999)-999-99-99'

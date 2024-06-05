@@ -15,6 +15,8 @@ export function useUpdateSprint(key?: string) {
 		onSuccess: data => {
 			if (data.success) {
 				queryClient.invalidateQueries({ queryKey: ['sprints'] }),
+				queryClient.invalidateQueries({ queryKey: ['board', ] }),
+				console.log(data)
 					toast.success(data.message)
 			} else {
 				toast.error(data.message)

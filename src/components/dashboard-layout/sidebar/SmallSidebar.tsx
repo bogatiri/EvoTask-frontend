@@ -54,7 +54,7 @@ const SmallSidebar = () => {
 				<SheetHeader>
 					<SheetTitle>
 						<Link
-							href='/'
+							href='/i/scrumban'
 							className='flex items-center justify-center gap-2.5 p-3 border-b border-b-border'
 						>
 							<Image

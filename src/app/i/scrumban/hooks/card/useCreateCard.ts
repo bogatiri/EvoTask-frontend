@@ -21,6 +21,8 @@ export function useCreateCard() {
 					toast.success(`card "${data.data.name}" created`)
 					queryClient.invalidateQueries({queryKey:['list']})
 					queryClient.invalidateQueries({queryKey:['sprint']})
+					queryClient.invalidateQueries({queryKey:['board']})
+
 				},
 				onError(error: unknown) {
 					if (isAxiosError(error)) {

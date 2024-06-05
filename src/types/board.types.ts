@@ -20,6 +20,7 @@ export interface IBoardResponse extends IBase {
 	chats: IChatResponse[]
 	userId: string
 	sprints?: ISprintResponse[]
+	creator: IUser
 }
 
 export type TypeBoardFormState = Partial<

@@ -1,4 +1,4 @@
-import { ChevronsUpDown, Component } from 'lucide-react'
+import { ChevronsUpDown, Users } from 'lucide-react'
 
 import { Command, CommandGroup } from '@/components/ui/command'
 import {
@@ -50,7 +50,7 @@ const BoardRoles = ({ users, roles, creator }: IBoardRoleProps) => {
 				<div className='flex items-center justify-center h-10'>
 					<DialogTrigger>
 						<div className='flex justify-center items-center h-10 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
-							<Component className='h-4 w-4' />
+							<Users className='h-4 w-4' />
 							<span className='text-sm mx-3 my-1.5'>Roles</span>
 						</div>
 					</DialogTrigger>
@@ -68,7 +68,7 @@ const BoardRoles = ({ users, roles, creator }: IBoardRoleProps) => {
 									className='flex justify-between items-center h-10 w-full'
 									key={role.id}
 								>
-									<span>{role.name}</span>
+									<span>{(role.name === 'scrum_master' && 'Scrum мастер') || (role.name ==='project_owner' && 'Владелец продукта') || (role.name ==='team_member' && 'Участник проекта')  }</span>
 									{(role.name === 'scrum_master' ||
 										role.name === 'project_owner') &&
 									role.users.length !== 0 ? (

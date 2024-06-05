@@ -10,6 +10,7 @@ interface IUserFieldProps {
 	user: IUser
 	placeholder: string
 	register: UseFormRegister<TypeUserForm>
+	type?: string
 }
 
 const UserField = ({
@@ -17,6 +18,7 @@ const UserField = ({
 	placeholder,
 	disabled,
 	text,
+	type,
 	register
 }: IUserFieldProps) => {
 	return (
@@ -25,6 +27,7 @@ const UserField = ({
 			<div className='border border-border rounded-md p-2 mt-1 mb-2'>
 				<TransparentField
 					autoComplete='off'
+					type={type}
 					disabled={disabled}
 					className={user.name ? 'opacity-100' : 'opacity-50'}
 					placeholder={placeholder}

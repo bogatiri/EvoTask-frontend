@@ -3,8 +3,8 @@ import type { IBase } from './root.types'
 
 export enum EnumListType {
 	backlog = 'backlog',
-	to_do = 'to-do',
-	in_progress = 'in-progress',
+	to_do = 'to_do',
+	in_progress = 'in_progress',
 	done = 'done',
 	blocked = 'blocked',
 	feedback = 'feedback'

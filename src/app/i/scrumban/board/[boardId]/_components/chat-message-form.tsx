@@ -13,6 +13,7 @@ import { IMessageResponse } from '@/types/message.types'
 import SocketApi from '@/api/socket-api'
 
 import ChatMessage from './chat-message'
+import { toast } from 'sonner'
 
 interface IChatMesageFormProps {
 	message: IMessageResponse
@@ -27,6 +28,19 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 	const deleteMessage = (id: string) => {
 		SocketApi.socket?.emit('delete-message', { id })
 	}
+
+	const copyToClipboard = async (text: string) => {
+		if (!navigator.clipboard) {
+			toast.error('Clipboard API not available');
+			return;
+		}
+		try {
+			await navigator.clipboard.writeText(text);
+			toast.success('Text copied to clipboard');
+		} catch (err) {
+			console.error('Failed to copy:', err);
+		}
+	};
 
 	const updateMessage = (id: string) => {
 		SocketApi.socket?.emit('update-message', { id, textUpdatedMessage })
@@ -54,7 +68,7 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 			{message.userId !== currentUser && <User userToAvatar={message.user} />}
 			<ContextMenu>
 				<ContextMenuTrigger
-					className={`rounded-lg px-4 py-2 max-w-xs ${message.userId === currentUser ? 'ml-auto bg-blue-500 text-white' : 'mr-auto bg-gray-900'} `}
+					className={`rounded-b-xl px-4 py-2 max-w-xs ${message.userId === currentUser ? 'ml-auto rounded-tl-xl bg-blue-500 text-white' : 'mr-auto rounded-tr-xl bg-gray-900'} `}
 				>
 					<li >
 						{message.userId !== currentUser && (
@@ -79,8 +93,9 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 						/>
 					</li>
 				</ContextMenuTrigger>
+				<ContextMenuContent>
 				{message.userId === currentUser && (
-					<ContextMenuContent>
+					<>
 						<ContextMenuItem onClick={() => deleteMessage(message.id)}>
 							Delete
 						</ContextMenuItem>
@@ -92,8 +107,16 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 						>
 							Edit
 						</ContextMenuItem>
-					</ContextMenuContent>
+								</>
 				)}
+						<ContextMenuItem
+							onClick={() => {
+								copyToClipboard(message.text)
+							}}
+						>
+							Copy
+						</ContextMenuItem>
+				</ContextMenuContent>
 			</ContextMenu>
 		</div>
 	)

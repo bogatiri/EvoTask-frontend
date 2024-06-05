@@ -56,7 +56,8 @@ export const BoardTitleForm = ({
 
 	useBoardDebounce({ watch, boardId: board!.id })
 
-	const creator = board!.users[0]
+
+	const creator = board!.creator
 	const chatId = board!.chats[0].id
 
 	const onMessageSend = (message: IMessageResponse[]) => {

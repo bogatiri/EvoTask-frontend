@@ -30,6 +30,47 @@ const ListItem = ({ list, index }: ListItemProps) => {
 		})
 	}
 
+	// window.addEventListener('scroll', () => {
+	// 	const item = document.getElementById(list.id)
+	// 	const rect = item!.getBoundingClientRect();
+	// 	console.log('asd')
+	// 	if (rect.top < window.innerHeight && rect.bottom > 0) {
+	// 		// Элемент частично виден, выполняем доскролл
+	// 		item?.scrollIntoView({
+	// 			behavior: 'smooth',
+	// 			block: 'nearest'
+	// 		});
+	// 	}
+	// }, { passive: true });
+
+	const scrollContainer = document.querySelector('.board-container');
+	console.log('asdasd', scrollContainer)
+
+	let isScrolling: any;
+
+	scrollContainer && scrollContainer.addEventListener('scroll', (e) => {
+  window.clearTimeout(isScrolling);
+  isScrolling = setTimeout(() => {
+    // Логика для определения ближайшего элемента к центру видимой части
+    const items = scrollContainer!.querySelectorAll('.list-item');
+    let nearestItem;
+    let nearestDistance = Infinity;
+    for (const item of items) {
+      const rect = item.getBoundingClientRect();
+      const distance = Math.abs(rect.left + (rect.width / 2) - (window.innerWidth / 2));
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestItem = item;
+      }
+    }
+    nearestItem!.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center',
+    });
+  }, 66); // Задержка в миллисекундах (часто используются 100 или 66 для 15 FPS)
+}, false);
+
 
 	return (
 		<Draggable
@@ -38,9 +79,10 @@ const ListItem = ({ list, index }: ListItemProps) => {
 		>
 			{provided => (
 				<li
+					id={list.id}
 					{...provided.draggableProps}
 					ref={provided.innerRef}
-					className='shrink-0 top-30 h-full w-[272px] select-none'
+					className='list-item shrink-0 top-30 h-full w-[300px] md:w-[272px] select-none'
 				>
 					<div
 						{...provided.dragHandleProps}

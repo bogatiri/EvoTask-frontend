@@ -22,6 +22,8 @@ export function useUpdateOrderCard() {
 			toast.success(`Card reordered`)
 			queryClient.invalidateQueries({ queryKey: ['sprint'] })
 			queryClient.invalidateQueries({ queryKey: ['list'] })
+			queryClient.invalidateQueries({ queryKey: ['board'] })
+
 		},
 		onError(error: unknown) {
 			if (isAxiosError(error)) {

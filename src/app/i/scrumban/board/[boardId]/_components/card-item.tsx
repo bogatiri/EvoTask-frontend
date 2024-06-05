@@ -15,6 +15,7 @@ import { ICardResponse, TypeCardFormState } from '@/types/card.types'
 import { useCardDebounce } from '../../../hooks/card/useCardDebounce'
 
 import CardModalContent from './card-modal-content'
+import { Checkbox } from '@/components/ui/checkbox'
 
 interface CardItemProps {
 	data: ICardResponse
@@ -54,12 +55,13 @@ const CardItem = ({ data, boardId }: CardItemProps) => {
 	return (
 		<>
 			<div
-				className={`flex flex-col gap-y-2 border bg-[#0e0f0f] border-border ${data.parentId ? 'p-2' : 'py-2 px-3 '} rounded-md hover:border-black`}
+				className={`flex flex-col gap-y-2 border ${data.completed && 'opacity-60 hover:opacity-100'} bg-[#0e0f0f] border-border ${data.parentId ? 'p-2' : 'py-2 px-3 '} rounded-md hover:border-black`}
 			>
 				<Dialog>
 					<div className='flex items-center'>
 						<div className='flex gap-x-3 text-sm items-center justify-center'>
 							<CardCheckbox control={control} />
+					{/* <Checkbox/> */}
 							<TransparentField {...register('name')} />
 							<DialogTrigger>
 								<Settings className='opacity-45 hover:opacity-100' />
@@ -70,7 +72,7 @@ const CardItem = ({ data, boardId }: CardItemProps) => {
 						)}
 					</div>
 					{!data.parentId && (
-						<div className='flex items-center w-full gap-y-3  text-sm  rounded-md shadow-sm justify-between'>
+						<div className='flex items-center w-full mt-3 gap-y-3  text-sm  rounded-md shadow-sm justify-between'>
 							<CardPriority control={control} />
 							<CardPoints control={control} />
 						</div>

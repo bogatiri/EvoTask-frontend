@@ -1,4 +1,4 @@
-import { Play, RefreshCcw, Settings, Trash } from 'lucide-react'
+import { Play, RefreshCcw, Settings, StopCircle, Trash, ClipboardPlus } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -15,8 +15,7 @@ import {
 import { TransparentField } from '@/components/ui/fields/TransparentField'
 import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 import CardDate from '@/components/ui/items-options/pick-date'
-import SprintStatus from '@/components/ui/items-options/pick-status'
-
+import PickStatus from '@/components/ui/items-options/pick-status'
 import {
 	EnumSprintStatus,
 	ISprintResponse,
@@ -25,16 +24,24 @@ import {
 
 import { useDeleteSprint } from '../../../hooks/sprint/useDeleteSprint'
 import { useSprintDebounce } from '../../../hooks/sprint/useSprintDebounce'
-import PickStatus from '@/components/ui/items-options/pick-status'
+import { IUser } from '@/types/auth.types'
+import { generateAndDownloadDocx } from '../../../hooks/report'
 
 interface ISprintNavbarProps {
 	item: ISprintResponse
 	index: number
 	isScrum: boolean
+	users: IUser[]
 	backToMainBoard: () => void
 }
 
-const SprintNavbar = ({ item, index,isScrum, backToMainBoard }: ISprintNavbarProps) => {
+const SprintNavbar = ({
+	item,
+	index,
+	isScrum,
+	users,
+	backToMainBoard
+}: ISprintNavbarProps) => {
 	const { deleteSprint } = useDeleteSprint()
 
 	const { register, control, watch, reset, setValue, resetField } =
@@ -71,7 +78,35 @@ const SprintNavbar = ({ item, index,isScrum, backToMainBoard }: ISprintNavbarPro
 		setValue('startDate', currentDate.toISOString())
 	}
 
+	const handleStopSprint = () => {
+		setValue('status', 'completed' as EnumSprintStatus)
+		const currentDate = new Date()
+		setValue('endDate', currentDate.toISOString())
+	}
+
 	useSprintDebounce({ watch, sprintId: item!.id })
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	return (
 		<>
 			<Dialog>
@@ -93,13 +128,13 @@ const SprintNavbar = ({ item, index,isScrum, backToMainBoard }: ISprintNavbarPro
 						/>
 					</DialogTrigger>
 				</div>
-				<DialogContent>
+				<DialogContent className='w-full'>
 					<DialogHeader>
 						<DialogTitle>
 							<div className='flex gap-3'>
 								<RefreshCcw />
 								<TransparentField
-								disabled={!isScrum}
+									disabled={!isScrum}
 									autoFocus={false}
 									{...register('name')}
 								/>
@@ -128,29 +163,46 @@ const SprintNavbar = ({ item, index,isScrum, backToMainBoard }: ISprintNavbarPro
 						/>
 					</div>
 					<TransparentFieldTextarea
-					disabled={!isScrum}
+						disabled={!isScrum}
 						placeholder='You can write goal to your sprint'
 						{...register('goal')}
 					/>
-					<div className='flex w-full justify-between'>
-						<DialogClose className='justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex text-base items-center gap-4'>
-							<div
-								className='flex text-base items-center gap-4'
-								onClick={handleDeleteSprint}
-							>
-								<span>Delete sprint</span>
-								<Trash size={18} />
-							</div>
-						</DialogClose>
-						<Button
-							variant='outline'
+					<DialogClose className='justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex text-base items-center gap-4'>
+						<div
 							className='flex text-base items-center gap-4'
-							onClick={handleStartSprint}
+							onClick={handleDeleteSprint}
 						>
-							<span>Start sprint</span>
-							<Play size={18} />
-						</Button>
-					</div>
+							<span>Delete sprint</span>
+							<Trash size={18} />
+						</div>
+					</DialogClose>
+					<Button
+						variant='outline'
+						className='flex text-base items-center gap-4'
+						onClick={handleStartSprint}
+					>
+						<span>Start sprint</span>
+						<Play size={18} />
+					</Button>
+					<Button
+						variant='outline'
+						className='flex text-base items-center gap-4'
+						onClick={handleStopSprint}
+					>
+						<span>End sprint</span>
+						<StopCircle size={18} />
+					</Button>
+					{item.status === 'completed'  && (
+
+					<Button
+						variant='outline'
+						className='flex text-base items-center gap-4'
+						onClick={() => generateAndDownloadDocx({item, users})}
+					>
+						<span>Generate report</span>
+						<ClipboardPlus size={18} />
+					</Button>
+					) }
 				</DialogContent>
 			</Dialog>
 		</>

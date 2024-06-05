@@ -43,7 +43,7 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 		<aside className='border-r w-full border-r-border h-full bg-sidebar flex flex-col justify-between flex-grow'>
 			<div>
 				<Link
-					href='/'
+					href='/i/scrumban'
 					className='flex items-center justify-center gap-2.5 p-layout border-b border-b-border'
 				>
 					<Image
