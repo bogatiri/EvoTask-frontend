@@ -70,7 +70,7 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 				<ContextMenuTrigger
 					className={`rounded-b-xl px-4 py-2 max-w-xs ${message.userId === currentUser ? 'ml-auto rounded-tl-xl bg-blue-500 text-white' : 'mr-auto rounded-tr-xl bg-gray-900'} `}
 				>
-					<li >
+					<div >
 						{message.userId !== currentUser && (
 							<div className='flex mb-1 justify-start items-center '>
 								{message.user.name ? (
@@ -91,7 +91,7 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 							textUpdatedMessage={textUpdatedMessage}
 							setTextUpdatedMessage={setTextUpdatedMessage}
 						/>
-					</li>
+					</div>
 				</ContextMenuTrigger>
 				<ContextMenuContent>
 				{message.userId === currentUser && (

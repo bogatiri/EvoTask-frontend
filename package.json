@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo -H 192.168.0.7",
+    "dev": "next dev --turbo ",
     "build": "next build",
     "start": "next start ",
     "lint": "next lint"

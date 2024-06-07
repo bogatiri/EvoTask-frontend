@@ -37,9 +37,15 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 	const sendMessage = () => {
 		SocketApi.socket?.emit('send-message', { text, chatId })
 		setText('')
-		if (messagesEndRef.current) {
-			messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-		}
+		setTimeout(() => {
+			if (messagesEndRef.current) {
+				messagesEndRef.current.scrollIntoView({ 
+					behavior: 'smooth',
+					block: 'end',
+					inline: 'nearest'
+				})
+			}
+		}, 100);
 	}
 
 	useEffect(() => {
@@ -47,12 +53,11 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 	}, [message])
 
 	return (
-		<>
 			<Sheet >
 				<SheetTrigger>
 					<div className='flex justify-center items-center h-10 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
-						<MessageCircle className='h-4 w-4' />
-						<span className='text-sm mx-3 my-1.5'>Chat</span>
+						<MessageCircle className='hidden md:block h-4 w-4' />
+						<span className=' text-sm mx-3 my-1.5'>Chat</span>
 					</div>
 				</SheetTrigger>
 				<SheetContent>
@@ -63,7 +68,7 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 						</SheetDescription>
 					</SheetHeader>
 					<div className='flex flex-col h-full'>
-						<ul className='space-y-2 h-full max-h-[75%] md:max-h-[80%] overflow-y-auto flex flex-col justify-end p-4'>
+						<div className='space-y-2  h-full max-h-[75%] md:max-h-[80%] overflow-y-auto overflow-x-hidden custom-scrollbar flex flex-col p-4 pl-0'>
 							{messages?.map((message, index) => (
 								<ChatMessageForm
 									message={message}
@@ -71,7 +76,7 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 								/>
 							))}
 							<div ref={messagesEndRef}></div>
-						</ul>
+						</div>
 						<Separator/>
 						<SheetFooter className='w-full'>
 							<div className='flex items-center w-full  gap-2 mt-3 ml-1'>
@@ -86,20 +91,17 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 										}
 									}}
 								/>
-								{/* <div className='flex items-end'> */}
 									<div
 										className='opacity-70 hover:opacity-100 cursor-pointer hover:bg-blueSecondary rounded-md p-3'
 										onClick={sendMessage}
 									>
 										<SendHorizonal />
 									</div>
-								{/* </div> */}
 							</div>
 						</SheetFooter>
 					</div>
 				</SheetContent>
 			</Sheet>
-		</>
 	)
 }
 

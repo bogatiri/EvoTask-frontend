@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import { TransparentField } from '@/components/ui/fields/TransparentField'
 import Description from '@/components/ui/items-options/description'
-import SprintStatus from '@/components/ui/items-options/pick-status'
+import PickStatus from '@/components/ui/items-options/pick-status'
 import { Separator } from '@/components/ui/separator'
 
 import { IBoardResponse, TypeBoardFormState } from '@/types/board.types'
@@ -30,7 +30,6 @@ import { useBoardDebounce } from '../../../hooks/board/useBoardDebounce'
 import BoardChat from './board-chat'
 import BoardRoles from './board-roles'
 import SprintMenu from './sprint-menu'
-import PickStatus from '@/components/ui/items-options/pick-status'
 
 interface IBoardTitleForm {
 	board: IBoardResponse
@@ -56,7 +55,6 @@ export const BoardTitleForm = ({
 
 	useBoardDebounce({ watch, boardId: board!.id })
 
-
 	const creator = board!.creator
 	const chatId = board!.chats[0].id
 
@@ -64,47 +62,48 @@ export const BoardTitleForm = ({
 		setMessages(message)
 	}
 
-
 	return (
 		<>
-			<div className='flex w-full justify-between items-center border-b border-border p-2 gap-2'>
-				<div className='w-full flex flex-col gap-3'>
+			<div className='grid grid-cols-[1.3fr_0.5fr] fixed w-[100vw] md:w-[85vw] items-center border-b border-border p-3 md:p-2 gap-2 '>
+				<div className='flex gap-2 w-full items-center'>
+					<BoardRoles
+						roles={board.roles}
+						users={board.users}
+						creator={board.userId}
+					/>
+					<BoardChat
+						messages={messages}
+						chatId={chatId}
+						onMessageSend={onMessageSend}
+					/>
+					<SprintMenu
+						users={board.users}
+						backToMainBoard={backToMainBoard}
+						onSprintPick={onSprintPick}
+						board={board}
+					/>
 					<TransparentField
-						className='text-lg w-[400px] font-bold px-[7px] h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-foreground'
+						className='text-lg w-auto font-bold px-[7px] h-7 hidden xl:block border-foreground'
 						{...register('name')}
 					/>
 				</div>
-				<BoardRoles
-					roles={board.roles}
-					users={board.users}
-					creator={board.userId}
-				/>
-				<BoardChat
-					messages={messages}
-					chatId={chatId}
-					onMessageSend={onMessageSend}
-				/>
-				<SprintMenu
-					users={board.users}
-					backToMainBoard={backToMainBoard}
-					onSprintPick={onSprintPick}
-					board={board}
-				/>
-				<div>
+				<div className='flex self-end justify-end items-center'>
 					<Dialog>
-						<div className='flex items-center justify-center h-10'>
+						<div className='flex self-end justify-end xl:justify-end items-center w-full  h-10'>
 							<DialogTrigger>
-								<div className='flex justify-center items-center h-10 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
+								<div className='flex justify-center self-end items-center h-10 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
 									<Settings className='h-4 w-4' />
-									<span className='text-sm mx-3 my-1.5'>Settings</span>
+									<span className='hidden md:block text-sm mx-3 my-1.5'>
+										Settings
+									</span>
 								</div>
 							</DialogTrigger>
 						</div>
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle autoFocus={false}>
-									<div className='flex gap-3'>
-										<div className='flex items-center justify-center gap-3'>
+									<div className='flex gap-3 w-full'>
+										<div className='flex items-center w-full mr-3 justify-center gap-3'>
 											<List />
 											<TransparentField
 												autoFocus={false}

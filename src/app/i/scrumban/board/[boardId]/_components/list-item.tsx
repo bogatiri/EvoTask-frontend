@@ -18,9 +18,19 @@ interface ListItemProps {
 const ListItem = ({ list, index }: ListItemProps) => {
 	const textareaRef = useRef<ElementRef<'textarea'>>(null)
 	const [isEditing, setIsEditing] = useState(false)
+	const cardsEndRef = useRef<HTMLDivElement>(null)
 
 	const disableEditing = () => {
 		setIsEditing(false)
+		setTimeout(() => {
+			if (cardsEndRef.current) {
+				cardsEndRef.current.scrollIntoView({
+					behavior: 'smooth',
+					block: 'end',
+					inline: 'nearest'
+				})
+			}
+		}, 100)
 	}
 
 	const enableEditing = () => {
@@ -30,47 +40,43 @@ const ListItem = ({ list, index }: ListItemProps) => {
 		})
 	}
 
-	// window.addEventListener('scroll', () => {
-	// 	const item = document.getElementById(list.id)
-	// 	const rect = item!.getBoundingClientRect();
-	// 	console.log('asd')
-	// 	if (rect.top < window.innerHeight && rect.bottom > 0) {
-	// 		// Элемент частично виден, выполняем доскролл
-	// 		item?.scrollIntoView({
-	// 			behavior: 'smooth',
-	// 			block: 'nearest'
-	// 		});
-	// 	}
-	// }, { passive: true });
+	const scrollContainer = document.querySelector('.board-container')
+	let isScrolling: any
+	let lastScrollLeft = scrollContainer?.scrollLeft // Сохраняем начальное положение горизонтального скролла
 
-	const scrollContainer = document.querySelector('.board-container');
-	console.log('asdasd', scrollContainer)
-
-	let isScrolling: any;
-
-	scrollContainer && scrollContainer.addEventListener('scroll', (e) => {
-  window.clearTimeout(isScrolling);
-  isScrolling = setTimeout(() => {
-    // Логика для определения ближайшего элемента к центру видимой части
-    const items = scrollContainer!.querySelectorAll('.list-item');
-    let nearestItem;
-    let nearestDistance = Infinity;
-    for (const item of items) {
-      const rect = item.getBoundingClientRect();
-      const distance = Math.abs(rect.left + (rect.width / 2) - (window.innerWidth / 2));
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestItem = item;
-      }
-    }
-    nearestItem!.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center',
-    });
-  }, 66); // Задержка в миллисекундах (часто используются 100 или 66 для 15 FPS)
-}, false);
-
+	scrollContainer?.addEventListener('scroll', (e) => {
+		if (window.innerWidth < 768) {
+			const currentScrollLeft = scrollContainer.scrollLeft;
+			if (lastScrollLeft !== currentScrollLeft) {
+				window.clearTimeout(isScrolling);
+				isScrolling = setTimeout(() => {
+					const items = scrollContainer.querySelectorAll('.list-item');
+					let nearestItem;
+					let nearestDistance = Infinity;
+		
+					for (const item of items) {
+						const rect = item.getBoundingClientRect();
+						const distance = Math.abs(rect.left + (rect.width / 2) - (window.innerWidth / 2));
+		
+						if (distance < nearestDistance) {
+							nearestDistance = distance;
+							nearestItem = item;
+						}
+					}
+		
+					if (nearestItem) {
+						nearestItem.scrollIntoView({
+							behavior: 'smooth',
+							block: 'center',
+							inline: 'center',
+						});
+					}
+				}, 66); 
+			}
+		
+			lastScrollLeft = currentScrollLeft;
+		} 
+	}, false);
 
 	return (
 		<Draggable
@@ -82,11 +88,11 @@ const ListItem = ({ list, index }: ListItemProps) => {
 					id={list.id}
 					{...provided.draggableProps}
 					ref={provided.innerRef}
-					className='list-item shrink-0 top-30 h-full w-[300px] md:w-[272px] select-none'
+					className=' shrink-0 top-30  w-[45vh] md:w-[272px] select-none'
 				>
 					<div
 						{...provided.dragHandleProps}
-						className='w-full rounded-md bg-[#0e0f0f] shadow-md pb-2'
+						className='w-full rounded-2xl max-h-full bg-[#0e0f0f] shadow-md pb-2'
 					>
 						<ListHeader data={list} />
 						<Droppable
@@ -98,10 +104,10 @@ const ListItem = ({ list, index }: ListItemProps) => {
 									ref={provided.innerRef}
 									{...provided.droppableProps}
 									className={cn(
-										'mx-1 px-1 py-0.5 flex flex-col gap-y-2',
+										'mx-1 px-1 py-0.5 custom-scrollbar flex flex-col max-h-[65vh] gap-y-2 overflow-x-hidden overflow-y-auto',
 										snapshot.isDraggingOver
-											? 'border border--border border-dashed rounded-md'
-											: ''
+											&& 'border border--border border-dashed rounded-md'
+											
 									)}
 								>
 									{list.cards &&
@@ -127,6 +133,7 @@ const ListItem = ({ list, index }: ListItemProps) => {
 											</Draggable>
 										))}
 									{provided.placeholder}
+									<div ref={cardsEndRef}></div>
 								</ol>
 							)}
 						</Droppable>

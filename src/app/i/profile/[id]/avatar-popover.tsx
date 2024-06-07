@@ -11,10 +11,9 @@ import {
 	PopoverTrigger
 } from '@/components/ui/popover'
 
-import { FormInput } from './form-input'
-import { FormPicker } from './form-picker'
-import { FormSubmit } from './form-submit'
+import { AvatarPicker} from './avatar-picker'
 import { useCreateBoard } from '@/app/i/scrumban/hooks/board/useCreateBoard'
+import { useUpdateUser } from '../hooks/useUpdateUser'
 
 interface FormPopoverProps {
 	children: React.ReactNode
@@ -25,33 +24,25 @@ interface FormPopoverProps {
 	pickImage: () => void
 }
 
-export const FormPopover = ({
+export const AvatarPopover = ({
 	children,
 	side = 'bottom',
 	align,
 	isPicked,
 	pickImage,
-	sideOffset = 0
+	sideOffset 
 }: FormPopoverProps) => {
 	const closeRef = useRef<ElementRef<'button'>>(null)
 
 
-	const { createBoard } = useCreateBoard()
+const {updateUser} = useUpdateUser()
 
 	const onSubmit = (formData: FormData) => {
-		const title = formData.get('title') as string
 		const image = formData.get('image') as string
-		const [imageId, imageThumbUrl, imageFullUrl, imageLinkHTML, imageUserName] =
+		const [raw, imageThumbUrl, imageFullUrl, regular, small] =
 			image.split('|')
-		const name = title
-		createBoard({
-			name,
-			imageId,
-			imageThumbUrl,
-			imageFullUrl,
-			imageLinkHTML,
-			imageUserName
-		})
+		const avatar = small
+		updateUser({data:{avatar}})
 		closeRef.current?.click()
 	}
 
@@ -65,7 +56,7 @@ export const FormPopover = ({
 				sideOffset={sideOffset}
 			>
 				<div className='text-md font-medium text-center text-neutral-600 pb-4'>
-					Create board
+					Choose a photo
 				</div>
 				<PopoverClose
 					ref={closeRef}
@@ -85,21 +76,14 @@ export const FormPopover = ({
 					<div
 						className='space-y-4'
 					>
-						<FormPicker
+						<AvatarPicker
 							pickImage={pickImage}
 							id='image'
 						/>
-						<FormInput
-							id='title'
-							label='Board title'
-							type='text'
-						/>
 					</div>
-					{isPicked ? (
-						<FormSubmit className='w-full text-base'>Create</FormSubmit>
-					) : (
-						<div className='text-center'>Need to pick some background</div>
-					)}
+						<Button
+						disabled={!isPicked}
+						type='submit' variant='outline' className='w-full text-base'>Choose</Button>
 				</form>
 			</PopoverContent>
 		</Popover>

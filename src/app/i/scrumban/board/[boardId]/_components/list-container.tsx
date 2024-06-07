@@ -125,7 +125,6 @@ const ListContainer = ({ list }: ListContainerProps) => {
 		}
 	}
 
-
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Droppable
@@ -137,7 +136,7 @@ const ListContainer = ({ list }: ListContainerProps) => {
 					<ol
 						{...provided.droppableProps}
 						ref={provided.innerRef}
-						className='board-container flex gap-x-3 mt-2 h-auto px-6'
+						className='board-container flex gap-x-3 mt-16 h-auto pl-3 md:pl-6 pr-20'
 					>
 						{orderedData.map((list, index) => {
 							return (
@@ -150,7 +149,9 @@ const ListContainer = ({ list }: ListContainerProps) => {
 						})}
 						{provided.placeholder}
 						<ListForm
-						sprintId={orderedData.find(list => list.sprintId !== null)?.sprintId }
+							sprintId={
+								orderedData.find(list => list.sprintId !== null)?.sprintId
+							}
 						/>
 						<div className='flex-shrink-0 w-1' />
 					</ol>

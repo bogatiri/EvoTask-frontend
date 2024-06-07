@@ -40,6 +40,7 @@ export default function RootLayout({
 						duration={1500}
 					/>
 					{children}
+
 				</Providers>
 			</body>
 		</html>

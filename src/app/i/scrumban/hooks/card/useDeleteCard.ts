@@ -14,6 +14,10 @@ export function useDeleteCard() {
 			onSuccess: data => {
 				toast.success(`Card "${data.data.name}" deleted`)
 				queryClient.invalidateQueries({queryKey:['list']})
+				queryClient.invalidateQueries({queryKey:['sprint']})	
+				// queryClient.invalidateQueries({queryKey:['board']})
+
+
 			},
 			onError(error: unknown) {
 				if (isAxiosError(error)) {

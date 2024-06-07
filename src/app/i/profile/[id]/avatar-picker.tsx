@@ -5,9 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { defaultImages } from '@/constants/images'
+import { avatars } from '@/constants/avatars'
 
-import { FormErrors } from './form-errors'
 import { cn } from '@/lib/utils'
 
 interface FormPickerProps {
@@ -16,11 +15,11 @@ interface FormPickerProps {
 	pickImage: () => void
 }
 
-export const FormPicker = ({ id, errors, pickImage }: FormPickerProps) => {
+export const AvatarPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 	const { pending } = useFormStatus()
 
 	const [images, setImages] =
-		useState<Array<Record<string, any>>>(defaultImages)
+		useState<Array<Record<string, any>>>(avatars)
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedImageId, setSelectedImageId] = useState(null)
 
@@ -59,7 +58,7 @@ export const FormPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 							checked={selectedImageId === image.id}
 							onChange={() => {}}
 							disabled={pending}
-							defaultValue={`${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`}
+							defaultValue={`${image.urls.raw}|${image.urls.thumb}|${image.urls.full}|${image.links.regular}|${image.urls.small_s3}`}
 						/>
 						<Image
 							src={image.urls.thumb}
@@ -73,20 +72,10 @@ export const FormPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 								<Check className='h-4 w-4 text-white' />
 							</div>
 						)}
-						<Link
-							href={image.links.html}
-							target='_blank'
-							className='opacity-0 hidden md:block group-hover:opacity-100 absolute bottom-0 w-full text-[10px] truncate text-white hover:underline p-1 bg-black/50'
-						>
-							{image.user.name}
-						</Link>
 					</div>
 				))}
 			</div>
-			<FormErrors
-				id='image'
-				errors={errors}
-			/>
+
 		</div>
 	)
 }

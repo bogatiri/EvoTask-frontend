@@ -21,7 +21,7 @@ const Description = ({ register, placeholder }: IDescriptionProps) => {
 			</div>
 			<TransparentFieldTextarea
 				placeholder={placeholder}
-				className='h-[200px]'
+				className='h-auto overflow-y-auto max-h-36 md:h-[200px]'
 				{...register('description')}
 			/>
 		</div>

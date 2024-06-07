@@ -39,6 +39,7 @@ export default function BoardIdPage() {
 		setSprintId(pickedSprintId)
 	}
 
+	
 	const backToMainBoard = () => {
 		setSprintId(null)
 		setLists(list)
@@ -58,15 +59,17 @@ export default function BoardIdPage() {
 				lists && sprintLists.length > 0 ? [lists[0], ...sprintLists] : lists
 			return (
 				<div
-					className=' flex flex-col relative size-full bg-no-repeat bg-cover bg-center'
+					className=' flex flex-col custom-scrollbar relative size-full bg-no-repeat bg-cover bg-center '
 					style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
 				>
-					<div className='px-4 board-container text-lg text-card-foreground h-full overflow-x-auto '>
+					<div className='md:px-4 board-container text-lg text-card-foreground h-full overflow-y-hidden overflow-x-auto custom-scrollbar'>
+					<div className='sticky top-0 w-full'>
 						<BoardNavbar
 							onSprintPick={onSprintPick}
 							backToMainBoard={backToMainBoard}
 							board={board!}
-						/>
+							/>
+							</div>
 						<ListContainer list={lists.length > 0 ? listsToShow! : sprintLists} />
 					</div>
 				</div>

@@ -20,7 +20,7 @@ export interface IUser {
 	createdAt: Date
 	about?: string
 	roles: IRolesResponse[] 
-	avatar? : string
+	avatar: string
 	workInterval?: number
 	breakInterval?: number
 	intervalsCount?: number

@@ -13,6 +13,8 @@ export function useDeleteSprint() {
 			if (data.success) {
 				queryClient.invalidateQueries({ queryKey: ['sprints'] }),
 					queryClient.invalidateQueries({ queryKey: ['list'] }),
+					queryClient.invalidateQueries({ queryKey: ['board'] }),
+
 					toast.success(data.message)
 			} else {
 				toast.error(data.message)

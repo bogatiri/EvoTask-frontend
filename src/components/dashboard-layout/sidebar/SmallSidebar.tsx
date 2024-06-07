@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
 	SheetFooter,
 	SheetHeader,
@@ -46,8 +47,8 @@ const SmallSidebar = () => {
 	return (
 		<Sheet>
 			<SheetTrigger>
-				<div className='flex justify-center items-center h-10 rounded-md m-3 ml-1 bg-transition hover:bg-accent hover:text-accent-foreground'>
-					<PanelRightClose className='h-6 w-6' />
+				<div className='rounded-md m-1 bg-transition hover:text-accent-foreground'>
+					<Separator orientation='vertical' className='w-2 bg-[#858585] rounded-xl h-28' />
 				</div>
 			</SheetTrigger>
 			<SheetContent side='left'>
@@ -72,13 +73,14 @@ const SmallSidebar = () => {
 					</SheetTitle>
 				</SheetHeader>
 				<div className='flex flex-col h-full'>
+
 					<div className='flex flex-col h-full max-h-[85%] w-full  p-2 gap-2'>
 						{MENU.map(item => (
 							<MenuItem
-								currentUser={currentUser}
-								sidebar={20}
-								item={item}
-								key={item.link}
+							currentUser={currentUser}
+							sidebar={20}
+							item={item}
+							key={item.link}
 							/>
 						))}
 					</div>

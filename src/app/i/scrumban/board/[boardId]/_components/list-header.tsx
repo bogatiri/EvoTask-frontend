@@ -27,7 +27,7 @@ const ListHeader = ({ data }: ListHeaderProps) => {
 	useListDebounce({ watch, listId: data!.id })
 
 	return (
-		<div className='pt-2 px-2 text-sm  rounded-md m-2 font-semibold flex justify-between items-start- gap-x-2'>
+		<div className=' list-item pt-2 px-2 text-sm  rounded-md m-2 font-semibold  justify-between items-start- gap-x-2'>
 			<div className='flex rounded-md w-full flex-col gap-3 '>
 				<div className='flex'>
 					<TransparentField {...register('name')} />

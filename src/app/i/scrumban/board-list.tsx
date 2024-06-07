@@ -19,7 +19,7 @@ export const BoardList = () => {
 
 
 	return (
-		<div className='space-y-4 m-big-layout'>
+		<div className='space-y-4 m-big-layout overflow-y-hidden md:overflow-y-auto'>
 			<div className='flex items-center font-semibold text-lg text-neutral-700'>
 				<User2 className='h-6 w-6 mr-2' />
 				Your boards
@@ -38,7 +38,7 @@ export const BoardList = () => {
 				))}
 				<FormPopover
 					sideOffset={10}
-					side='right'
+					side='bottom'
 					isPicked={isPicked}
 					pickImage={pickImage}
 				>
@@ -54,7 +54,7 @@ export const BoardList = () => {
 							What makes EvoTask different is that it gives you the ability to create an unlimited number of options for accessing boards, tasks, and other elements of your workspace.
               `}
 						>
-							<HelpCircle className='absolute bottom-2 right-2 h-[14px] w-[14px]' />
+							<HelpCircle className='absolute bottom-2 hidden md:block right-2 h-[14px] w-[14px]' />
 						</Hint>
 					</div>
 				</FormPopover>

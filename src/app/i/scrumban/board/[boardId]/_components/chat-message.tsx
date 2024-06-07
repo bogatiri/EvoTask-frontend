@@ -56,7 +56,7 @@ const ChatMessage = forwardRef<HTMLInputElement, iChatMessageProps>(
 		}
 
 		return (
-			<div className='flex justify-between gap-2'>
+			<div className='flex isolate justify-between gap-2'>
 				{editingMessageId === message.id ? (
 					<Input
 						ref={inputRef}

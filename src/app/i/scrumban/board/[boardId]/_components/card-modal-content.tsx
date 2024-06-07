@@ -64,7 +64,7 @@ const CardModalContent = ({
 	}
 
 	return (
-		<DialogContent className='sm:max-w-md md:max-w-xl xl:max-w-2xl'>
+		<DialogContent className='rounded-xl max-w-sm sm:max-w-md md:max-w-xl xl:max-w-2xl'>
 			<DialogHeader>
 				<DialogTitle>
 					<div className='flex gap-4 items-center'>
@@ -73,16 +73,16 @@ const CardModalContent = ({
 						<Creator creator={data.creator} />
 					</div>
 				</DialogTitle>
-				<DialogDescription>
+				<DialogDescription className='hidden md:block'>
 					You can change all of this attributes
 				</DialogDescription>
 			</DialogHeader>
 			<div
-				className={`${!data.parentId ? 'grid grid-cols-[1.1fr_0.5fr] gap-2 items-stretch space-x-2' : 'flex flex-row-reverse'}`}
+				className={`${!data.parentId ? 'grid md:grid-cols-[1.1fr_0.5fr] gap-2 items-stretch md:space-x-2' : 'flex flex-row-reverse'}`}
 			>
 				{!data.parentId && (
 					<div className='flex flex-col justify-between'>
-						<div className='flex justify-between items-stretch'>
+						<div className='flex gap-1 justify-between items-stretch'>
 							<PickDate
 								control={control}
 								date={data.updatedAt || ''}
@@ -102,7 +102,7 @@ const CardModalContent = ({
 					</div>
 				)}
 				<div
-					className={`flex ${data.parentId ? '' : ''} flex-col gap-y-2 border border-border p-2 rounded-md`}
+					className={`grid grid-cols-2 gap-x-2 md:flex md:flex-col gap-y-2 border border-border p-2 rounded-md`}
 				>
 					{!data.parentId && (
 						<Copy
@@ -124,7 +124,7 @@ const CardModalContent = ({
 					<Users data={data} />
 				</div>
 			</div>
-			<div className='grid grid-cols-2 w-full gap-2'>
+			<div className='grid grid-cols-1 md:grid-cols-2 w-full gap-2'>
 				<Description register={register} />
 				<Comments data={data} />
 			</div>

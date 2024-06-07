@@ -19,8 +19,8 @@ interface CardFormProps {
 	isEditing: boolean
 }
 
-const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(
-	({ listId, enableEditing, disableEditing, isEditing, parentId }, ref) => {
+const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({ listId, enableEditing, disableEditing, isEditing, parentId }, ref) => {
+
 		const formRef = useRef<ElementRef<'form'>>(null)
 
 		const onKeyDown = (e: KeyboardEvent) => {

@@ -14,14 +14,14 @@ import { IRolesResponse } from '@/types/roles.types'
 
 import User from './user'
 import UserAvatar from './userAvatar'
+import { IUser } from '@/types/auth.types'
 
 interface IUserProps {
-	data: ICardResponse | IBoardResponse | IRolesResponse
+	data: ICardResponse | IBoardResponse | IRolesResponse 
 }
 
 const Users = ({ data }: IUserProps) => {
 	
-
 
 	return (
 		<Popover>
@@ -29,7 +29,7 @@ const Users = ({ data }: IUserProps) => {
 				{data.users.length > 0 ? (
 					<div className='flex min-w-[150px]  opacity-70 hover:opacity-100 cursor-pointer justify-between items-center gap-2 transition-opacity '>
 						<div className='flex pl-1'>
-							{data.users.slice(0, 5).map((user, index) => (
+							{data.users.map((user, index) => (
 								<div
 									key={user.id}
 									className='flex justify-start -mr-5'

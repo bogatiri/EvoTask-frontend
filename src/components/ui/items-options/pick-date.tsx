@@ -18,7 +18,7 @@ const PickDate = ({ control, controlName, text, date }: IPickDateProps) => {
 		<div
 			className={`flex gap-3 items-center ${controlName && 'border border-border gap-y-1 rounded-md p-2'}`}
 		>
-			<Calendar className='w-9' />
+			<Calendar className='w-9 ' />
 			{text && (
 				<span className='font-semibold text-sm text-neutral-700 mb-2'>
 					{text}

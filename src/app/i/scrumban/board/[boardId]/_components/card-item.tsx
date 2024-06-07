@@ -55,11 +55,12 @@ const CardItem = ({ data, boardId }: CardItemProps) => {
 	return (
 		<>
 			<div
-				className={`flex flex-col gap-y-2 border ${data.completed && 'opacity-60 hover:opacity-100'} bg-[#0e0f0f] border-border ${data.parentId ? 'p-2' : 'py-2 px-3 '} rounded-md hover:border-black`}
+				className={`flex flex-col gap-y-2 border ${data.completed && 'opacity-60 hover:opacity-100'} bg-[#0e0f0f] border-border ${data.parentId ? 'p-2' : 'py-2 px-3 '} rounded-lg hover:border-black`}
 			>
 				<Dialog>
-					<div className='flex items-center'>
-						<div className='flex gap-x-3 text-sm items-center justify-center'>
+					
+					<div className='flex  md:items-center'>
+						<div className='flex w-full gap-x-3 text-sm items-center justify-center'>
 							<CardCheckbox control={control} />
 					{/* <Checkbox/> */}
 							<TransparentField {...register('name')} />
@@ -72,7 +73,7 @@ const CardItem = ({ data, boardId }: CardItemProps) => {
 						)}
 					</div>
 					{!data.parentId && (
-						<div className='flex items-center w-full mt-3 gap-y-3  text-sm  rounded-md shadow-sm justify-between'>
+						<div className='hidden md:flex items-center w-full mt-3 gap-y-3  text-sm  rounded-md shadow-sm justify-between'>
 							<CardPriority control={control} />
 							<CardPoints control={control} />
 						</div>

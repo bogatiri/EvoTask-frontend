@@ -86,27 +86,6 @@ const SprintNavbar = ({
 
 	useSprintDebounce({ watch, sprintId: item!.id })
 
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	return (
 		<>
 			<Dialog>

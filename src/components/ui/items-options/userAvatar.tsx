@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { getAvatar } from '@/hooks/useProfile'
 
 import { IUser } from '@/types/auth.types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loader from '../Loader'
 
 interface IUserProps {
@@ -13,17 +13,22 @@ interface IUserProps {
 const UserAvatar = ({ userToAvatar, user }: IUserProps) => {
 
 
-	const {image, isLoading} = getAvatar(userToAvatar.avatar!)
+	
 
-	if (isLoading) {
-		return <Loader/>
+	const [avatar, setAvatar] = useState('')
+
+	if (userToAvatar.avatar.includes('static/uploads/avatars')){
+		const {image, isLoading} = getAvatar(userToAvatar.avatar)
+		useEffect(() => {
+			setAvatar(image)
+		}, [isLoading])
 	}
 	
 	return (
 		<>
 			{userToAvatar.avatar ? (
 				<Avatar className='h-8 w-8 border border-border'>
-					<AvatarImage src={image}></AvatarImage>
+					<AvatarImage src={userToAvatar.avatar.includes('static/uploads/avatars') ? avatar : userToAvatar.avatar}></AvatarImage>
 				</Avatar>
 			) : (
 				<Avatar className='h-8 w-8 border border-border'>

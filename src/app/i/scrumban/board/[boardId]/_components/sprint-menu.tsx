@@ -48,13 +48,13 @@ const SprintMenu = ({
 		createSprint({ boardId })
 	}
 
+
 	return (
-		<div>
 			<Menubar>
 				<MenubarMenu>
-					<MenubarTrigger>
-						<div className='flex justify-center items-center h-10 pl-3'>
-							<Shell className='h-4 w-4' />
+					<MenubarTrigger className='flex justify-center items-center h-10 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
+						<div className='flex justify-center items-center h-10 px-3'>
+							<Shell className='hidden md:block h-4 w-4' />
 							<span className='text-sm mx-3 my-1.5'>Sprints</span>
 						</div>
 					</MenubarTrigger>
@@ -94,7 +94,7 @@ const SprintMenu = ({
 					</MenubarContent>
 				</MenubarMenu>
 			</Menubar>
-		</div>
+
 	)
 }
 

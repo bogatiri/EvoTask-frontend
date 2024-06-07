@@ -13,7 +13,7 @@ export function useUpdateBoard(key?: string) {
 			boardService.updateBoard(id, data),
 		onSuccess() {
 			queryClient.invalidateQueries({
-				queryKey: ['board', key]
+				queryKey: ['board']
 			})
 		}
 	})

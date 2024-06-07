@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { Heading } from '@/components/ui/Heading'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 
 import { TypeUserForm } from '@/types/auth.types'
 
@@ -14,7 +15,6 @@ import { useUserId } from '../hooks/useUserId'
 
 import AvatarInput from './avatar-input'
 import UserField from './user-field'
-import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 
 export default function UserId() {
 	const { user, isLoading } = useUserId()
@@ -130,7 +130,7 @@ export default function UserId() {
 								user={user}
 							/>
 							<UserField
-							type='number'
+								type='number'
 								text='phone'
 								disabled={!my}
 								placeholder='7(999)-999-99-99'
@@ -144,19 +144,17 @@ export default function UserId() {
 								register={register}
 								user={user}
 							/>
-
-
 						</div>
 					</div>
 					<div className='w-full md:pr-layout xl:pr-10 xl:mr-2'>
-							<span className='cursor-default select-none ml-2'>About:</span>
-							<div className='mt-4'>
-								<TransparentFieldTextarea
-									placeholder='About...'
-									disabled={!my}
-									{...register('about')}
-								/>
-							</div>
+						<span className='cursor-default select-none ml-2'>About:</span>
+						<div className='mt-4'>
+							<TransparentFieldTextarea
+								placeholder='About...'
+								disabled={!my}
+								{...register('about')}
+							/>
+						</div>
 					</div>
 				</div>
 			</>

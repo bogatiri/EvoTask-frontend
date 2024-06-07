@@ -32,7 +32,7 @@ const AddUser = ({ boardId, cardId }: IAddUserProps) => {
 	}
 
 	return (
-		<DialogFooter className='sm:justify-start w-full flex gap-3 justify-between'>
+		<DialogFooter className='sm:justify-start flex-col w-full flex gap-3 justify-between'>
 			<Input
 				className='w-full'
 				placeholder='write an email of user that you want to add'

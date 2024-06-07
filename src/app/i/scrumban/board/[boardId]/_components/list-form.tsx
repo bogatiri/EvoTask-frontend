@@ -45,6 +45,7 @@ const ListForm = ({sprintId}: IListForm) => {
 	useOnClickOutside(formRef, disableEditing)
 	const { createList } = useCreateList()
 
+
 	const onSubmit = (formData: FormData) => {
 		const name = formData.get('title') as string
 		const board = formData.get('boardId') as string
@@ -61,18 +62,22 @@ const ListForm = ({sprintId}: IListForm) => {
 		disableEditing()
 	}
 
+
+
+
+
 	if (isEditing) {
 		return (
 			<ListWrapper>
 				<form
 					action={onSubmit}
 					ref={formRef}
-					className='w-full list-item p-3 rounded-md mt-2 bg-[#0e0f0f] space-y-4 shadow-md'
+					className='w-full list-item  p-3 rounded-md mt-2 bg-[#0e0f0f] space-y-4 shadow-md mr-20'
 				>
 					<FormInput
 						ref={inputRef}
 						id='title'
-						className='text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-input focus:border-input transition'
+						className='text-sm px-2 py-1 h-7 font-medium border-transparent hover:border-none focus:border-none transition'
 						placeholder='Enter list title...'
 					/>
 					<input
@@ -92,19 +97,22 @@ const ListForm = ({sprintId}: IListForm) => {
 						</Button>
 					</div>
 				</form>
+
 			</ListWrapper>
 		)
 	}
 
 	return (
-		<ListWrapper>
+		<ListWrapper
+		>
 			<button
 				onClick={enableEditing}
-				className='w-full rounded-md bg-[#0e0f0f]/50 hover:bg-[#0e0f0f]/80 transition p-3 mt-2 flex items-center font-medium text-sm'
+				className='w-full rounded-xl bg-[#0e0f0f]/50 hover:bg-[#0e0f0f]/80 transition p-3 mt-2 flex items-center font-medium text-sm mr-20z`'
 			>
 				<Plus className='h-4 w-4 mr-2' />
 				Add a list
 			</button>
+
 		</ListWrapper>
 	)
 }

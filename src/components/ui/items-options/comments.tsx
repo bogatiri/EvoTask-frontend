@@ -44,29 +44,31 @@ const Comments = ({ data }: ICommentsProps) => {
 	}
 
 	return (
-		<div className='flex flex-col flex-grow justify-between'>
+		<div className='flex  flex-col flex-grow justify-between'>
 			<div>
 				<div className='flex gap-x-3'>
 					<MessageSquareText className='h-5 w-5 mt-0.5 text-neutral-700' />
 					<p className='font-semibold text-neutral-700 mb-2'>Comments</p>
 				</div>
-				<ul className='border border-border rounded-md space-y-2 h-[150px] overflow-y-auto flex flex-col p-4'>
+				<ul className='border border-border rounded-md space-y-2 h-32 max-h-32 md:h-48 overflow-y-auto flex flex-col p-1 md:p-4'>
 					{data.comments ? (
 						data.comments.map((comment, index) => (
 							<div
-								className='flex gap-2'
+								className='flex gap-1 md:gap-2'
 								key={index}
 							>
 								<div className='flex items-center'>
 									{comment.user.avatar ? (
-										<Link href={`/i/profile/${comment.user.id}`}>
-											<Avatar className='h-8 w-8 border border-border'>
+										<Link
+										className=''
+										href={`/i/profile/${comment.user.id}`}>
+											<Avatar className='size-5 md:size-8  border border-border'>
 												<AvatarImage src={comment.user.avatar}></AvatarImage>
 											</Avatar>
 										</Link>
 									) : (
 										<Link href={`/i/profile/${comment.user.id}`}>
-											<Avatar className='h-8 w-8 border border-border'>
+											<Avatar className='size-5 md:size-8 border border-border'>
 												<AvatarFallback>
 													{comment.user.name
 														? comment.user.name.charAt(0).toUpperCase()
@@ -77,11 +79,11 @@ const Comments = ({ data }: ICommentsProps) => {
 									)}
 								</div>
 								<div className='rounded-lg px-4 py-2 max-w-xs mr-auto  text-white bg-gray-900'>
-									<div className='flex gap-2'>
-										<span className='block break-all max-w-[200px] text-sm'>
+									<div className='flex gap-1 md:gap-2'>
+										<span className='block break-words max-w-[200px] text-sm'>
 											{comment.text}
 										</span>
-										<span className='block text-xs text-right text-gray-600 self-end'>
+										<span className='text-xs text-right text-gray-600 self-end'>
 											{formatDate(comment.createdAt)}
 										</span>
 									</div>

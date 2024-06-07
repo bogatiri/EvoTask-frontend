@@ -16,7 +16,6 @@ export function useUpdateList(key?: string) {
 			queryClient.invalidateQueries({
 				queryKey: ['lists']
 			})
-			toast.success(`List updated`)
 		}
 	})
 

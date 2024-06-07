@@ -11,8 +11,8 @@ interface ICardPriorityProps {
 
 const CardPriority = ({control} : ICardPriorityProps) => {
 	return (
-		<div className='flex gap-3'>
-		<BarChart />
+		<div className='flex gap-3 '>
+		<BarChart  />
 		<Controller
 			control={control}
 			name='priority'

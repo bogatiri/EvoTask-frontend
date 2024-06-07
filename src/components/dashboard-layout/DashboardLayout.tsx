@@ -27,7 +27,6 @@ export default function DashboardLayout({
 	const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
 	const { data, isLoading, isSuccess } = useProfile()
-	console.log(data)
 	const [sidebar, setSidebar] = useState<number | null>(
 		isLoading ? null : +data!.user.sidebarWidth
 	)
@@ -35,7 +34,6 @@ export default function DashboardLayout({
 
 	useEffect(() => {
 		if (data) {
-			console.log('data', data)
 			setSidebar(+data.user.sidebarWidth)
 			if (refA.current) {
 				setTimeout(() => refA.current?.resize(+data.user.sidebarWidth), 10)
@@ -85,17 +83,19 @@ export default function DashboardLayout({
 						sidebar={sidebar}
 						/>
 					</ResizablePanel>
-					<div className='xl:hidden fixed z-50'>
+					<div className='xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
 					<SmallSidebar/>
 					</div>
-					<ResizableHandle  />
+					<ResizableHandle className='hidden xl:block'/>
 					<ResizablePanel defaultSize={100-sidebar!}>
 						<main className='overflow-x-hidden h-full max-h-screen relative'>
 							{(!pathName.includes('board') && (
 								<Header />
 							))}
 							{children}
+
 						</main>
+
 					</ResizablePanel>
 				</ResizablePanelGroup>
 			)}

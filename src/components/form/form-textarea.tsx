@@ -67,7 +67,7 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
             onChange={onChange}
             disabled={pending || disabled}
             className={cn(
-              'resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm',
+              'resize-none rounded-lg  focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm',
               className
             )}
             aria-describedby={`${id}-error`}
