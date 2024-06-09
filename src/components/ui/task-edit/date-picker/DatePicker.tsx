@@ -44,7 +44,7 @@ export function DatePicker({
 			ref={ref}
 		>
 			<button onClick={() => setIsShow(!isShow)}>
-				{value ? dayjs(value).format('LL') : 'Click for select'}
+				{value ? dayjs(value).format('MMM D') : 'Click for select'}
 			</button>
 			{isShow && (
 				<div

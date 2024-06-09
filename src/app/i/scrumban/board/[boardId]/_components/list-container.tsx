@@ -37,6 +37,8 @@ const ListContainer = ({ list }: ListContainerProps) => {
 		const { destination, source, type } = result
 
 		if (!destination) {
+			document.body.style.overflow = ''
+
 			return
 		}
 		//if dropped in the same position
@@ -44,6 +46,8 @@ const ListContainer = ({ list }: ListContainerProps) => {
 			destination.droppableId === source.droppableId &&
 			destination.index === source.index
 		) {
+			document.body.style.overflow = ''
+
 			return
 		}
 
@@ -70,6 +74,8 @@ const ListContainer = ({ list }: ListContainerProps) => {
 			)
 
 			if (!sourceList || !destList) {
+				document.body.style.overflow = ''
+
 				return
 			}
 
@@ -123,10 +129,18 @@ const ListContainer = ({ list }: ListContainerProps) => {
 				updateOrderCard(destList.cards)
 			}
 		}
+		document.body.style.overflow = ''
+	}
+
+	const onDragStart = () => {
+		document.body.style.overflow = 'hidden'
 	}
 
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
+		<DragDropContext
+			onDragStart={onDragStart}
+			onDragEnd={onDragEnd}
+		>
 			<Droppable
 				droppableId='lists'
 				type='list'
@@ -141,6 +155,7 @@ const ListContainer = ({ list }: ListContainerProps) => {
 						{orderedData.map((list, index) => {
 							return (
 								<ListItem
+									orderedData={orderedData}
 									key={list.id}
 									index={index}
 									list={list}

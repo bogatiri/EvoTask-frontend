@@ -40,7 +40,7 @@ const UserAvatar = ({ userToAvatar, user }: IUserProps) => {
 				</Avatar>
 			)}
 			{user?.name ? (
-				<p className='font-semibold text-neutral-700 text-sm'>{user?.name}</p>
+				<p className='font-semibold  text-neutral-700 text-sm'>{user?.name}</p>
 			) : (
 				<p className='font-semibold text-sm text-neutral-700'>{user?.email}</p>
 			)}

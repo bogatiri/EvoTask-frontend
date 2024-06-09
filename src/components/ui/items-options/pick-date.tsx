@@ -11,9 +11,10 @@ interface IPickDateProps {
 	text?: string
 	controlName?: string
 	date: string
+	position?: 'left' | 'right'
 }
 
-const PickDate = ({ control, controlName, text, date }: IPickDateProps) => {
+const PickDate = ({ control, controlName, text, date, position }: IPickDateProps) => {
 	return (
 		<div
 			className={`flex gap-3 items-center ${controlName && 'border border-border gap-y-1 rounded-md p-2'}`}
@@ -31,7 +32,7 @@ const PickDate = ({ control, controlName, text, date }: IPickDateProps) => {
 					<DatePicker
 						onChange={onChange}
 						value={date || ''}
-						position='right'
+						position={position ? position : 'left'}
 					/>
 				)}
 			/>

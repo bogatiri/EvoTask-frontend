@@ -30,3 +30,13 @@ export function useListById(boardId: string, options = { enabled: true }) {
 
   return { list, isLoading, error }
 }
+
+export function getListBySprintId(sprintId: string) {
+  const { data: list, isLoading, error } = useQuery<IListResponse[]>({
+    queryKey: ['list', sprintId], 
+    queryFn: () => listService.getListById(sprintId),
+  },
+)
+
+  return { list, isLoading, error }
+}

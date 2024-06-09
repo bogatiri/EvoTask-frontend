@@ -30,7 +30,7 @@ export function SingleSelect({
 
 	return (
 		<div
-			className={cn('relative min-w-20 cursor-pointer ', {
+			className={cn('relative cursor-pointer ', {
 				'w-max': isColorSelect
 			})}
 			ref={ref}
@@ -59,11 +59,9 @@ export function SingleSelect({
 			{isShow && (
 				<div
 					className={cn(
-						'absolute md:flex md:flex-row md:gap-1 w-full md:bottom-4 p-2.5   md:right-12 slide bg-sidebar z-10 shadow rounded-lg'
+						'absolute md:flex md:flex-row md:gap-1 w-full md:bottom-4 p-2.5   md:right-3 slide bg-sidebar z-10 shadow rounded-lg'
 					)}
-					// style={{
-					// 	top: 'calc(100% + .5rem)'
-					// }}
+
 				>
 					{data.map(item => (
 						<div

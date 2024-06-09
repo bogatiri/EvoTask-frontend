@@ -15,6 +15,11 @@ class CardService {
     const response = await axiosWithAuth.get<ICardResponse[]>(`${this.BASE_URL}/${id}`)
     return response.data
   }
+
+	async moveCardToAnotherList({cardId, listId} : {cardId: string, listId: string}){
+		const response = await axiosWithAuth.put(`${this.BASE_URL}/moveCardToAnotherList`, {cardId, listId})
+		return response.data
+	}
 	
 
 	async getCardByCardId(id: string) {

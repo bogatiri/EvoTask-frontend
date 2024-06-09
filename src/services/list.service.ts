@@ -15,6 +15,12 @@ class ListService {
     return response.data
   }
 
+	async getListBySprintId(id: string) {
+    const response = await axiosWithAuth.get<IListResponse[]>(`${this.BASE_URL}/find-by-sprintId/${id}`)
+		console.log('response',response)
+    return response.data
+  }
+
 	async getLists() {
 		const response = await axiosWithAuth.get<IListResponse[]>(this.BASE_URL)
 		return response

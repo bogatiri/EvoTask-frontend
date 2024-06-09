@@ -74,11 +74,11 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 						{message.userId !== currentUser && (
 							<div className='flex mb-1 justify-start items-center '>
 								{message.user.name ? (
-									<span className='font-bold font-mono'>
+									<span className='font-bold text-xs font-mono'>
 										{message.user.name}
 									</span>
 								) : (
-									<span className='font-bold font-mono'>
+									<span className='font-bold text-xs font-mono'>
 										{message.user.email}
 									</span>
 								)}

@@ -77,12 +77,12 @@ const ChatMessage = forwardRef<HTMLInputElement, iChatMessageProps>(
 						href={message.text}
 						target='_blank'
 						rel='noopener noreferrer'
-						className='text-black underline break-all max-w-[200px] text-sm'
+						className='text-black underline break-all max-w-[200px] text-xs'
 					>
 						{message.text}
 					</a>
 				) : (
-					<span lang="ru" className='block break-words hyphens-manual max-w-[250px] text-sm'>
+					<span lang="ru" className='block break-words hyphens-manual max-w-[250px] text-xs'>
 						{message.text}
 					</span>
 				)}

@@ -13,7 +13,7 @@ interface ISprintStatusProps {
 
 const PickStatus = ({ control, status }: ISprintStatusProps) => {
 	return (
-		<div className='flex gap-3'>
+		<div className='flex gap-3 justify-center'>
 			<TrendingUp />
 			<Controller
 				control={control}

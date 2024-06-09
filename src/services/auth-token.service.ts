@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+import Cookies from '../../node_modules/@types/js-cookie'
 
 export enum EnumTokens {
 	'ACCESS_TOKEN' = 'accessToken',
@@ -6,8 +6,8 @@ export enum EnumTokens {
 }
 
 export const getAccessToken = () => {
-		const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
-		return accessToken || null
+	const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)
+	return accessToken || null
 }
 
 export const saveTokenStorage = (accessToken: string) => {

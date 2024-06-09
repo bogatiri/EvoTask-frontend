@@ -11,11 +11,12 @@ import ListHeader from './list-header'
 import { cn } from '@/lib/utils'
 
 interface ListItemProps {
+	orderedData: IListResponse[]
 	list: IListResponse
 	index: number
 }
 
-const ListItem = ({ list, index }: ListItemProps) => {
+const ListItem = ({ list, index, orderedData }: ListItemProps) => {
 	const textareaRef = useRef<ElementRef<'textarea'>>(null)
 	const [isEditing, setIsEditing] = useState(false)
 	const cardsEndRef = useRef<HTMLDivElement>(null)
@@ -124,6 +125,7 @@ const ListItem = ({ list, index }: ListItemProps) => {
 														{...provided.dragHandleProps}
 													>
 														<CardItem
+															orderedData={orderedData}
 															boardId={list.boardId}
 															key={card.id}
 															data={card}

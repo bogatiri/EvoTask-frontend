@@ -72,7 +72,7 @@ export default function DashboardLayout({
 					direction='horizontal'
 				>
 					<ResizablePanel
-					className='hidden xl:block'
+					className='hidden 3xl:block'
 						minSize={9}
 						defaultSize={sidebar! }
 						maxSize={20}
@@ -83,7 +83,7 @@ export default function DashboardLayout({
 						sidebar={sidebar}
 						/>
 					</ResizablePanel>
-					<div className='xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
+					<div className='3xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
 					<SmallSidebar/>
 					</div>
 					<ResizableHandle className='hidden xl:block'/>

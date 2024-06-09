@@ -5,7 +5,6 @@ import { Control, UseFormRegister } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import {
 	DialogContent,
-	DialogDescription,
 	DialogHeader,
 	DialogTitle
 } from '@/components/ui/dialog'
@@ -17,6 +16,7 @@ import Description from '@/components/ui/items-options/description'
 import PickDate from '@/components/ui/items-options/pick-date'
 
 import { ICardResponse, TypeCardFormState } from '@/types/card.types'
+import { IListResponse } from '@/types/list.types'
 
 import AddUser from '../../../../../../components/ui/items-options/addUser'
 import Comments from '../../../../../../components/ui/items-options/comments'
@@ -27,19 +27,22 @@ import Users from '../../../../../../components/ui/items-options/users'
 import { usePickCard } from '../../../hooks/card/usePickCard'
 
 import CardForm from './card-form'
+import MoveCardToAnotherList from './moveCardToAnotherList'
 
 interface ICardModalContentProps {
 	data: ICardResponse
 	boardId: string
 	register: UseFormRegister<TypeCardFormState>
 	control: Control<TypeCardFormState>
+	orderedData?: IListResponse[]
 }
 
 const CardModalContent = ({
 	data,
 	boardId,
 	register,
-	control
+	control,
+	orderedData
 }: ICardModalContentProps) => {
 	const [isEditing, setIsEditing] = useState(false)
 	const textareaRef = useRef<ElementRef<'textarea'>>(null)
@@ -70,25 +73,30 @@ const CardModalContent = ({
 					<div className='flex gap-4 items-center'>
 						<CardCheckbox control={control} />
 						<TransparentField {...register('name')} />
-						<Creator creator={data.creator} />
 					</div>
 				</DialogTitle>
-				<DialogDescription className='hidden md:block'>
-					You can change all of this attributes
-				</DialogDescription>
+				<Creator
+					style={{ justifyContent: 'start' }}
+					creator={data.creator}
+				/>
 			</DialogHeader>
 			<div
 				className={`${!data.parentId ? 'grid md:grid-cols-[1.1fr_0.5fr] gap-2 items-stretch md:space-x-2' : 'flex flex-row-reverse'}`}
 			>
 				{!data.parentId && (
 					<div className='flex flex-col justify-between'>
-						<div className='flex gap-1 justify-between items-stretch'>
+						<div className='flex justify-start gap-3 items-stretch'>
 							<PickDate
+								position='left'
 								control={control}
 								date={data.updatedAt || ''}
 							/>
 							<CardPriority control={control} />
 							<CardPoints control={control} />
+							<MoveCardToAnotherList
+								orderedData={orderedData}
+								cardId={data.id}
+							/>
 						</div>
 						<div className='flex items-end m-0 w-full -px-2'>
 							<CardForm

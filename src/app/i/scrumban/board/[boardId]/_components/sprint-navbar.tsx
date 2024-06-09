@@ -123,11 +123,14 @@ const SprintNavbar = ({
 					<DialogDescription>
 						You can change all of this attributes
 					</DialogDescription>
+					<div className='justify-start max-w-16 pl-5'>
+
 					<PickStatus
 						status={item.status as EnumSprintStatus}
 						control={control}
-					/>
-					<div className='flex gap-3'>
+						/>
+						</div>
+					<div className='flex gap-3 justify-between'>
 						<CardDate
 							date={item.startDate || ''}
 							control={control}

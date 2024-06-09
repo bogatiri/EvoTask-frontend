@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form'
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog'
 import { TransparentField } from '@/components/ui/fields/TransparentField'
+import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 import Description from '@/components/ui/items-options/description'
 import PickStatus from '@/components/ui/items-options/pick-status'
 import { Separator } from '@/components/ui/separator'
@@ -64,7 +64,7 @@ export const BoardTitleForm = ({
 
 	return (
 		<>
-			<div className='grid grid-cols-[1.3fr_0.5fr] fixed w-[100vw] md:w-[85vw] items-center border-b border-border p-3 md:p-2 gap-2 '>
+			<div className='grid grid-cols-[1.8fr_0.2fr] fixed w-[100vw] md:w-[85vw] items-center border-b border-border p-3 md:p-2 gap-2 '>
 				<div className='flex gap-2 w-full items-center'>
 					<BoardRoles
 						roles={board.roles}
@@ -83,13 +83,13 @@ export const BoardTitleForm = ({
 						board={board}
 					/>
 					<TransparentField
-						className='text-lg w-auto font-bold px-[7px] h-7 hidden xl:block border-foreground'
+						className=' w-full font-bold px-[7px] h-7 hidden lg:block border-foreground text-lg'
 						{...register('name')}
 					/>
 				</div>
 				<div className='flex self-end justify-end items-center'>
 					<Dialog>
-						<div className='flex self-end justify-end xl:justify-end items-center w-full  h-10'>
+						<div className='flex self-end justify-end xl:justify-end items-center   h-10'>
 							<DialogTrigger>
 								<div className='flex justify-center self-end items-center h-10 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground'>
 									<Settings className='h-4 w-4' />
@@ -104,18 +104,19 @@ export const BoardTitleForm = ({
 								<DialogTitle autoFocus={false}>
 									<div className='flex gap-3 w-full'>
 										<div className='flex items-center w-full mr-3 justify-center gap-3'>
-											<List />
-											<TransparentField
+											<List size={20} />
+											<TransparentFieldTextarea
+												className='text-xs h-auto'
 												autoFocus={false}
 												{...register('name')}
 											/>
 										</div>
-										<Creator creator={creator} />
 									</div>
 								</DialogTitle>
-								<DialogDescription>
-									You can change all of this attributes
-								</DialogDescription>
+								<Creator
+									style={{ justifyContent: 'start' }}
+									creator={creator}
+								/>
 							</DialogHeader>
 							<div className='flex flex-col-[0.5fr_1fr] justify-between gap-4'>
 								<Description

@@ -27,8 +27,10 @@ const Users = ({ data }: IUserProps) => {
 		<Popover>
 			<PopoverTrigger>
 				{data.users.length > 0 ? (
-					<div className='flex min-w-[150px]  opacity-70 hover:opacity-100 cursor-pointer justify-between items-center gap-2 transition-opacity '>
-						<div className='flex pl-1'>
+					<div className='flex flex-col min-w-[150px]  opacity-70 hover:opacity-100 cursor-pointer justify-between items-center gap-2 transition-opacity '>
+						<div className='flex gap-1 items-center w-full'>
+
+						<div className='flex pl-1 w-full justify-center'>
 							{data.users.map((user, index) => (
 								<div
 									key={user.id}
@@ -41,6 +43,7 @@ const Users = ({ data }: IUserProps) => {
 							))}
 						</div>
 						<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+						</div>
 						{data.users.length > 5 && (
 							<div className=' flex pl-2 justify-start items-center'>
 								<span className='text-gray-500 text-xs'>

@@ -12,7 +12,6 @@ interface ICardPointsProps {
 const CardPoints = ({control} : ICardPointsProps) => {
 	return (
 		<div className='flex gap-3'>
-			<Coins  />
 			<Controller
 				control={control}
 				name='points'

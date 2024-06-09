@@ -21,6 +21,7 @@ export interface ICardResponse extends IBase {
 	list: string
 	listId: string
 	parentId?: string
+	sprintId?: string
 	isSubtaskVisible: boolean
 	subtasks: ICardResponse[]
 }

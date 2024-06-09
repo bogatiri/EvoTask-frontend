@@ -45,7 +45,36 @@ export default function BoardIdPage() {
 		setLists(list)
 	}
 
-	
+	// const scrollContainer = document.getElementById('scrollContainer');
+
+  // let isDown = false; // Флаг нажатия мыши
+  // let startX: any; // Начальная позиция курсора
+  // let scrollLeft: any; // Начальное значение прокрутки
+
+  // scrollContainer?.addEventListener('mousedown', (e) => {
+  //   isDown = true;
+  //   startX = e.pageX;
+  //   scrollLeft = scrollContainer.scrollLeft;
+  // });
+
+  // scrollContainer?.addEventListener('mouseleave', () => {
+
+  //   isDown = false;
+  // });
+
+  // scrollContainer?.addEventListener('mouseup', () => {
+
+  //   isDown = false;
+  // });
+
+  // scrollContainer?.addEventListener('mousemove', (e) => {
+
+  //   if (!isDown) return; // Остановить выполнение, если мышь не зажата
+  //   e.preventDefault(); // Предотвратить выделение текста
+  //   const x = e.pageX - scrollContainer.offsetLeft; 
+  //   const walk = (x - startX) ; // Умножаем на 3 для увеличения скорости скролла
+  //   scrollContainer.scrollLeft = scrollLeft - walk;
+  // });
 
 
 	if (isBoardLoading || isListLoading) return <div>Loading...</div>
@@ -59,10 +88,12 @@ export default function BoardIdPage() {
 				lists && sprintLists.length > 0 ? [lists[0], ...sprintLists] : lists
 			return (
 				<div
-					className=' flex flex-col custom-scrollbar relative size-full bg-no-repeat bg-cover bg-center '
+					className=' flex flex-col scrollContainer relative size-full bg-no-repeat bg-cover bg-center '
 					style={{ backgroundImage: `url(${board?.imageFullUrl})` }}
 				>
-					<div className='md:px-4 board-container text-lg text-card-foreground h-full overflow-y-hidden overflow-x-auto custom-scrollbar'>
+
+{/* cursor-grab active:cursor-grabbing */}
+					<div id='scrollContainer' className='md:px-4 board-container text-lg text-card-foreground h-full overflow-y-hidden overflow-x-auto  custom-scrollbar scrollContainer'>
 					<div className='sticky top-0 w-full'>
 						<BoardNavbar
 							onSprintPick={onSprintPick}

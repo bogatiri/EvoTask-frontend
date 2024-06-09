@@ -12,7 +12,7 @@ export const TransparentField = forwardRef<
 			autoComplete='off'
 			autoFocus={false}
 			className={cn(
-				'bg-transparent border-none focus:outline-0 focus:shadow-transparent w-full',
+				' bg-transparent  border-none focus:outline-0 focus:shadow-transparent w-full',
 				className
 			)}
 			ref={ref}
