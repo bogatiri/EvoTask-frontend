@@ -110,6 +110,7 @@ export default function UserId() {
 						<div className='w-full h-full xl:pr-10 md:col-span-2 xl:col-span-1'>
 							<UserField
 								text='name'
+								maxLength={30}
 								disabled={!my}
 								placeholder='Ivan'
 								register={register}
@@ -117,6 +118,7 @@ export default function UserId() {
 							/>
 							<UserField
 								text='post'
+								maxLength={30}
 								disabled={!my}
 								placeholder='Frontend developer'
 								register={register}
@@ -124,6 +126,7 @@ export default function UserId() {
 							/>
 							<UserField
 								text='lastName'
+								maxLength={30}
 								disabled={!my}
 								placeholder='Ivanov'
 								register={register}
@@ -132,6 +135,7 @@ export default function UserId() {
 							<UserField
 								type='number'
 								text='phone'
+								maxLength={11}
 								disabled={!my}
 								placeholder='7(999)-999-99-99'
 								register={register}
@@ -139,6 +143,7 @@ export default function UserId() {
 							/>
 							<UserField
 								text='organization'
+								maxLength={30}
 								disabled={!my}
 								placeholder='organization'
 								register={register}

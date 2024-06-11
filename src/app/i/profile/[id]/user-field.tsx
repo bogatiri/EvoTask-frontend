@@ -11,6 +11,7 @@ interface IUserFieldProps {
 	placeholder: string
 	register: UseFormRegister<TypeUserUpdateForm>
 	type?: string
+	maxLength?: number
 }
 
 const UserField = ({
@@ -19,6 +20,7 @@ const UserField = ({
 	disabled,
 	text,
 	type,
+	maxLength,
 	register
 }: IUserFieldProps) => {
 	return (
@@ -26,10 +28,10 @@ const UserField = ({
 			<span className='cursor-default select-none ml-2 mt-2'>{text.replace(/\b\w/g, c => c.toUpperCase())}:</span>
 			<div className='border border-border rounded-md p-2 mt-1 mb-2'>
 				<TransparentField
-					autoComplete='off'
 					type={type}
 					disabled={disabled}
-					className={user.name ? 'opacity-100' : 'opacity-50'}
+					maxLength={maxLength}
+					className='opacity-100'
 					placeholder={placeholder}
 					{...register(text as keyof TypeUserUpdateForm)}
 				/>
