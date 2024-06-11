@@ -1,7 +1,7 @@
 'use client'
 
-import { type PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { usePathname } from 'next/navigation'
+import { type PropsWithChildren, useRef } from 'react'
 import { type ImperativePanelHandle } from 'react-resizable-panels'
 
 import {
@@ -10,94 +10,43 @@ import {
 	ResizablePanelGroup
 } from '@/components/ui/resizable'
 
-import { TypeUserForm } from '@/types/auth.types'
-
-import { useProfile } from '@/hooks/useProfile'
-
 import { Header } from './header/Header'
 import { Sidebar } from './sidebar/Sidebar'
-import { useUserDebounce } from '@/app/i/profile/hooks/useUserDebounce'
-import { usePathname } from 'next/navigation'
 import SmallSidebar from './sidebar/SmallSidebar'
 
 export default function DashboardLayout({
 	children
 }: PropsWithChildren<unknown>) {
-	const [isInitialized, setIsInitialized] = useState<boolean>(false)
-
-	const { data, isLoading, isSuccess } = useProfile()
-	// const [sidebar, setSidebar] = useState<number | null>(
-	// 	isLoading ? null : +data!.user.sidebarWidth
-	// )
 	const refA = useRef<ImperativePanelHandle>(null)
-
-	// useEffect(() => {
-	// 	if (data) {
-	// 		setSidebar(+data.user.sidebarWidth)
-	// 		if (refA.current) {
-	// 			setTimeout(() => refA.current?.resize(+data.user.sidebarWidth), 10)
-	// 			const a = refA.current?.getSize()
-	// 		}
-	// 		setIsInitialized(true)
-	// 	}
-	// }, [data])
-
-	const { watch, setValue } = useForm<TypeUserForm>({
-		defaultValues: {
-			sidebarWidth: data?.user.sidebarWidth
-		}
-	})
-
-	// const onResize = (size: number) => {
-	// 	if (isInitialized) {
-	// 		setSidebar(size)
-	// 		{
-	// 			sidebar !== size && setValue('sidebarWidth', sidebar!.toString())
-	// 		}
-	// 	}
-	// }
-
-	useUserDebounce({ watch })
 
 	const pathName = usePathname()
 
 	return (
 		<>
-			{/* {isLoading ? (
-				<div>Loading...</div>
-			) : ( */}
-				<ResizablePanelGroup
-					className='grid min-h-screen md:grid-cols-[0.5fr_6fr] 2xl:grid-cols-[0.8fr_6fr] grid-cols-[1.2fr_6fr]'
-					direction='horizontal'
-				>
-					<ResizablePanel
+			<ResizablePanelGroup
+				className='grid min-h-screen md:grid-cols-[0.5fr_6fr] 2xl:grid-cols-[0.8fr_6fr] grid-cols-[1.2fr_6fr]'
+				direction='horizontal'
+			>
+				<ResizablePanel
 					className='hidden 3xl:block'
-						minSize={9}
-						defaultSize={13 }
-						maxSize={20}
-						// onResize={onResize}
-						ref={refA}
-					>
-						<Sidebar
-						sidebar={15}
-						/>
-					</ResizablePanel>
-					<div className='3xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
-					<SmallSidebar/>
-					</div>
-					<ResizableHandle className='hidden xl:block'/>
-					<ResizablePanel defaultSize={100-13}>
-						<main className='overflow-x-hidden h-full max-h-screen relative'>
-							{(!pathName.includes('board') && (
-								<Header />
-							))}
-							{children}
-
-						</main>
-
-					</ResizablePanel>
-				</ResizablePanelGroup>
-			{/* )} */}
+					minSize={9}
+					defaultSize={13}
+					maxSize={20}
+					ref={refA}
+				>
+					<Sidebar sidebar={15} />
+				</ResizablePanel>
+				<div className='3xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
+					<SmallSidebar />
+				</div>
+				<ResizableHandle className='hidden xl:block' />
+				<ResizablePanel defaultSize={100 - 13}>
+					<main className='overflow-x-hidden h-full max-h-screen relative'>
+						{!pathName.includes('board') && <Header />}
+						{children}
+					</main>
+				</ResizablePanel>
+			</ResizablePanelGroup>
 		</>
 	)
 }

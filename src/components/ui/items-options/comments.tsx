@@ -72,7 +72,7 @@ const Comments = ({ data }: ICommentsProps) => {
 												<AvatarFallback>
 													{comment.user.name
 														? comment.user.name.charAt(0).toUpperCase()
-														: comment.user.email.charAt(0).toUpperCase()}
+														: comment.user.email?.charAt(0).toUpperCase()}
 												</AvatarFallback>
 											</Avatar>
 										</Link>

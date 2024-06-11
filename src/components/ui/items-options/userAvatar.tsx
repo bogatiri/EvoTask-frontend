@@ -35,7 +35,7 @@ const UserAvatar = ({ userToAvatar, user }: IUserProps) => {
 					<AvatarFallback>
 						{userToAvatar.name
 							? userToAvatar.name.charAt(0).toUpperCase()
-							: userToAvatar.email.charAt(0).toUpperCase()}
+							: userToAvatar.email?.charAt(0).toUpperCase()}
 					</AvatarFallback>
 				</Avatar>
 			)}
