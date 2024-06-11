@@ -4,6 +4,7 @@ import Loader from '@/components/ui/Loader'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { useProfile } from '@/hooks/useProfile'
+import Link from 'next/link'
 
 export function Profile() {
 	const { data, isLoading } = useProfile()
@@ -15,6 +16,8 @@ export function Profile() {
 			{isLoading ? (
 				<Loader />
 			) : (
+				<Link
+				href={`/i/profile/${data?.user.id}`}>
 				<div className='flex items-center'>
 					<div className='text-right mr-3'>
 						<p className='font-bold -mb-1 sm:display-none'>{data?.user.name}</p>
@@ -31,6 +34,7 @@ export function Profile() {
 						</div>
 					)}
 				</div>
+			</Link>
 			)}
 		</div>
 	)
