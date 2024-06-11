@@ -16,12 +16,7 @@ export function useListDebounce({ watch, listId }: IUseListDebounce) {
 	const { createList } = useCreateList()
 	const { updateList } = useUpdateList()
 
-	const debouncedCreateList = useCallback(
-		debounce((formData: TypeListUpdateFormState) => {
-			createList(formData)
-		}, 444),
-		[]
-	)
+
 
 	// Теперь debouncedUpdateList будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateList = useCallback(
@@ -38,12 +33,12 @@ export function useListDebounce({ watch, listId }: IUseListDebounce) {
 					...formData,
 				})
 			} else {
-				debouncedCreateList(formData)
+				
 			}
 		})
 
 		return () => {
 			unsubscribe()
 		}
-	}, [watch(), debouncedUpdateList, debouncedCreateList])
+	}, [watch(), debouncedUpdateList])
 }

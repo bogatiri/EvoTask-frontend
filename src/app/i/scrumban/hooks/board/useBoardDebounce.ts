@@ -2,13 +2,13 @@ import debounce from 'lodash.debounce'
 import { useCallback, useEffect } from 'react'
 import { UseFormWatch } from 'react-hook-form'
 
-import { TypeBoardFormState } from '@/types/board.types'
+import { TypeBoardUpdateFormState } from '@/types/board.types'
 
 import { useCreateBoard } from './useCreateBoard'
 import { useUpdateBoard } from './useUpdateBoard'
 
 interface IUseBoardDebounce {
-	watch: UseFormWatch<TypeBoardFormState>
+	watch: UseFormWatch<TypeBoardUpdateFormState>
 	boardId: string
 }
 
@@ -17,7 +17,7 @@ export function useBoardDebounce({ watch, boardId }: IUseBoardDebounce) {
 	const { updateBoard } = useUpdateBoard()
 
 	const debouncedCreateBoard = useCallback(
-		debounce((formData: TypeBoardFormState) => {
+		debounce((formData: TypeBoardUpdateFormState) => {
 			createBoard(formData)
 		}, 444),
 		[]
@@ -25,7 +25,7 @@ export function useBoardDebounce({ watch, boardId }: IUseBoardDebounce) {
 
 	// Теперь debouncedUpdateBoard будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateBoard = useCallback(
-		debounce((formData: TypeBoardFormState) => {
+		debounce((formData: TypeBoardUpdateFormState) => {
 			updateBoard({ id: boardId, data: formData })
 		}, 444),
 		[]
@@ -38,7 +38,7 @@ export function useBoardDebounce({ watch, boardId }: IUseBoardDebounce) {
 					...formData,
 				})
 			} else {
-				debouncedCreateBoard(formData)
+
 			}
 		})
 

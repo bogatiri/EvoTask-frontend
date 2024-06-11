@@ -15,12 +15,7 @@ interface IUseCardDebounce {
 export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 	const { createCard } = useCreateCard()
 	const { updateCard } = useUpdateCard()
-	const debouncedCreateCard = useCallback(
-		debounce((formData: TypeCardUpdateFormState) => {
-			createCard(formData)
-		}, 444),
-		[]
-	)
+
 
 	// Теперь debouncedUpdateCard будет сохраняться между рендерами, и debounce будет работать как ожидается.
 	const debouncedUpdateCard = useCallback(
@@ -39,12 +34,12 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 					priority: formData.priority || undefined
 				})
 			} else {
-				debouncedCreateCard(formData)
+			
 			}
 		})
 
 		return () => {
 			unsubscribe()
 		}
-	}, [watch(), debouncedUpdateCard, debouncedCreateCard])
+	}, [watch(), debouncedUpdateCard, ])
 }

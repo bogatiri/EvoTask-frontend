@@ -2,19 +2,19 @@ import debounce from 'lodash.debounce'
 import { useCallback, useEffect } from 'react'
 import { UseFormWatch } from 'react-hook-form'
 
-import { TypeUserForm, TypeUserFormState } from '@/types/auth.types'
+import { TypeUserUpdateForm, TypeUserFormState } from '@/types/auth.types'
 
 import { useUpdateUser } from './useUpdateUser'
 
 interface IUseUserDebounce {
-	watch: UseFormWatch<TypeUserForm>
+	watch: UseFormWatch<TypeUserUpdateForm>
 }
 
 export function useUserDebounce({ watch }: IUseUserDebounce) {
 	const { updateUser } = useUpdateUser()
 
 	const debouncedUpdateUser = useCallback(
-		debounce((formData: TypeUserFormState) => {
+		debounce((formData: TypeUserUpdateForm) => {
 			updateUser({ data: formData })
 		}, 1000),
 		[updateUser]

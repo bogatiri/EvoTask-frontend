@@ -23,6 +23,5 @@ export interface IBoardResponse extends IBase {
 	creator: IUser
 }
 
-export type TypeBoardFormState = Partial<
-	Omit<IBoardResponse, 'id' >
->
+export type TypeBoardFormState = Partial<Omit<IBoardResponse, 'id' >>
+export type TypeBoardUpdateFormState = Partial<Omit<IBoardResponse, 'id' | 'list' | 'users' | 'roles' | 'sprints' | 'chats' | 'creator'>>
