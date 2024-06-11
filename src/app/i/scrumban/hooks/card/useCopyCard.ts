@@ -14,6 +14,7 @@ export function useCopyCard() {
 		onSuccess: data => {
 			toast.success(`Card "${data.data.name}" copied`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
+			queryClient.invalidateQueries({ queryKey: ['sprint'] })
 		},
 		onError(error: unknown) {
 			if (isAxiosError(error)) {

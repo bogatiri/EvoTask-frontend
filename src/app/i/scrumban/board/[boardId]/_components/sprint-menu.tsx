@@ -32,7 +32,7 @@ const SprintMenu = ({
 }: ISprintMenuProps) => {
 
 	const [items, setItems] = useState(board?.sprints)
-
+	console.log(items)
 	useEffect(() => {
 		setItems(board.sprints)
 	}, [board])

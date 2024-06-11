@@ -228,7 +228,7 @@ const Header = () => {
         justify-end
       '
 			>
-				<Link href={'/auth'}>
+				<Link href='/auth'>
 					<Button
 						variant='btn-secondary'
 						className=' p-1 hidden sm:block text-foreground'

@@ -1,11 +1,12 @@
 import clsx from 'clsx'
 import { randomUUID } from 'crypto'
 import Image from 'next/image'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import {  CardDescription, CardTitle } from '@/components/ui/card'
+import { CardDescription, CardTitle } from '@/components/ui/card'
 
 import Banner from '../../../public/appBanner.png'
 import Cal from '../../../public/icons/cal.png'
@@ -43,9 +44,10 @@ const HomePage = () => {
           sm:w-[300px]
         '
 				>
-					<Button
-						variant='btn-secondary'
-						className=' 
+					<Link href='/auth'>
+						<Button
+							variant='btn-secondary'
+							className=' 
 						
 						w-full
             rounded-[10px]
@@ -55,9 +57,10 @@ const HomePage = () => {
 						border-border
 						text-foreground
           '
-					>
-						Get EvoTask Free
-					</Button>
+						>
+							Get EvoTask Free
+						</Button>
+					</Link>
 				</div>
 				<div
 					className='md:mt-[-90px]
@@ -121,7 +124,7 @@ const HomePage = () => {
 				>
 					{[...Array(2)].map(arr => (
 						<div
-						key={randomUUID()}
+							key={randomUUID()}
 							className='flex
                 flex-nowrap
                 animate-slide
@@ -129,7 +132,7 @@ const HomePage = () => {
 						>
 							{CLIENTS.map(client => (
 								<div
-								key={randomUUID()}
+									key={randomUUID()}
 									className=' relative
                     w-[200px]
                     m-20
@@ -240,8 +243,8 @@ const HomePage = () => {
 						>
 							{USERS.map((testimonial, index) => (
 								<CustomCard
-								key={randomUUID()}	
-								className='w-[500px]
+									key={randomUUID()}
+									className='w-[500px]
 
                   shrink-0s
                   rounded-xl

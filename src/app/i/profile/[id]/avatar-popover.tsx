@@ -41,7 +41,7 @@ const {updateUser} = useUpdateUser()
 		const image = formData.get('image') as string
 		const [raw, imageThumbUrl, imageFullUrl, regular, small] =
 			image.split('|')
-		const avatar = small
+		const avatar = regular
 		updateUser({data:{avatar}})
 		closeRef.current?.click()
 	}
@@ -56,7 +56,7 @@ const {updateUser} = useUpdateUser()
 				sideOffset={sideOffset}
 			>
 				<div className='text-md font-medium text-center text-neutral-600 pb-4'>
-					Choose a photo
+					Choose a avatar
 				</div>
 				<PopoverClose
 					ref={closeRef}

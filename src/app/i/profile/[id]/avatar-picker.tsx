@@ -58,7 +58,7 @@ export const AvatarPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 							checked={selectedImageId === image.id}
 							onChange={() => {}}
 							disabled={pending}
-							defaultValue={`${image.urls.raw}|${image.urls.thumb}|${image.urls.full}|${image.links.regular}|${image.urls.small_s3}`}
+							defaultValue={`${image.urls.raw}|${image.urls.thumb}|${image.urls.full}|${image.urls.regular}|${image.urls.small_s3}`}
 						/>
 						<Image
 							src={image.urls.thumb}

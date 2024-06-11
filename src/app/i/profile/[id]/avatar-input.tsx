@@ -38,11 +38,12 @@ const AvatarInput = ({ currentUser }: IAvatarInputProps) => {
 		<DialogContent>
 			<DialogHeader>
 				<DialogTitle>Avatar</DialogTitle>
-				<DialogDescription>You can choose a picture</DialogDescription>
 			</DialogHeader>
-			<span>Choose a picture picture:</span>
+			<span>Choose a avatar</span>
+			<div className='grid grid-cols-2'>
+
 			<AvatarPopover
-					sideOffset={-325}
+					sideOffset={-525}
 					side='top'
 					isPicked={isPicked}
 					pickImage={pickImage}
@@ -52,9 +53,10 @@ const AvatarInput = ({ currentUser }: IAvatarInputProps) => {
 						className='aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition'
 						onClick={() => setIsPicked(false)}
 					>
-						<p className='text-sm'>Choose a photo</p>
+						<p className='text-sm'>Choose a avatar</p>
 					</div>
 				</AvatarPopover>
+					</div>
 			<div className='flex justify-between gap-5'>
 				<div className='flex gap-3'>
 					<input
