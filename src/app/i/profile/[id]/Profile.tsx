@@ -135,7 +135,7 @@ export default function UserId() {
 							<UserField
 								type='number'
 								text='phone'
-								maxLength={11}
+								maxLength={15}
 								disabled={!my}
 								placeholder='7(999)-999-99-99'
 								register={register}
