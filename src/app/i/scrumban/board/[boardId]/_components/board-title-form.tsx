@@ -63,8 +63,6 @@ export const BoardTitleForm = ({
 		setMessages(message)
 	}
 
-	console.log('board', board)
-
 	return (
 		<>
 			<div className='grid grid-cols-[1.8fr_0.2fr] fixed w-[100vw] md:w-[85vw] items-center border-b border-border p-3 md:p-2 gap-2 '>
