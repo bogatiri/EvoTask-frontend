@@ -73,9 +73,9 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 				</div>
 			</div>
 			<div>
-				<div className=' max-w-[200px] cursor-pointer'>
+				<div className=' cursor-pointer'>
 					<div
-						className={`flex gap-2.5 ${sidebar! < 10 && 'justify-center '} items-center py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg`}
+						className={`flex gap-2.5 ${sidebar! < 10 && 'justify-center w-full'} items-center py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg`}
 						onClick={() => mutate()}
 					>
 						{(sidebar! > 10 || sidebar! < 10) && <LogOut />}

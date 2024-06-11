@@ -43,10 +43,12 @@ export const authService = {
 		} catch (error: any) {
 			if (error.response) {
 				console.error(error.response.data)
-				return Promise.reject(error.response.data || 'Error')
+				// return Promise.reject(error.response.data || 'Error')
+				throw error
 			} else {
 				console.error(error)
-				return Promise.reject('Error')
+				// return Promise.reject('Error')
+				throw error
 			}
 		}
 	},

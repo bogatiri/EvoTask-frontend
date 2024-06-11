@@ -54,8 +54,8 @@ export function Auth() {
 		onSuccess: (response, variables) => {
 			auth(variables.data)
 		},
-		onError() {
-			toast.error('Invalid confirmation code')
+		onError (error) {
+			toast.error('Invalid confirmation code or password')
 		}
 	})
 
@@ -73,11 +73,18 @@ export function Auth() {
 	const { mutate: sendCode } = useMutation({
 		mutationKey: ['send-code'],
 		mutationFn: (data: IAuthForm) => authService.sendConfirmationCode(data),
-		onSuccess() {
-			setStage('codeSent')
-			toast.success('Confirmation code sent! Check your email.')
+		onSuccess: data => {
+			if (data.message){
+				toast.success(data.message)
+			} else {
+				setStage('codeSent')
+				toast.success('Confirmation code sent! Check your email.')
+			}
 		},
-		onError(error) {
+		onError: data =>  {
+			if (data.message.includes('valid')){
+				toast.success(data.message)
+			}
 			toast.error('Failed to send confirmation code.')
 		}
 	})

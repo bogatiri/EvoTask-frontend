@@ -8,7 +8,7 @@ import {
 import { authService } from '@/services/auth.service'
 
 const options: CreateAxiosDefaults = {
-	baseURL: 'http://localhost:4201/api',
+	baseURL: `${process.env.SERVER_URL}/api`,
 	headers: {
 		'Content-Type': 'application/json'
 	},

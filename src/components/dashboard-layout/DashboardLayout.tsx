@@ -18,7 +18,6 @@ import { Header } from './header/Header'
 import { Sidebar } from './sidebar/Sidebar'
 import { useUserDebounce } from '@/app/i/profile/hooks/useUserDebounce'
 import { usePathname } from 'next/navigation'
-import { ArrowBigDown } from 'lucide-react'
 import SmallSidebar from './sidebar/SmallSidebar'
 
 export default function DashboardLayout({
@@ -27,21 +26,21 @@ export default function DashboardLayout({
 	const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
 	const { data, isLoading, isSuccess } = useProfile()
-	const [sidebar, setSidebar] = useState<number | null>(
-		isLoading ? null : +data!.user.sidebarWidth
-	)
+	// const [sidebar, setSidebar] = useState<number | null>(
+	// 	isLoading ? null : +data!.user.sidebarWidth
+	// )
 	const refA = useRef<ImperativePanelHandle>(null)
 
-	useEffect(() => {
-		if (data) {
-			setSidebar(+data.user.sidebarWidth)
-			if (refA.current) {
-				setTimeout(() => refA.current?.resize(+data.user.sidebarWidth), 10)
-				const a = refA.current?.getSize()
-			}
-			setIsInitialized(true)
-		}
-	}, [data])
+	// useEffect(() => {
+	// 	if (data) {
+	// 		setSidebar(+data.user.sidebarWidth)
+	// 		if (refA.current) {
+	// 			setTimeout(() => refA.current?.resize(+data.user.sidebarWidth), 10)
+	// 			const a = refA.current?.getSize()
+	// 		}
+	// 		setIsInitialized(true)
+	// 	}
+	// }, [data])
 
 	const { watch, setValue } = useForm<TypeUserForm>({
 		defaultValues: {
@@ -49,14 +48,14 @@ export default function DashboardLayout({
 		}
 	})
 
-	const onResize = (size: number) => {
-		if (isInitialized) {
-			setSidebar(size)
-			{
-				sidebar !== size && setValue('sidebarWidth', sidebar!.toString())
-			}
-		}
-	}
+	// const onResize = (size: number) => {
+	// 	if (isInitialized) {
+	// 		setSidebar(size)
+	// 		{
+	// 			sidebar !== size && setValue('sidebarWidth', sidebar!.toString())
+	// 		}
+	// 	}
+	// }
 
 	useUserDebounce({ watch })
 
@@ -64,9 +63,9 @@ export default function DashboardLayout({
 
 	return (
 		<>
-			{isLoading ? (
+			{/* {isLoading ? (
 				<div>Loading...</div>
-			) : (
+			) : ( */}
 				<ResizablePanelGroup
 					className='grid min-h-screen md:grid-cols-[0.5fr_6fr] 2xl:grid-cols-[0.8fr_6fr] grid-cols-[1.2fr_6fr]'
 					direction='horizontal'
@@ -74,20 +73,20 @@ export default function DashboardLayout({
 					<ResizablePanel
 					className='hidden 3xl:block'
 						minSize={9}
-						defaultSize={sidebar! }
+						defaultSize={13 }
 						maxSize={20}
-						onResize={onResize}
+						// onResize={onResize}
 						ref={refA}
 					>
 						<Sidebar
-						sidebar={sidebar}
+						sidebar={15}
 						/>
 					</ResizablePanel>
 					<div className='3xl:hidden absolute top-1/2 transform -translate-y-1/2 z-50'>
 					<SmallSidebar/>
 					</div>
 					<ResizableHandle className='hidden xl:block'/>
-					<ResizablePanel defaultSize={100-sidebar!}>
+					<ResizablePanel defaultSize={100-13}>
 						<main className='overflow-x-hidden h-full max-h-screen relative'>
 							{(!pathName.includes('board') && (
 								<Header />
@@ -98,7 +97,7 @@ export default function DashboardLayout({
 
 					</ResizablePanel>
 				</ResizablePanelGroup>
-			)}
+			{/* )} */}
 		</>
 	)
 }

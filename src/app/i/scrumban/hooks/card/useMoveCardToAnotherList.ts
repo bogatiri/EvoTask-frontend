@@ -13,7 +13,6 @@ export function useMoveCardToAnotherList() {
 		mutationFn: ({ cardId, listId }: { cardId: string; listId: string}) =>
 			cardService.moveCardToAnotherList({cardId, listId}),
 		onSuccess: data => {
-			console.log(data)
 			toast.success(`Card moved successfully`)
 			queryClient.invalidateQueries({ queryKey: ['sprint'] })
 			queryClient.invalidateQueries({ queryKey: ['list'] })
