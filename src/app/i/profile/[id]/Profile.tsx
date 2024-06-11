@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
 
-import { TypeUserForm } from '@/types/auth.types'
+import { TypeUserUpdateForm } from '@/types/auth.types'
 
 import { useUserDebounce } from '../hooks/useUserDebounce'
 import { useUserId } from '../hooks/useUserId'
@@ -34,7 +34,7 @@ export default function UserId() {
 			: `EvoTask | ${user?.email}`
 	}, [user])
 
-	const { register, control, watch, reset } = useForm<TypeUserForm>({
+	const { register, control, watch, reset } = useForm<TypeUserUpdateForm>({
 		defaultValues: {
 			name: user?.name,
 			about: user?.about,
@@ -87,7 +87,7 @@ export default function UserId() {
 											<AvatarFallback className='text-9xl'>
 												{user.name
 													? user.name.charAt(0).toUpperCase()
-													: user.email.charAt(0).toUpperCase()}
+													: user.email?.charAt(0).toUpperCase()}
 											</AvatarFallback>
 										</Avatar>
 									)}

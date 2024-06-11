@@ -2,14 +2,14 @@ import { UseFormRegister } from 'react-hook-form'
 
 import { TransparentField } from '@/components/ui/fields/TransparentField'
 
-import { IUser, TypeUserForm } from '@/types/auth.types'
+import { IUser, TypeUserUpdateForm } from '@/types/auth.types'
 
 interface IUserFieldProps {
 	disabled: boolean
 	text: string
 	user: IUser
 	placeholder: string
-	register: UseFormRegister<TypeUserForm>
+	register: UseFormRegister<TypeUserUpdateForm>
 	type?: string
 }
 
@@ -31,7 +31,7 @@ const UserField = ({
 					disabled={disabled}
 					className={user.name ? 'opacity-100' : 'opacity-50'}
 					placeholder={placeholder}
-					{...register(text as keyof TypeUserForm)}
+					{...register(text as keyof TypeUserUpdateForm)}
 				/>
 			</div>
 		</>
