@@ -43,6 +43,7 @@ export const BoardTitleForm = ({
 	backToMainBoard
 }: IBoardTitleForm) => {
 	const [messages, setMessages] = useState(board!.chats[0].messages)
+	const currentUser = localStorage.getItem('userId')
 
 	const { register, control, watch } = useForm<TypeBoardFormState>({
 		defaultValues: {
@@ -61,6 +62,8 @@ export const BoardTitleForm = ({
 	const onMessageSend = (message: IMessageResponse[]) => {
 		setMessages(message)
 	}
+
+	console.log('board', board)
 
 	return (
 		<>
@@ -125,7 +128,9 @@ export const BoardTitleForm = ({
 								/>
 
 								<div className='flex flex-col gap-3'>
-									<Delete boardId={board.id} />
+									{currentUser === creator.id && (
+										<Delete boardId={board.id} />
+									)}
 									<Users data={board} />
 									<PickStatus
 										status={board.status as EnumSprintStatus}

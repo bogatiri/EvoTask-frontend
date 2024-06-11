@@ -21,7 +21,6 @@ interface IUserProps {
 }
 
 const Users = ({ data }: IUserProps) => {
-	
 
 	return (
 		<Popover>

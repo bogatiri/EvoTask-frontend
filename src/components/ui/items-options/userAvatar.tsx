@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react'
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { getAvatar } from '@/hooks/useProfile'
 
 import { IUser } from '@/types/auth.types'
-import { useEffect, useState } from 'react'
-import Loader from '../Loader'
+
+import { getAvatar } from '@/hooks/useProfile'
 
 interface IUserProps {
 	userToAvatar: IUser
@@ -11,24 +12,26 @@ interface IUserProps {
 }
 
 const UserAvatar = ({ userToAvatar, user }: IUserProps) => {
-
-
-	
-
 	const [avatar, setAvatar] = useState('')
 
-	if (userToAvatar.avatar.includes('static/uploads/avatars')){
-		const {image, isLoading} = getAvatar(userToAvatar.avatar)
+	if (userToAvatar.avatar.includes('static/uploads/avatars')) {
+		const { image, isLoading } = getAvatar(userToAvatar.avatar)
 		useEffect(() => {
 			setAvatar(image)
 		}, [isLoading])
 	}
-	
+
 	return (
 		<>
 			{userToAvatar.avatar ? (
 				<Avatar className='h-8 w-8 border border-border'>
-					<AvatarImage src={userToAvatar.avatar.includes('static/uploads/avatars') ? avatar : userToAvatar.avatar}></AvatarImage>
+					<AvatarImage
+						src={
+							userToAvatar.avatar.includes('static/uploads/avatars')
+								? avatar
+								: userToAvatar.avatar
+						}
+					></AvatarImage>
 				</Avatar>
 			) : (
 				<Avatar className='h-8 w-8 border border-border'>

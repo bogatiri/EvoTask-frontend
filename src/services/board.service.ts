@@ -17,9 +17,8 @@ class BoardService {
 		return response
 	}
 
-	async addUserToBoard({email, boardId} : {email: string, boardId: string}) {
+	async addUserToBoard({ email, boardId }: { email: string; boardId: string }) {
 		try {
-			
 			const response = await axiosWithAuth.put(
 				`${this.BASE_URL}/${boardId}/users`,
 				{ email }
@@ -37,9 +36,12 @@ class BoardService {
 
 	async updateBoard(id: string, data: TypeBoardFormState) {
 		try {
-			
 			const response = await axiosWithAuth.put(`${this.BASE_URL}/${id}`, data)
-			return response
+			if (response.data.success === true) {
+				return response.data
+			} else {
+				return response.data
+			}
 		} catch (error) {
 			throw error
 		}
@@ -47,7 +49,11 @@ class BoardService {
 
 	async deleteBoard(id: string) {
 		const response = await axiosWithAuth.delete(`${this.BASE_URL}/${id}`)
-		return response
+		if (response.data.success === true) {
+			return response.data
+		} else {
+			return response.data
+		}
 	}
 }
 

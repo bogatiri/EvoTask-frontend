@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 import { TypeBoardFormState } from '@/types/board.types'
 
@@ -11,10 +12,13 @@ export function useUpdateBoard(key?: string) {
 		mutationKey: ['update board', key],
 		mutationFn: ({ id, data }: { id: string; data: TypeBoardFormState }) =>
 			boardService.updateBoard(id, data),
-		onSuccess() {
-			queryClient.invalidateQueries({
-				queryKey: ['board']
-			})
+		onSuccess: data => {
+			if (data.success) {
+				queryClient.invalidateQueries({ queryKey: ['board'] }),
+					toast.success(data.message)
+			} else {
+				toast.error(data.message)
+			}
 		}
 	})
 

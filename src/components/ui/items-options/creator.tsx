@@ -19,9 +19,8 @@ const Creator = ({ creator, style }: ICreatorProps) => {
 			<User
 				userToAvatar={creator}
 				user={creator}
-				/>
+			/>
 		</div>
-				
 	)
 }
 
