@@ -8,7 +8,7 @@ export const TransparentField = forwardRef<
 	HTMLInputElement,
 	TypeTransparentField
 >(({ className,type, ...rest }, ref) => {
-	const { getInputProps } = useInputMask({ mask: '+(999) 999-9999' });
+	const { getInputProps } = useInputMask({ mask: '+7(999)-999-99-99' });
 
 	return (
 		<input
