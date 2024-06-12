@@ -7,7 +7,7 @@ import { Heading } from '@/components/ui/Heading'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TransparentFieldTextarea } from '@/components/ui/fields/TransparentFieldTextarea'
-
+import { useInputMask } from '@code-forge/react-input-mask';
 import { TypeUserUpdateForm } from '@/types/auth.types'
 
 import { useUserDebounce } from '../hooks/useUserDebounce'
@@ -33,7 +33,7 @@ export default function UserId() {
 			? `EvoTask | ${user?.name}`
 			: `EvoTask | ${user?.email}`
 	}, [user])
-
+	const { getInputProps } = useInputMask({ mask: '+(999) 999-9999' });
 	const { register, control, watch, reset } = useForm<TypeUserUpdateForm>({
 		defaultValues: {
 			name: user?.name,
@@ -133,6 +133,7 @@ export default function UserId() {
 								user={user}
 							/>
 							<UserField
+							{...getInputProps()}
 								type='tel'
 								text='phone'
 								maxLength={15}
