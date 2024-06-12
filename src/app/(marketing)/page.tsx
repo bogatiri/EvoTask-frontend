@@ -35,6 +35,8 @@ const HomePage = () => {
 				/>
 				<div
 					className='
+					z-50
+					cursor-pointer
           p-[2px]
           mt-6
           rounded-xl
@@ -48,7 +50,8 @@ const HomePage = () => {
 						<Button
 							variant='btn-secondary'
 							className=' 
-						
+						cursor-pointer
+						z-50
 						w-full
             rounded-[10px]
             p-6
