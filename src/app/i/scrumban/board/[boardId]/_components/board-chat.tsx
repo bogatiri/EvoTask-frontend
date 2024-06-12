@@ -81,6 +81,7 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 						<SheetFooter className='w-full'>
 							<div className='flex items-center w-full  gap-2 mt-3 ml-1'>
 								<Textarea
+								maxLength={500}
 									value={text}
 									onChange={e => setText(e.currentTarget.value)}
 									className='resize-none '

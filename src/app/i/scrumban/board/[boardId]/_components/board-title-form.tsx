@@ -107,6 +107,7 @@ export const BoardTitleForm = ({
 										<div className='flex items-center w-full mr-3 justify-center gap-3'>
 											<List size={20} />
 											<TransparentFieldTextarea
+											placeholder='Add a name to board'
 												className='text-xs h-auto'
 												autoFocus={false}
 												{...register('name')}

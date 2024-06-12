@@ -157,10 +157,6 @@ export function Auth() {
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>Write the confirmation code</DialogTitle>
-								<DialogDescription>
-									This action cannot be undone. This will permanently delete
-									your account and remove your data from our servers.
-								</DialogDescription>
 							</DialogHeader>
 							<div className='flex justify-center items-center'>
 								<InputOTP
