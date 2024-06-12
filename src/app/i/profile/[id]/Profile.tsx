@@ -155,6 +155,7 @@ export default function UserId() {
 						<span className='cursor-default select-none ml-2'>About:</span>
 						<div className='mt-4'>
 							<TransparentFieldTextarea
+								className='h-auto'
 								maxLength={1500}
 								placeholder='About...'
 								disabled={!my}
