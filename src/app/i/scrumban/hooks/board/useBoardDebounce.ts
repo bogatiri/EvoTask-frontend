@@ -27,7 +27,7 @@ export function useBoardDebounce({ watch, boardId }: IUseBoardDebounce) {
 	const debouncedUpdateBoard = useCallback(
 		debounce((formData: TypeBoardUpdateFormState) => {
 			updateBoard({ id: boardId, data: formData })
-		}, 444),
+		}, 1500),
 		[]
 	)
 

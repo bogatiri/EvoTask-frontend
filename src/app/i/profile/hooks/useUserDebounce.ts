@@ -16,7 +16,7 @@ export function useUserDebounce({ watch }: IUseUserDebounce) {
 	const debouncedUpdateUser = useCallback(
 		debounce((formData: TypeUserUpdateForm) => {
 			updateUser({ data: formData })
-		}, 1000),
+		}, 2500),
 		[updateUser]
 	)
 

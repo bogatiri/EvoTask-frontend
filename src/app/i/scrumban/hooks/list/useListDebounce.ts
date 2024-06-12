@@ -22,7 +22,7 @@ export function useListDebounce({ watch, listId }: IUseListDebounce) {
 	const debouncedUpdateList = useCallback(
 		debounce((formData: TypeListUpdateFormState) => {
 			updateList({ id: listId, data: formData })
-		}, 444),
+		}, 1500),
 		[]
 	)
 

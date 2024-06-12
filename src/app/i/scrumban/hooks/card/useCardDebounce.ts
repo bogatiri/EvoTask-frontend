@@ -22,7 +22,7 @@ export function useCardDebounce({ watch, cardId }: IUseCardDebounce) {
 		debounce((formData: TypeCardUpdateFormState) => {
 
 			updateCard({ id: cardId, data: formData })
-		}, 444),
+		}, 1500),
 		[]
 	)
 
