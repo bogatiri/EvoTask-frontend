@@ -133,7 +133,7 @@ export default function UserId() {
 								user={user}
 							/>
 							<UserField
-								type='number'
+								type='tel'
 								text='phone'
 								maxLength={15}
 								disabled={!my}
