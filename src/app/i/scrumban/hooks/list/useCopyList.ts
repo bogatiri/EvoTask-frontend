@@ -12,9 +12,10 @@ export function useCopyList() {
 		mutationFn: ({ listId, boardId }: { listId: string; boardId: string }) =>
 			listService.copyList({ listId, boardId }),
 		onSuccess: data => {
+			console.log(data)
 			toast.success(`List "${data.data.name}" copied`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
-			queryClient.invalidateQueries({ queryKey: ['sprint'] })
+			queryClient.invalidateQueries({ queryKey: ['sprint', data.data.sprintId] })
 			// queryClient.invalidateQueries({ queryKey: ['board'] })
 		},
 		onError(error: unknown) {
