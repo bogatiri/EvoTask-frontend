@@ -1,12 +1,15 @@
 import cn from 'clsx'
 import { type InputHTMLAttributes, forwardRef } from 'react'
+import { useInputMask } from '@code-forge/react-input-mask';
 
 type TypeTransparentField = InputHTMLAttributes<HTMLInputElement>
 
 export const TransparentField = forwardRef<
 	HTMLInputElement,
 	TypeTransparentField
->(({ className, ...rest }, ref) => {
+>(({ className,type, ...rest }, ref) => {
+	const { getInputProps } = useInputMask({ mask: '+(999) 999-9999' });
+
 	return (
 		<input
 			autoComplete='off'
@@ -15,6 +18,8 @@ export const TransparentField = forwardRef<
 				' bg-transparent  border-none focus:outline-0 focus:shadow-transparent w-full',
 				className
 			)}
+			type={type}
+			{...(type === 'tel' ? getInputProps() : {})}
 			ref={ref}
 			{...rest}
 		/>
