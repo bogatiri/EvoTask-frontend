@@ -19,7 +19,7 @@ export function useSprintDebounce({ watch, sprintId }: IUseSprintDebounce) {
 	const debouncedUpdateSprint = useCallback(
 		debounce((formData: TypeSprintUpdateFormState) => {
 			updateSprint({ id: sprintId, data: formData })
-		}, 1500),
+		}, 700),
 		[]
 	)
 
