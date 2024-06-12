@@ -67,19 +67,18 @@ const HomePage = () => {
 				</div>
 				<div
 					className='md:mt-[-90px]
-          sm:w-full
           w-[750px]
           flex
           justify-center
           items-center
-          mt-[-40px]
+          mt-[-0px]
           relative
-          sm:ml-0
-          ml-[-50px]
+          sm:ml-[-50px]
+          md:ml-[-50px]
         '
 				>
 					<Image
-						className='mt-40'
+						className='mt-10 w-[60%] sm:w-[100vw] ml-0 mr-[350px] md:mr-0'
 						src={Banner}
 						alt='Application Banner'
 					/>
@@ -101,7 +100,6 @@ const HomePage = () => {
 					className="overflow-hidden
           flex
           after:content['']
-
           after:to-transparent
           after:from-background
           after:bg-gradient-to-l
