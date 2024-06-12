@@ -19,12 +19,7 @@ import Logo from '../../../public/evotasklogo.svg'
 
 import { cn } from '@/lib/utils'
 
-const routes = [
-	{ title: 'Features', href: '#features' },
-	{ title: 'Resourses', href: '#resources' },
-	{ title: 'Pricing', href: '#pricing' },
-	{ title: 'Testimonials', href: '#testimonial' }
-]
+
 
 const components: { title: string; href: string; description: string }[] = [
 	{
@@ -67,12 +62,7 @@ const Header = () => {
 	const [path, setPath] = useState('#products')
 	return (
 		<header
-			className='p-4
-      flex
-      justify-center
-      items-center
-
-  '
+			className='p-4 flex justify-center items-center'
 		>
 			<Link
 				href={'/'}
@@ -109,28 +99,11 @@ const Header = () => {
 						</NavigationMenuTrigger>
 						<NavigationMenuContent>
 							<ul
-								className='grid
-                gap-3
-                p-6
-                md:w-[400px]
-                ld:w-[500px]
-                lg:grid-cols-[.75fr_1fr]
-                '
+								className='grid gap-3 p-6 md:w-[400px] ld:w-[500px] lg:grid-cols-[.75fr_1fr] '
 							>
 								<li className='row-span-3'>
 									<span
-										className='flex h-full w-full select-none
-                  flex-col
-                  justify-end
-                  rounded-md
-                  bg-gradient-to-b
-                  from-muted/50
-                  to-muted
-                  p-6 no-underline
-                  outline-none
-                  focus:shadow-md
-                  '
-									>
+										className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md' >
 										Welcome
 									</span>
 								</li>
@@ -138,7 +111,7 @@ const Header = () => {
 									href='#'
 									title='Introduction'
 								>
-									Re-usable components built using Radix UI and Tailwind CSS.
+									Re-usable components built using Shadcn UI and Tailwind CSS.
 								</ListItem>
 								<ListItem
 									href='#'
@@ -170,13 +143,7 @@ const Header = () => {
 						<NavigationMenuContent>
 							<ul className='grid w-[400px] gap-3 p-4  md:grid-row-2  '>
 								<ListItem
-									title='Pro Plan'
-									href={'#'}
-								>
-									Unlock full power with collaboration.
-								</ListItem>
-								<ListItem
-									title={'free Plan'}
+									title={'Free Plan'}
 									href={'#'}
 								>
 									Great for teams just starting out.
@@ -186,15 +153,7 @@ const Header = () => {
 					</NavigationMenuItem>
 					<NavigationMenuItem>
 						<NavigationMenuContent>
-							<ul
-								className='grid w-[400px]
-              gap-3
-              p-4
-              md:w-[500px]
-              md:grid-cols-2 
-              lg:w-[600px]
-              '
-							>
+							<ul className='grid w-[400px] gap-3 md:w-[500px] md:grid-cols-2  lg:w-[600px] p-4'>
 								{components.map((component, index) => (
 									<ListItem
 									key={index}

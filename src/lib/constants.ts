@@ -110,31 +110,3 @@ export const USERS = [
   },
 ]
 
-export const PRICING_CARDS = [
-  {
-    planType: 'Free Plan',
-    price: '00.00',
-    description: 'Unlimited block trials  for teams',
-    highlightFeature: '',
-    freatures: [
-      'Unlimited blocks for teams',
-      'Unlimited file uploads',
-      'Invite guests',
-    ],
-  },
-  {
-    planType: 'Pro Plan',
-    price: '00.00',
-    description: 'Billed annually. $0 billed monthly',
-    highlightFeature: 'Everything in free +',
-    freatures: [
-      'Unlimited blocks for teams',
-      'Unlimited file uploads',
-      'Invite guests',
-    ],
-  },
-]
-
-export const PRICING_PLANS = { proplan: 'Pro Plan', freeplan: 'Free Plan' }
-
-export const MAX_FOLDERS_FREE_PLAN = 3
