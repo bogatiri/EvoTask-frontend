@@ -15,7 +15,7 @@ export function useCopyList() {
 			toast.success(`List "${data.data.name}" copied`)
 			queryClient.invalidateQueries({ queryKey: ['list'] })
 			queryClient.invalidateQueries({ queryKey: ['sprint'] })
-			queryClient.invalidateQueries({ queryKey: ['board'] })
+			// queryClient.invalidateQueries({ queryKey: ['board'] })
 		},
 		onError(error: unknown) {
 			if (isAxiosError(error)) {

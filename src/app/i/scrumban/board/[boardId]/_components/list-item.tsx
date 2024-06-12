@@ -45,42 +45,49 @@ const ListItem = ({ list, index, orderedData }: ListItemProps) => {
 	let isScrolling: any
 	let lastScrollLeft = scrollContainer?.scrollLeft // Сохраняем начальное положение горизонтального скролла
 
-	scrollContainer?.addEventListener('scroll', (e) => {
-		if (window.innerWidth < 768) {
-			const currentScrollLeft = scrollContainer.scrollLeft;
-			if (lastScrollLeft !== currentScrollLeft) {
-				window.clearTimeout(isScrolling);
-				isScrolling = setTimeout(() => {
-					const items = scrollContainer.querySelectorAll('.list-item');
-					let nearestItem;
-					let nearestDistance = Infinity;
-		
-					for (const item of items) {
-						const rect = item.getBoundingClientRect();
-						const distance = Math.abs(rect.left + (rect.width / 2) - (window.innerWidth / 2));
-		
-						if (distance < nearestDistance) {
-							nearestDistance = distance;
-							nearestItem = item;
+	scrollContainer?.addEventListener(
+		'scroll',
+		e => {
+			if (window.innerWidth < 768) {
+				const currentScrollLeft = scrollContainer.scrollLeft
+				if (lastScrollLeft !== currentScrollLeft) {
+					window.clearTimeout(isScrolling)
+					isScrolling = setTimeout(() => {
+						const items = scrollContainer.querySelectorAll('.list-item')
+						let nearestItem
+						let nearestDistance = Infinity
+
+						for (const item of items) {
+							const rect = item.getBoundingClientRect()
+							const distance = Math.abs(
+								rect.left + rect.width / 2 - window.innerWidth / 2
+							)
+
+							if (distance < nearestDistance) {
+								nearestDistance = distance
+								nearestItem = item
+							}
 						}
-					}
-		
-					if (nearestItem) {
-						nearestItem.scrollIntoView({
-							behavior: 'smooth',
-							block: 'center',
-							inline: 'center',
-						});
-					}
-				}, 66); 
+
+						if (nearestItem) {
+							nearestItem.scrollIntoView({
+								behavior: 'smooth',
+								block: 'center',
+								inline: 'center'
+							})
+						}
+					}, 66)
+				}
+
+				lastScrollLeft = currentScrollLeft
 			}
-		
-			lastScrollLeft = currentScrollLeft;
-		} 
-	}, false);
+		},
+		false
+	)
 
 	return (
 		<Draggable
+			isDragDisabled={list.sprintId ? true : false}
 			draggableId={list!.id}
 			index={index}
 		>
@@ -106,9 +113,8 @@ const ListItem = ({ list, index, orderedData }: ListItemProps) => {
 									{...provided.droppableProps}
 									className={cn(
 										'mx-1 px-1 py-0.5 custom-scrollbar flex flex-col max-h-[65vh] gap-y-2 overflow-x-hidden overflow-y-auto',
-										snapshot.isDraggingOver
-											&& 'border border--border border-dashed rounded-md'
-											
+										snapshot.isDraggingOver &&
+											'border border--border border-dashed rounded-md'
 									)}
 								>
 									{list.cards &&
