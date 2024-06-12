@@ -1,13 +1,13 @@
 import { MessageSquareText, SendHorizonal } from 'lucide-react'
-import Link from 'next/link'
 import { useState } from 'react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
 
 import { ICardResponse } from '@/types/card.types'
 
 import { useCreateComment } from '../../../app/i/scrumban/hooks/comment/useCreateComment'
+
+import User from './user'
 
 interface ICommentsProps {
 	data: ICardResponse
@@ -58,25 +58,10 @@ const Comments = ({ data }: ICommentsProps) => {
 								key={index}
 							>
 								<div className='flex items-center'>
-									{comment.user.avatar ? (
-										<Link
-										className=''
-										href={`/i/profile/${comment.user.id}`}>
-											<Avatar className='size-5 md:size-8  border border-border'>
-												<AvatarImage src={comment.user.avatar}></AvatarImage>
-											</Avatar>
-										</Link>
-									) : (
-										<Link href={`/i/profile/${comment.user.id}`}>
-											<Avatar className='size-5 md:size-8 border border-border'>
-												<AvatarFallback>
-													{comment.user.name
-														? comment.user.name.charAt(0).toUpperCase()
-														: comment.user.email?.charAt(0).toUpperCase()}
-												</AvatarFallback>
-											</Avatar>
-										</Link>
-									)}
+									<User
+										user={comment.user}
+										userToAvatar={comment.user}
+									/>
 								</div>
 								<div className='rounded-lg px-4 py-2 max-w-xs mr-auto  text-white bg-gray-900'>
 									<div className='flex gap-1 md:gap-2'>
