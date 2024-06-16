@@ -20,6 +20,7 @@ import { useSocketConnect } from '@/hooks/useConnectSocket'
 import SocketApi from '@/api/socket-api'
 
 import ChatMessageForm from './chat-message-form'
+import { toast } from 'sonner'
 
 interface IBoardChatProps {
 	messages: IMessageResponse[]
@@ -35,17 +36,22 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 	const { message } = useSocketConnect(chatId, messages)
 
 	const sendMessage = () => {
-		SocketApi.socket?.emit('send-message', { text, chatId })
-		setText('')
-		setTimeout(() => {
-			if (messagesEndRef.current) {
-				messagesEndRef.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'end',
-					inline: 'nearest'
-				})
-			}
-		}, 100)
+		if (text.length > 0){
+
+			SocketApi.socket?.emit('send-message', { text, chatId })
+			setText('')
+			setTimeout(() => {
+				if (messagesEndRef.current) {
+					messagesEndRef.current.scrollIntoView({
+						behavior: 'smooth',
+						block: 'end',
+						inline: 'nearest'
+					})
+				}
+			}, 100)
+		} else {
+			toast.success('Text of mesage must be more then 0 symbols')
+		}
 	}
 
 	useEffect(() => {
