@@ -50,7 +50,7 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 				}
 			}, 100)
 		} else {
-			toast.success('Text of mesage must be more then 0 symbols')
+			toast.warning('Text of mesage must be more then 0 symbols')
 		}
 	}
 
