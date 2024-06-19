@@ -581,6 +581,12 @@ const config: Config = {
         },
       })
     },
+		require('@tailwindcss/forms'),
+    function ({ addBase } : {addBase: any}) {
+      addBase({
+        'span': { color: '#ffffff' }, // Задаем белый цвет текста для всех <span>
+      });
+    },
 		require('tailwindcss-animate')]
 }
 export default config

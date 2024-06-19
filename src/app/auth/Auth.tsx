@@ -170,7 +170,9 @@ export function Auth() {
 										}
 									}}
 								>
-									<InputOTPGroup>
+									<InputOTPGroup
+									className='text-white'
+									>
 										<InputOTPSlot index={0} />
 										<InputOTPSlot index={1} />
 										<InputOTPSlot index={2} />
