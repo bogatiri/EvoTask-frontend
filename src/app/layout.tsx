@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={cn(zen.className, '')}>
+			<body className={cn(zen.className, 'custom-scrollbar')}>
 				<Providers>
 					<Toaster
 						theme='dark'
