@@ -90,7 +90,7 @@ export default function UserId() {
 										</Avatar>
 									)}
 								</DialogTrigger>
-								{/* <AvatarInput currentUser={currentUser} /> */}
+								<AvatarInput currentUser={currentUser} />
 							</Dialog>
 						</div>
 						<div className='p-4 w-full flex flex-col mt-1 border opacity-80 hover:opacity-100 justify-center gap-5 shadow-md rounded-lg cursor-default select-none items-center transition mr-10 xl:pr-0'>

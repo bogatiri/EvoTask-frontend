@@ -57,7 +57,7 @@ const AvatarInput = ({ currentUser }: IAvatarInputProps) => {
 					</div>
 				</AvatarPopover>
 					</div>
-			<div className='flex justify-between gap-5'>
+			{/* <div className='flex justify-between gap-5'>
 				<div className='flex gap-3'>
 					<input
 						id='fileInput'
@@ -90,7 +90,7 @@ const AvatarInput = ({ currentUser }: IAvatarInputProps) => {
 				>
 					Set Avatar
 				</Button>
-			</div>
+			</div> */}
 		</DialogContent>
 	)
 }
