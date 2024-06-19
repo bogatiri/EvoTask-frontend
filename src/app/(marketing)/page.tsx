@@ -31,7 +31,7 @@ const HomePage = () => {
 			>
 				<TitleSection
 					pill='✨ Your Workspace, Perfected'
-					title='All-In-One Collaboration and Productivity Platform'
+					title='The Evolution of Your Project Management'
 				/>
 				<div
 					className='
