@@ -21,7 +21,7 @@ const PickDate = ({ control, controlName, text, date, position }: IPickDateProps
 		>
 			<Calendar className='w-9 ' />
 			{text && (
-				<span className='font-semibold text-sm text-neutral-700 mb-2'>
+				<span className='font-semibold text-sm text-white mb-2'>
 					{text}
 				</span>
 			)}

@@ -19,7 +19,7 @@ export const Logo = () => {
           width={30}
         />
         <p
-          className={cn('text-lg text-neutral-700 pb-1', headingFont.className)}
+          className={cn('text-lg text-white pb-1', headingFont.className)}
         >
           EvoTask
         </p>

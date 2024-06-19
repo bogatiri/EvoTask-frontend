@@ -47,8 +47,8 @@ const Comments = ({ data }: ICommentsProps) => {
 		<div className='flex  flex-col flex-grow justify-between'>
 			<div>
 				<div className='flex gap-x-3'>
-					<MessageSquareText className='h-5 w-5 mt-0.5 text-neutral-700' />
-					<p className='font-semibold text-neutral-700 mb-2'>Comments</p>
+					<MessageSquareText className='h-5 w-5 mt-0.5 text-white' />
+					<p className='font-semibold text-white mb-2'>Comments</p>
 				</div>
 				<ul className='border border-border rounded-md space-y-2 h-32 max-h-32 md:h-48 overflow-y-auto flex flex-col p-1 md:p-4'>
 					{data.comments ? (

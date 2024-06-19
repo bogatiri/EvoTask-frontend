@@ -15,7 +15,7 @@ const Creator = ({ creator, style }: ICreatorProps) => {
 			className={`hidden md:flex gap-2 justify-center items-center mr-5`}
 			style={style}
 		>
-			<span className=' font-semibold text-sm text-neutral-700 '>Creator:</span>
+			<span className=' font-semibold text-sm text-white'>Creator:</span>
 			<User
 				userToAvatar={creator}
 				user={creator}

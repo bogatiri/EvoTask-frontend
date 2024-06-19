@@ -55,7 +55,7 @@ const {updateUser} = useUpdateUser()
 				side={side}
 				sideOffset={sideOffset}
 			>
-				<div className='text-md font-medium text-center text-neutral-600 pb-4'>
+				<div className='text-md font-medium text-center text-white pb-4'>
 					Choose a avatar
 				</div>
 				<PopoverClose
@@ -63,7 +63,7 @@ const {updateUser} = useUpdateUser()
 					asChild
 				>
 					<Button
-						className='h-auto w-auto p-2 absolute top-2 right-2 text-neutral-600'
+						className='h-auto w-auto p-2 absolute top-2 right-2 text-white'
 						variant='ghost'
 					>
 						<X className='h-5 w-5' />
