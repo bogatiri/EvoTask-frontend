@@ -59,7 +59,7 @@ const Comments = ({ data }: ICommentsProps) => {
 							>
 								<div className='flex items-center'>
 									<User
-										user={comment.user}
+										// user={comment.user}
 										userToAvatar={comment.user}
 									/>
 								</div>
