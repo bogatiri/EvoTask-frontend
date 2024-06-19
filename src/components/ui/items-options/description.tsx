@@ -16,8 +16,8 @@ const Description = ({ register, placeholder }: IDescriptionProps) => {
 	return (
 		<div className='h-full w-full'>
 			<div className='flex  gap-x-3'>
-				<AlignLeft className='h-5 w-5 mt-0.5 text-neutral-700' />
-				<p className='font-semibold text-neutral-700 mb-2'>Description</p>
+				<AlignLeft className='h-5 w-5 mt-0.5 text-white' />
+				<p className='font-semibold text-white mb-2'>Description</p>
 			</div>
 			<TransparentFieldTextarea
 				placeholder={placeholder}
