@@ -139,14 +139,14 @@ export default function UserId() {
 								register={register}
 								user={user}
 							/>
-							<UserField
+							{/* <UserField
 								text='organization'
 								maxLength={30}
 								disabled={!my}
 								placeholder='organization'
 								register={register}
 								user={user}
-							/>
+							/> */}
 						</div>
 					</div>
 					<div className='w-full md:pr-layout xl:pr-10 xl:mr-2'>
