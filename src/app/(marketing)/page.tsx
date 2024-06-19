@@ -17,7 +17,7 @@ import { CLIENTS, USERS } from '@/lib/constants'
 
 const HomePage = () => {
 	return (
-		<>
+		<div className='custom-scrollbar'>
 			<section
 				className=' overflow-hidden
       px-4
@@ -285,7 +285,7 @@ const HomePage = () => {
 					))}
 				</div>
 			</section>
-		</>
+		</div>
 	)
 }
 
