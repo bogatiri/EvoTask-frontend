@@ -32,6 +32,7 @@ export default function UserId() {
 			? `EvoTask | ${user?.name}`
 			: `EvoTask | ${user?.email}`
 	}, [user])
+	
 	const { register, control, watch, reset } = useForm<TypeUserUpdateForm>({
 		defaultValues: {
 			name: user?.name,

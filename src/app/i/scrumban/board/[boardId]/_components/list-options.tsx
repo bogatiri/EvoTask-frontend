@@ -39,7 +39,7 @@ export const ListOptions = ({
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<MoreHorizontal className=' hover:bg-accent hover:text-accent-foreground h-6 w-6 rounded-md p-1' />
+				<MoreHorizontal className=' hover:bg-accent hover:text-accent-foreground h-6 w-6 rounded-md p-1'/>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>

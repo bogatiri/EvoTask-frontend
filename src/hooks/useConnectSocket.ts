@@ -6,9 +6,7 @@ import SocketApi from '@/api/socket-api'
 
 import { useChatById } from '@/app/i/scrumban/hooks/chat/useChats'
 
-type Message = {
-	dto: string
-}
+
 
 export const useSocketConnect = (chatId: string, messages: IMessageResponse[]) => {
 	const [message, setMessages] = useState<IMessageResponse[]>(messages)
@@ -41,7 +39,7 @@ export const useSocketConnect = (chatId: string, messages: IMessageResponse[]) =
 						return prevMessages;
 				});
 		};
-
+		console.log('socker api socket',SocketApi.socket)
 			if (SocketApi.socket) {
 				SocketApi.socket.on('new-message', handleNewMessage)
 				SocketApi.socket.on('delete-message', handleDeleteMessage)
