@@ -31,7 +31,7 @@ const HomePage = () => {
 			>
 				<TitleSection
 					pill='✨ Your Workspace, Perfected'
-					title='Безопасника рот ебал'
+					title='The Evolution of Your Project Management.'
 				/>
 				<div
 					className='
