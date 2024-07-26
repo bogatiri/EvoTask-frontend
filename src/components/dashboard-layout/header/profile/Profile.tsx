@@ -29,7 +29,7 @@ export function Profile() {
 							<AvatarFallback>AV</AvatarFallback>
 						</Avatar>
 					) : (
-						<div className='w-10 h-10 flex justify-center items-center text-2xl text-white bg-white/20 rounded uppercase'>
+						<div className='w-10 h-10 flex justify-center items-center text-2xl  bg-white/20 rounded uppercase'>
 							{data?.user.name?.charAt(0) || data?.user.email?.charAt(0)}
 						</div>
 					)}

@@ -63,7 +63,7 @@ const ChatMessage = forwardRef<HTMLInputElement, iChatMessageProps>(
 						type='text'
 						value={textUpdatedMessage}
 						onChange={handleInputMessageEdited}
-						className='bg-blue-500 w-auto h-6 px-0 py-0 text-white border-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-none underline break-all max-w-[200px] text-sm'
+						className='bg-blue-500 w-auto h-6 px-0 py-0 border-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-none underline break-all max-w-[200px] text-sm'
 						onKeyDown={e => {
 							if (e.key === 'Enter' && !e.shiftKey) {
 								e.preventDefault()

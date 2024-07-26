@@ -69,7 +69,7 @@ export const AvatarPicker = ({ id, errors, pickImage }: FormPickerProps) => {
 						/>
 						{selectedImageId === image.id && (
 							<div className='absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center'>
-								<Check className='h-4 w-4 text-white' />
+								<Check className='h-4 w-4 ' />
 							</div>
 						)}
 					</div>

@@ -53,7 +53,7 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 					/>
 					{sidebar! > 9 && (
 
-					<span className='text-2xl text-white font-bold relative'>
+					<span className='text-2xl  font-bold relative'>
 						{SITE_NAME}
 						<span className='absolute -top-1 -right-6 text-xs opacity-40 rotate-[18deg] font-normal'>
 							beta

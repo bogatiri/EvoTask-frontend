@@ -148,7 +148,7 @@ export function Auth() {
 					>
 						<DialogTrigger>
 							<div
-								className='linear rounded-lg bg-transparent border border-primary py-2 px-7 text-base font-medium text-white transition hover:bg-primary active:bg-brand-700'
+								className='linear rounded-lg bg-transparent border border-primary py-2 px-7 text-base font-mediumtransition hover:bg-primary active:bg-brand-700'
 								onClick={handleSubmit(handleLogin)}
 							>
 								Login
@@ -171,7 +171,6 @@ export function Auth() {
 									}}
 								>
 									<InputOTPGroup
-									className='text-white'
 									>
 										<InputOTPSlot index={0} />
 										<InputOTPSlot index={1} />
@@ -186,7 +185,7 @@ export function Auth() {
 						</DialogContent>
 					</Dialog>
 					<div
-						className='linear rounded-lg bg-transparent border border-primary py-2 px-7 text-base font-medium text-white transition hover:bg-primary active:bg-brand-700 cursor-pointer'
+						className='linear rounded-lg bg-transparent border border-primary py-2 px-7 text-base font-medium  transition hover:bg-primary active:bg-brand-700 cursor-pointer'
 						onClick={handleSubmit(onSubmit)}
 					>
 						Register

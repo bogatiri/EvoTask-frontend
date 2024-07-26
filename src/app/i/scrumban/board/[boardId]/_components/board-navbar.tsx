@@ -14,7 +14,7 @@ const BoardNavbar = ({
 	backToMainBoard
 }: IBoardNavbarProps) => {
 	return (
-		<div className='w-[80vw] fixed h-14 z-[40] bg-black/50 flex items-center md:px-6 gap-x-4 text-white'>
+		<div className='w-[80vw] fixed h-14 z-[40] bg-black/50 flex items-center md:px-6 gap-x-4 '>
 			<BoardTitleForm
 				backToMainBoard={backToMainBoard}
 				onSprintPick={onSprintPick}

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import { Toaster } from 'sonner'
-
+import { ThemeProvider } from "@/components/theme-provider"
 
 import { SITE_NAME } from '@/constants/seo.constants'
 
@@ -39,7 +39,14 @@ export default function RootLayout({
 						position='bottom-right'
 						duration={1500}
 					/>
-					{children}
+					          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
 
 				</Providers>
 			</body>

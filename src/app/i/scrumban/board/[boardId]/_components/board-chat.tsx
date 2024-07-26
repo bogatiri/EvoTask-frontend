@@ -86,8 +86,6 @@ const BoardChat = ({ messages, chatId, onMessageSend }: IBoardChatProps) => {
 					<Separator />
 					<SheetFooter className='w-full'>
 						<div className='flex items-center w-full gap-2 mt-3 ml-1 relative'>
-							{' '}
-							{/* Добавлен класс relative */}
 							<Textarea
 								maxLength={500}
 								value={text}

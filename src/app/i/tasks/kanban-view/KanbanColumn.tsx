@@ -36,6 +36,7 @@ export function KanbanColumn({ value, items, label, setItems }: IKanbanColumn) {
 							>
 								{provided => (
 									<div
+									className='font-sans'
 										ref={provided.innerRef}
 										{...provided.draggableProps}
 										{...provided.dragHandleProps}

@@ -20,7 +20,7 @@ export function MenuItem({ item, sidebar, currentUser }: IMenuItemProps) {
 				<item.icon />
 				)}
 				{sidebar!  > 9 && (
-				<span className='text-white'>{item.name}</span>
+				<span >{item.name}</span>
 				)}
 			</Link>
 		</div>

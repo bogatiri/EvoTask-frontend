@@ -68,7 +68,7 @@ const ChatMessageForm = ({  message }: IChatMesageFormProps) => {
 			{message.userId !== currentUser && <User userToAvatar={message.user} />}
 			<ContextMenu>
 				<ContextMenuTrigger
-					className={`rounded-b-xl px-4 py-2 max-w-xs ${message.userId === currentUser ? 'ml-auto rounded-tl-xl bg-blue-500 text-white' : 'mr-auto rounded-tr-xl bg-gray-900'} `}
+					className={`rounded-b-xl px-4 py-2 max-w-xs ${message.userId === currentUser ? 'ml-auto rounded-tl-xl bg-blue-500 ' : 'mr-auto rounded-tr-xl bg-gray-900'} `}
 				>
 					<div >
 						{message.userId !== currentUser && (
