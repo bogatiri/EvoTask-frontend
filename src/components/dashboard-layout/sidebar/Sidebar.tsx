@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { LogOut, User } from 'lucide-react'
+import { LogOut, Moon, Sun, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -16,12 +16,17 @@ import Logo from '../../../../public/evotasklogo.svg'
 import { MenuItem } from './MenuItem'
 import { MENU } from './menu.data'
 import { authService } from '@/services/auth.service'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { useTheme } from 'next-themes'
 
 interface ISidebarProps {
 	sidebar: number | null
 }
 
 export function Sidebar({ sidebar }: ISidebarProps) {
+	const { setTheme } = useTheme()
+
 	const [currentUser, setCurrentUser] = useState('')
 	useEffect(() => {
 		const localUserId = localStorage.getItem('userId')
@@ -73,7 +78,27 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 				</div>
 			</div>
 			<div>
-				<div className=' cursor-pointer'>
+			<DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+				<div className='cursor-pointer'>
 					<div
 						className={`flex gap-2.5 ${sidebar! < 10 && 'justify-center w-full'} items-center py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg`}
 						onClick={() => mutate()}
