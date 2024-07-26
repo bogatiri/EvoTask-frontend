@@ -81,7 +81,7 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 				</div>
 			</div>
 			<div>
-				<DropdownMenu>
+				{/* <DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button
 							variant='outline'
@@ -103,7 +103,7 @@ export function Sidebar({ sidebar }: ISidebarProps) {
 							System
 						</DropdownMenuItem>
 					</DropdownMenuContent>
-				</DropdownMenu>
+				</DropdownMenu> */}
 				<div className='cursor-pointer'>
 					<div
 						className={`flex gap-2.5 ${sidebar! < 10 && 'justify-center w-full'} items-center py-1.5 m-3 px-layout transition-colors hover:bg-border rounded-lg`}

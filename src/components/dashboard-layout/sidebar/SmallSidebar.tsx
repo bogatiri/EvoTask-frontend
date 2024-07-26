@@ -94,7 +94,7 @@ const SmallSidebar = () => {
 								key={item.link}
 							/>
 						))}
-						<DropdownMenu>
+						{/* <DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button
 									variant='outline'
@@ -116,7 +116,7 @@ const SmallSidebar = () => {
 									System
 								</DropdownMenuItem>
 							</DropdownMenuContent>
-						</DropdownMenu>
+						</DropdownMenu> */}
 					</div>
 					<SheetFooter className='flex flex-col sm:flex-col justify-center w-full self-end'>
 						<Separator />
