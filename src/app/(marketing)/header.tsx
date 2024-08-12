@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -14,20 +15,10 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
- 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import Logo from '../../../public/evotasklogo.svg'
 
 import { cn } from '@/lib/utils'
-
-
 
 const components: { title: string; href: string; description: string }[] = [
 	{
@@ -70,9 +61,7 @@ const Header = () => {
 	const { setTheme } = useTheme()
 	const [path, setPath] = useState('#products')
 	return (
-		<header
-			className='p-4 flex justify-center items-center'
-		>
+		<header className='p-4 flex justify-center items-center'>
 			<Link
 				href={'/'}
 				className='w-full flex gap-2
@@ -107,12 +96,9 @@ const Header = () => {
 							Resources
 						</NavigationMenuTrigger>
 						<NavigationMenuContent>
-							<ul
-								className='grid gap-3 p-6 md:w-[400px] ld:w-[500px] lg:grid-cols-[.75fr_1fr] '
-							>
+							<ul className='grid gap-3 p-6 md:w-[400px] ld:w-[500px] lg:grid-cols-[.75fr_1fr] '>
 								<li className='row-span-3'>
-									<span
-										className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md' >
+									<span className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'>
 										Welcome
 									</span>
 								</li>
@@ -165,7 +151,7 @@ const Header = () => {
 							<ul className='grid w-[400px] gap-3 md:w-[500px] md:grid-cols-2  lg:w-[600px] p-4'>
 								{components.map((component, index) => (
 									<ListItem
-									key={index}
+										key={index}
 										title={component.title}
 										href={component.href}
 									>
@@ -196,26 +182,6 @@ const Header = () => {
         justify-end
       '
 			>
-				    {/* <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu> */}
 				<Link href='/auth'>
 					<Button
 						variant='btn-secondary'
@@ -227,7 +193,7 @@ const Header = () => {
 				<Link href='/auth'>
 					<Button
 						variant='btn-primary'
-						className='whitespace-nowrap text-foreground'
+						className='whitespace-nowrap text-foreground '
 					>
 						Sign Up
 					</Button>
@@ -239,7 +205,10 @@ const Header = () => {
 
 export default Header
 
-const ListItem = React.forwardRef<React.ElementRef<'a'>,React.ComponentPropsWithoutRef<'a'>>(({ className, title, children, ...props }, ref) => {
+const ListItem = React.forwardRef<
+	React.ElementRef<'a'>,
+	React.ComponentPropsWithoutRef<'a'>
+>(({ className, title, children, ...props }, ref) => {
 	return (
 		<li>
 			<NavigationMenuLink asChild>

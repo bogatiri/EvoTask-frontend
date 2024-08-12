@@ -39,7 +39,6 @@ export const useSocketConnect = (chatId: string, messages: IMessageResponse[]) =
 						return prevMessages;
 				});
 		};
-		console.log('socker api socket',SocketApi.socket)
 			if (SocketApi.socket) {
 				SocketApi.socket.on('new-message', handleNewMessage)
 				SocketApi.socket.on('delete-message', handleDeleteMessage)
